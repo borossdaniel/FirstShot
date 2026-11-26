@@ -1,0 +1,7 @@
+Done. Created in this folder:
+
+- **`server.js`** — plain `node:http` server returning "ok" on port 3000 (verified live: `curl localhost:3000` → `200 OK`, body `ok`).
+- **`package.json`** — minimal, `engines.node >= 26`, no dependencies.
+- **`Dockerfile`** — `node:26-alpine` (current Node LTS per firstshot facts), copies the two files, runs as the built-in non-root `node` user, exposes port 3000.
+
+`check_project` confirmed no outdated dependencies (there are none). Background test server stopped after verification.

@@ -76,7 +76,7 @@ runCheck(async (ws) => {
     if (!up) fail('crash', `next start did not answer within 20 s: ${tail(log)}`);
 
     let r = await get('/');
-    expect(r.status === 200 && String(r.body).includes('FirstShot home'), `GET / should render "FirstShot home" (status ${r.status})`);
+    expect(r.status === 200 && String(r.body).includes('OneShot home'), `GET / should render "OneShot home" (status ${r.status})`);
 
     r = await get('/api/health');
     expectEqual([r.status, r.body], [200, { status: 'ok' }], 'GET /api/health');

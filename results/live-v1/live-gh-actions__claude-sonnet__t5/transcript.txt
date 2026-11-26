@@ -1,0 +1,9 @@
+Both `npm ci` and `npm test` pass locally, confirming the CI workflow steps will work.
+
+Created:
+- `package.json` — test script runs `node --test` (Node's built-in test runner, no extra deps)
+- `test/sanity.test.js` — trivial passing test
+- `package-lock.json` — generated via `npm install` so `npm ci` works
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code, sets up Node LTS (`lts/*`) with npm caching, then `npm ci` && `npm test`
+
+No commits made, as requested.

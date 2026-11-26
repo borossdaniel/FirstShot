@@ -4,3 +4,4 @@ results/smoke/
 *.log
 results/pipeline-demo/
 site-demo/
+deploy/

@@ -1,0 +1,5 @@
+Good, it's still there (my earlier `rm` attempt was blocked and never ran). Setup is complete:
+
+- **package.json** — ES module project (`"type": "module"`), with `stripe@^23.2.0` installed via `npm install stripe@latest` (per CLAUDE.md policy).
+- **solution.mjs** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which creates a `mode: 'subscription'` Checkout Session with `line_items: [{ price: priceId, quantity: 1 }]`, pre-fills `customer_email`, sets `success_url` to `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can look up the completed session via the `session_id` query param) and `cancel_url` to `${baseUrl}/pricing`, then returns `session.url`.
+- **verify.mjs** — a test using a mocked Stripe client (no real API key available in this sandbox) that asserts all params and the returned URL are correct; ran successfully. Also confirmed the real `stripe` package imports cleanly.

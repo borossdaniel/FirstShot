@@ -1,0 +1,8 @@
+That extra sanity-check command got blocked, but it's not needed — the prior `npm test` run already showed the passing output, and `vitest run` returns non-zero on failures by default (standard Vitest behavior), satisfying the requirement.
+
+Setup complete and verified:
+- `math.mjs` exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` has 10 tests covering both functions, including clamp edge cases (boundary equality, min===max, negative ranges)
+- `package.json` configured with `"type": "module"` and `"test": "vitest run"` (runs once, exits, non-zero on failure)
+- Vitest `^5.1.2` (latest) installed via npm
+- `npm test` passes: 10/10 tests green

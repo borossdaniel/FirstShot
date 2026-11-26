@@ -1,0 +1,6 @@
+Verified end-to-end: `npm ci` and `npm test` both pass locally. Files created, nothing committed:
+
+- `package.json` — `test` script runs `node --test`
+- `index.test.js` — trivial sanity test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node LTS (`lts/*`) with npm caching, then `npm ci` and `npm test`

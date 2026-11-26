@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "live-dockerfile",
+  "taskName": "Node.js Dockerfile",
+  "package": null,
+  "agent": "claude",
+  "model": "sonnet",
+  "variant": null,
+  "trial": 1,
+  "ok": false,
+  "category": "outdated_fact",
+  "detail": "outdated base image: node:24-alpine (current LTS is 26)",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 48.5,
+  "costUsd": 0.3073601999999999,
+  "turns": 14,
+  "installedVersion": null,
+  "finishedAt": "2026-11-26T17:58:28.431Z"
+}

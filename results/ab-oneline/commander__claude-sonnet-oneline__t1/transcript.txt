@@ -1,0 +1,7 @@
+Both validations work correctly. The project is fully set up and verified:
+
+- `package.json` — ES modules (`"type": "module"`), `commander` installed as a dependency (latest, `^15.1.0`)
+- `solution.mjs` — exports `buildProgram()`, builds a `hello` program with `--version` (`1.2.3`) and a `greet <name>` subcommand supporting `--shout` and `--times <n>` (validated via a custom parser that throws Commander's `InvalidArgumentError` for non-integers or non-positive values)
+- `cli.mjs` — calls `buildProgram().parse()`
+
+Verified: `--version` prints `1.2.3`; `greet World` prints `Hello, World!`; `--shout` uppercases it; `--times 3` prints it three times; `--times abc` and `--times 0` both correctly fail with Commander's invalid-argument error and exit code 1.

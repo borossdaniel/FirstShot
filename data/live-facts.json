@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-26",
+  "sources": {
+    "claudeModels": "Anthropic model list (Claude 5 family)",
+    "githubActions": "GitHub releases/latest for each action",
+    "nodeLts": "nodejs.org/dist/index.json"
+  },
+  "claudeModels": ["claude-fable-5-2", "claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"],
+  "githubActions": { "actions/checkout": 7, "actions/setup-node": 7, "actions/cache": 6 },
+  "nodeLtsMajor": 26,
+  "nodeLtsCodename": "lithium"
+}

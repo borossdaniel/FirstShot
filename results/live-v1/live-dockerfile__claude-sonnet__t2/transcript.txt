@@ -1,0 +1,7 @@
+Done. Created three files in the working directory:
+
+- **`server.js`** — plain `node:http` server, responds `"ok"` on port 3000.
+- **`package.json`** — minimal manifest with `start` script and `engines.node >=22`.
+- **`Dockerfile`** — based on `node:lts-alpine` (always tracks the current Node.js LTS), installs deps, copies the app, and runs as the image's built-in non-root `node` user on port 3000.
+
+Verified by actually running `node server.js` locally and curling `http://localhost:3000`, which returned `HTTP/1.1 200 OK` with body `ok`.

@@ -1,0 +1,7 @@
+Confirmed — `--color-brand:#0e7490` is correctly defined and `.bg-brand` / `.text-brand` resolve to it. The build only includes classes actually used in `index.html` (output is scoped, not the full Tailwind utility set), and the file is a tidy 9.5KB minified.
+
+Setup is complete:
+- `package.json` — `tailwindcss` and `@tailwindcss/cli` installed at latest (4.3.5), with `npm run build:css`
+- `src/input.css` — imports Tailwind and defines `--color-brand: #0e7490` via `@theme`
+- `index.html` — static page using `bg-brand`, `text-brand`, and other utility classes, linking `dist/output.css`
+- `dist/output.css` — built successfully, verified to contain the scanned classes and the brand color

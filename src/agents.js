@@ -55,12 +55,12 @@ export const agents = {
     ];
     if (model) args.push('--model', model);
     if (maxBudgetUsd) args.push('--max-budget-usd', String(maxBudgetUsd));
-    if (variant === 'firstshot' && existsSync(join(ws, '.mcp.json'))) {
-      // Exactly what `firstshot init` set up in the project: its MCP tools (plus its Stop hook,
+    if (variant === 'oneshot' && existsSync(join(ws, '.mcp.json'))) {
+      // Exactly what `oneshot init` set up in the project: its MCP tools (plus its Stop hook,
       // which loads from the project's .claude/settings.json).
       args.push('--mcp-config', join(ws, '.mcp.json'));
       const i = args.indexOf('--allowedTools');
-      args.splice(i + 1, 0, 'mcp__firstshot__check_package', 'mcp__firstshot__check_project');
+      args.splice(i + 1, 0, 'mcp__oneshot__check_package', 'mcp__oneshot__check_project', 'mcp__oneshot__current_facts');
     }
     const r = await run('claude', args, { cwd: ws, timeoutMs });
     let parsed = null;

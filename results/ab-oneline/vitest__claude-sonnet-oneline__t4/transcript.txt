@@ -1,0 +1,9 @@
+Setup complete. `vitest run` (not `vitest` in watch mode) is the configured `npm test` script, which runs once and exits — Vitest's standard behavior is exit code 0 on success and 1 on any failing test, so this satisfies the failure-exit-code requirement by default.
+
+Summary of what was created in the folder:
+- `package.json` — ES module project (`"type": "module"`), `npm test` → `vitest run`
+- `math.mjs` — exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 10 tests covering `sum` and `clamp`, including edge cases (below/above range, boundary equal to min/max, min === max, negative ranges)
+- Installed `vitest` as a devDependency via `npm install vitest@latest --save-dev` (resolved to v5.1.2)
+
+Verified: `npm test` ran and **all 10 tests passed**.

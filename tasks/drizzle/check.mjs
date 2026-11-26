@@ -27,7 +27,7 @@ runCheck(async (ws) => {
   for (const col of ['id', 'title', 'year', 'authorId']) expect(books[col], `books table has no \`${col}\` column`);
   for (const col of ['id', 'name']) expect(authors[col], `authors table has no \`${col}\` column`);
 
-  const dir = mkdtempSync(join(tmpdir(), 'firstshot-drizzle-'));
+  const dir = mkdtempSync(join(tmpdir(), 'oneshot-drizzle-'));
   const file = join(dir, 'library.db');
   let db;
   let db2;

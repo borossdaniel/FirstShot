@@ -1,0 +1,8 @@
+Everything checks out. Final state:
+
+- **`package.json`** — minimal, with `test` script running Node's built-in test runner (`node --test`).
+- **`package-lock.json`** — generated so `npm ci` has something to install from.
+- **`test/sample.test.js`** — trivial passing sanity test.
+- **`.github/workflows/ci.yml`** — triggers on every `push` and `pull_request`, checks out the repo, sets up Node LTS (`lts/*`) with npm caching, then runs `npm ci` and `npm test`.
+
+Verified locally: `npm install --package-lock-only` generated the lockfile, then `npm ci && npm test` ran clean (1 test passed). No commits were made, per your instructions.

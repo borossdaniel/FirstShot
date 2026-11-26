@@ -1,0 +1,9 @@
+That was just a sanity check echo, not essential — vitest's `run` mode is well-documented to exit non-zero on failures, and the test run already succeeded cleanly. The task is complete.
+
+Set up in `/private<workspace>`:
+- `math.mjs` — `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 11 tests covering both functions, including clamp edge cases (boundary values, `min === max`, negative ranges)
+- `package.json` with `"type": "module"` and `"test": "vitest run"` (single run, no watch)
+- Installed `vitest@^5.1.2` (latest) as a dev dependency
+
+`npm test` passes: 11/11 tests green.

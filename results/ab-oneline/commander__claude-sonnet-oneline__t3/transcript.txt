@@ -1,0 +1,7 @@
+Both invalid cases are correctly rejected by Commander with exit code 1. Everything works as specified:
+
+- `node cli.mjs --version` → `1.2.3`
+- `node cli.mjs greet <name>` → prints `Hello, <name>!`
+- `--shout` uppercases, `--times <n>` repeats (validated as positive integer, rejecting `abc` and `0`)
+
+Files created: `package.json` (ESM, `commander@^15.1.0` installed via `npm install commander@latest`), `solution.mjs` (exports `buildProgram()`), `cli.mjs` (calls `buildProgram().parse()`). Task complete.

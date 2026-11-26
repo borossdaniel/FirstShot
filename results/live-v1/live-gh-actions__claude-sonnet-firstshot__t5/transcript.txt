@@ -1,0 +1,8 @@
+Both `npm ci` and `npm test` succeed locally, confirming the CI workflow steps will work. Files created:
+
+- `package.json` — with a `test` script running `test.js`
+- `test.js` — trivial assertion test
+- `package-lock.json` — generated so `npm ci` works in CI
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7`), sets up Node.js 26 (current LTS, `actions/setup-node@v7`) with npm caching, then `npm ci` and `npm test`
+
+Nothing was committed, as requested.

@@ -1,0 +1,9 @@
+{
+  "name": "anthropic-summarizer",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "ai.mjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0"
+  }
+}

@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-26T17:38:03.470Z",
+ "updatedAt": "2026-11-26T18:19:59.749Z",
  "agent": "Claude Code · Sonnet",
  "totals": {
   "libraries": 31,
@@ -1054,6 +1054,111 @@
    "lastRun": "2026-11-26T17:23:49.736Z"
   }
  ],
+ "live": {
+  "tasks": [
+   {
+    "id": "live-claude-model",
+    "name": "Newest Claude model",
+    "none": {
+     "runs": 5,
+     "correct": 0,
+     "medianSec": 50.2,
+     "medianCost": 0.27
+    },
+    "line": {
+     "runs": 5,
+     "correct": 3,
+     "medianSec": 71,
+     "medianCost": 0.46
+    },
+    "oneshot": {
+     "runs": 5,
+     "correct": 5,
+     "medianSec": 45.4,
+     "medianCost": 0.27
+    }
+   },
+   {
+    "id": "live-gh-actions",
+    "name": "GitHub Actions CI",
+    "none": {
+     "runs": 5,
+     "correct": 0,
+     "medianSec": 35.4,
+     "medianCost": 0.24
+    },
+    "line": {
+     "runs": 5,
+     "correct": 5,
+     "medianSec": 56.2,
+     "medianCost": 0.42
+    },
+    "oneshot": {
+     "runs": 5,
+     "correct": 5,
+     "medianSec": 29.5,
+     "medianCost": 0.2
+    }
+   },
+   {
+    "id": "live-dockerfile",
+    "name": "Node.js Dockerfile",
+    "none": {
+     "runs": 5,
+     "correct": 2,
+     "medianSec": 48.5,
+     "medianCost": 0.31
+    },
+    "line": {
+     "runs": 5,
+     "correct": 5,
+     "medianSec": 69.6,
+     "medianCost": 0.44
+    },
+    "oneshot": {
+     "runs": 5,
+     "correct": 5,
+     "medianSec": 39.8,
+     "medianCost": 0.29
+    }
+   }
+  ],
+  "none": {
+   "runs": 15,
+   "correct": 2,
+   "medianSec": 41.6,
+   "medianCost": 0.25
+  },
+  "line": {
+   "runs": 15,
+   "correct": 13,
+   "medianSec": 68.3,
+   "medianCost": 0.43
+  },
+  "oneshot": {
+   "runs": 15,
+   "correct": 15,
+   "medianSec": 40.9,
+   "medianCost": 0.27
+  },
+  "examples": [
+   {
+    "task": "Newest Claude model",
+    "wrote": "claude-opus-4-8",
+    "count": 5
+   },
+   {
+    "task": "GitHub Actions CI",
+    "wrote": "actions/checkout@v4",
+    "count": 5
+   },
+   {
+    "task": "Node.js Dockerfile",
+    "wrote": "node:24-alpine",
+    "count": 3
+   }
+  ]
+ },
  "ab": {
   "libraries": [
    "anthropic",
@@ -1061,7 +1166,10 @@
    "openai",
    "stripe",
    "tailwind",
-   "vitest"
+   "vitest",
+   "live-claude-model",
+   "live-dockerfile",
+   "live-gh-actions"
   ],
   "without": {
    "runs": 30,
@@ -1071,11 +1179,11 @@
    "medianCost": 0.31
   },
   "with": {
-   "runs": 30,
-   "passed": 29,
+   "runs": 45,
+   "passed": 44,
    "oldInstalls": 0,
-   "medianSec": 48.8,
-   "medianCost": 0.31
+   "medianSec": 45.7,
+   "medianCost": 0.29
   },
   "perLibrary": [
    {
@@ -1178,6 +1286,57 @@
      "oldInstalls": 0,
      "medianSec": 41.6,
      "medianCost": 0.27
+    }
+   },
+   {
+    "id": "live-claude-model",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 5,
+     "passed": 5,
+     "oldInstalls": 0,
+     "medianSec": 45.4,
+     "medianCost": 0.27
+    }
+   },
+   {
+    "id": "live-dockerfile",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 5,
+     "passed": 5,
+     "oldInstalls": 0,
+     "medianSec": 39.8,
+     "medianCost": 0.29
+    }
+   },
+   {
+    "id": "live-gh-actions",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 5,
+     "passed": 5,
+     "oldInstalls": 0,
+     "medianSec": 29.5,
+     "medianCost": 0.2
     }
    }
   ]

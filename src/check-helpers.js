@@ -17,7 +17,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-export const RESULT_PREFIX = 'FIRSTSHOT_RESULT ';
+export const RESULT_PREFIX = 'ONESHOT_RESULT ';
 
 export class CheckFailure extends Error {
   constructor(category, detail) {
@@ -143,7 +143,7 @@ export async function startMockServer(handler) {
 let shimCount = 0;
 export async function importFromWorkspace(ws, specifier) {
   const { writeFileSync } = await import('node:fs');
-  const shim = join(ws, `.firstshot-import-${process.pid}-${shimCount++}.mjs`);
+  const shim = join(ws, `.oneshot-import-${process.pid}-${shimCount++}.mjs`);
   writeFileSync(shim, `import * as ns from ${JSON.stringify(specifier)};\nexport const mod = ns;\n`);
   try {
     return (await import(pathToFileURL(shim).href)).mod;

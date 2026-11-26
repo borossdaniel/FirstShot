@@ -1,0 +1,7 @@
+Setup is complete:
+
+- **`package.json`**: ES modules (`"type": "module"`), with `openai@^7.65.0` and `zod@^4.6.7` installed as latest.
+- **`solution.mjs`**: exports `ask(client, question)` and `classify(client, text)`.
+  - `ask` uses `client.responses.create({ model: "gpt-5.2", input: question })` and returns `response.output_text`.
+  - `classify` uses `client.responses.parse()` with `text.format: zodTextFormat(schema, "classification")`, where the Zod schema enforces `{ label: "spam" | "ham" }`, returning `response.output_parsed`.
+- Verified both functions against a mock client (no real API key used, per the instructions) — confirmed correct API calls and return shapes.

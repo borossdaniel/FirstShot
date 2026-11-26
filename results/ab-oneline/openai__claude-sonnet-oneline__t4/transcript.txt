@@ -1,0 +1,6 @@
+Both functions work correctly against a mock client: `ask` returns a plain string from `output_text`, and `classify` uses `responses.parse` with a strict Zod-generated JSON schema (`{label: "spam"|"ham"}`) and returns the parsed object via `output_parsed`.
+
+Setup complete in this folder:
+- `package.json` (`type: "module"`) with `openai@7.65.0` and `zod@4.6.7` (latest at install time, via `npm install openai@latest zod@latest`)
+- `solution.mjs` exporting `ask(client, question)` and `classify(client, text)`, both using the Responses API (`gpt-5.2`) — `classify` uses `responses.parse` + `zodTextFormat` for structured output
+- Verified by injecting a fake client (no real API key used/read)

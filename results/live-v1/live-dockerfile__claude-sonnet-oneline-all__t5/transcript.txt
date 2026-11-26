@@ -1,0 +1,7 @@
+All three files are created and verified in `/private<workspace>/`:
+
+- **server.js** — plain `node:http` server returning `"ok"` on port 3000. Verified by running it and curling it: got `ok` / HTTP 200.
+- **package.json** — minimal manifest, `node >=26` engine requirement, `npm start` script.
+- **Dockerfile** — `node:26.13.1-slim` (current Node.js LTS "Lithium", confirmed via Node's GitHub releases and Docker Hub), creates and runs as non-root user `app`, no unnecessary deps/layers since there are no npm dependencies to install.
+
+Didn't build the Docker image per your instructions, but the app itself is confirmed working.

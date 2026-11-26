@@ -30,10 +30,11 @@ const wilson = (k, n, z = 1.96) => {
 };
 const notes = JSON.parse(readFileSync(join(here, '..', 'data', 'notes.json'), 'utf8'));
 
+const tasks = loadTasks(tasksDir).filter((t) => t.kind !== 'live-fact'); // live-fact tasks are their own experiment
 const allRuns = collectResults(resultsDir).filter((r) => r.agent !== 'fake');
-const runs = allRuns.filter((r) => !r.variant); // the board: agents on their own
-const withAddon = allRuns.filter((r) => r.variant === 'firstshot');
-const tasks = loadTasks(tasksDir);
+const boardIds = new Set(tasks.map((t) => t.id));
+const runs = allRuns.filter((r) => !r.variant && boardIds.has(r.task)); // the board: agents on their own
+const withAddon = allRuns.filter((r) => r.variant === 'oneshot' || r.variant === 'firstshot'); // 'firstshot' = runs recorded before the rename
 
 const rows = tasks.map((task) => {
   const rs = runs.filter((r) => r.task === task.id);
@@ -79,7 +80,30 @@ const data = {
     passCI: wilson(runs.filter((r) => r.ok).length, runs.length),
   },
   rows,
-  // Before/after: the same libraries with and without the FirstShot add-on installed.
+  // Live facts: model names, GitHub Actions, Docker/runtime versions. Three setups, same tasks.
+  live: (() => {
+    const lr = allRuns.filter((r) => /[\\/]live-v1[\\/]/.test(r._dir));
+    if (!lr.length) return null;
+    const pick = (v) => lr.filter((r) => (v === 'oneshot' ? r.variant === 'oneshot' || r.variant === 'firstshot' : (r.variant || null) === v));
+    const side = (rs) => ({ runs: rs.length, correct: rs.filter((r) => r.ok).length, medianSec: round(median(rs.map((r) => r.durationSec)), 1), medianCost: round(median(rs.map((r) => r.costUsd))) });
+    const names = { 'live-claude-model': 'Newest Claude model', 'live-gh-actions': 'GitHub Actions CI', 'live-dockerfile': 'Node.js Dockerfile' };
+    const arms = { none: pick(null), line: pick('oneline-all'), oneshot: pick('oneshot') };
+    const examples = [];
+    for (const r of arms.none) {
+      if (r.ok) continue;
+      const m = String(r.detail).match(/asked for "([^"]+)"|outdated: ([^;(]+)|outdated base image: (\S+)/);
+      const wrote = m && (m[1] || m[2] || m[3]);
+      if (wrote) examples.push({ task: names[r.task] || r.task, wrote: wrote.trim() });
+    }
+    const counts = {};
+    for (const e of examples) { const k = e.task + '|' + e.wrote; counts[k] = (counts[k] || 0) + 1; }
+    return {
+      tasks: Object.keys(names).map((id) => ({ id, name: names[id], none: side(arms.none.filter((r) => r.task === id)), line: side(arms.line.filter((r) => r.task === id)), oneshot: side(arms.oneshot.filter((r) => r.task === id)) })),
+      none: side(arms.none), line: side(arms.line), oneshot: side(arms.oneshot),
+      examples: Object.entries(counts).map(([k, n]) => ({ task: k.split('|')[0], wrote: k.split('|')[1], count: n })).sort((a, b) => b.count - a.count),
+    };
+  })(),
+  // Before/after: the same libraries with and without the OneShot add-on installed.
   ab: (() => {
     const libs = [...new Set(withAddon.map((r) => r.task))];
     if (!libs.length) return null;

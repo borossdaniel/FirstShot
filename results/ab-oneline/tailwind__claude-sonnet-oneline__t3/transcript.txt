@@ -1,0 +1,9 @@
+Setup complete and verified:
+
+- **Installed** `tailwindcss@4.3.5` and `@tailwindcss/cli@4.3.5` (latest) via npm.
+- **`index.html`** — static page using Tailwind utility classes including `bg-brand`, `text-brand`, and `hover:bg-brand/90`.
+- **`src/input.css`** — `@import "tailwindcss";` plus an `@theme` block defining `--color-brand: #0e7490`.
+- **`npm run build:css`** → `tailwindcss -i src/input.css -o dist/output.css --minify`, which scans `index.html` automatically (Tailwind v4 auto-detects content) and outputs only the used classes, minified, to `dist/output.css`.
+- Verified the compiled CSS contains `.bg-brand{background-color:var(--color-brand)}`, `.text-brand{color:var(--color-brand)}`, and the hex value `#0e7490` resolved correctly for the hover opacity variant.
+
+Browser preview wasn't possible (GUI app launch blocked in this sandboxed, unattended run), but the compiled CSS output was inspected directly and confirms correct class generation.

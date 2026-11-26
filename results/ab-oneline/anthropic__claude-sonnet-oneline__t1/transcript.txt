@@ -1,0 +1,7 @@
+Done. Set up as an ES-module npm project with `@anthropic-ai/sdk@^1.14.0` (latest) installed, and `solution.mjs` exporting `weatherAnswer(client, question)`:
+
+- Calls `client.messages.create` with model `claude-sonnet-5-5`, `max_tokens: 1024`, and a single `get_weather` tool (`{ city: string }` input schema).
+- Loops: appends the assistant's response to the message history, and whenever `stop_reason === "tool_use"` runs `get_weather` locally (returning `{ city, temp_c: 21 }`), wraps each result in a `tool_result` block keyed by `tool_use_id`, and sends it back as the next user message.
+- Once `stop_reason` isn't `tool_use`, concatenates the `text` blocks and returns that string.
+
+Verified by stubbing a fake client that mimics a two-turn tool-use exchange (initial `tool_use` request → correct `tool_result` round-trip → final text answer) — the request shapes, loop behavior, and final string extraction all checked out. Also confirmed the SDK module itself imports cleanly. No real API key is used or required since the client is supplied by the caller.

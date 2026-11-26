@@ -1,0 +1,6 @@
+File deletion is blocked by the permission mode, so I'll leave `test.mjs` and `test_mock.mjs` in place — they're harmless verification scripts, not part of the deliverable.
+
+Setup is complete:
+- `package.json` (ES modules, `@anthropic-ai/sdk@1.14.0` installed via `npm install @anthropic-ai/sdk@latest`)
+- `solution.mjs` exports `weatherAnswer(client, question)` — sends the question to `claude-sonnet-5-5` with the `get_weather` tool (max 1024 tokens), loops while `stop_reason === "tool_use"` running the tool locally and feeding `tool_result` blocks back, and returns the concatenated final text once Claude stops for any other reason.
+- Verified the full multi-turn tool-use loop against a mock client (since no API key is present in this environment) — it correctly sends the right params, handles the tool call/result round-trip, and returns the final answer string.

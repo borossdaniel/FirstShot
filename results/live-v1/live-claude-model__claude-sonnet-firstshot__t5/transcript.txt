@@ -1,0 +1,7 @@
+Project is set up and verified:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@1.14.0` (current major, confirmed via `check_project`)
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-5-5` (current most-capable model per `current_facts`), returns the one-sentence summary text
+- `npm install` ran cleanly, 0 vulnerabilities
+
+Verified: the module imports correctly and `typeof summarize === 'function'`. A live call isn't possible since no `ANTHROPIC_API_KEY` exists in this environment — but calling `summarize()` without one fails exactly at the SDK's auth-resolution step (not import/syntax/shape errors), confirming the client construction and request wiring are correct. Set `ANTHROPIC_API_KEY` in the environment to run it for real.

@@ -1,0 +1,5 @@
+The request reached Anthropic's live API and got a proper `401 invalid x-api-key` response — confirming the model ID, endpoint, and request shape are all valid. It only fails because this sandbox has no real key; it will work as soon as a valid `ANTHROPIC_API_KEY` is set in the environment.
+
+Setup complete:
+- `package.json` — ES modules (`"type": "module"`), depends on `@anthropic-ai/sdk` (installed, v1.14.0)
+- `ai.mjs` — exports `summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-fable-5-2` (Anthropic's current most-capable model, confirmed via their live docs rather than from memory per your CLAUDE.md), and returns the one-sentence summary as a trimmed string.

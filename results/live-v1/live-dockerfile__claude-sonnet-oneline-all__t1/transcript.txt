@@ -1,0 +1,7 @@
+Done. Created and verified:
+
+- **`server.js`** — plain `node:http` server, confirmed it responds `ok` on port 3000 (ran it locally and curled it).
+- **`package.json`** — minimal manifest, no dependencies needed.
+- **`Dockerfile`** — `node:26.13.1-alpine` (Node 26 "Lithium" is current Active LTS, confirmed via nodejs/node releases, supported to April 2029), runs as the image's built-in non-root `node` user, exposes 3000.
+
+Docker itself isn't available in this sandbox to actually build the image, but that was explicitly not required.

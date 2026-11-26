@@ -1,0 +1,10 @@
+Both functions work correctly against a mock client:
+
+- `ask()` calls `client.responses.create()` with model `gpt-5.2` and returns `output_text` as a plain string.
+- `classify()` calls `client.responses.parse()` with a strict JSON-schema text format generated from the Zod enum schema (`spam`/`ham`), returning the parsed `{ label }` object.
+
+**Setup summary:**
+- `package.json` — ES modules (`"type": "module"`), with `openai@7.65.0` and `zod@4.6.7` (latest at install time, per project instructions) installed via `npm install openai@latest zod@latest`.
+- `solution.mjs` — exports `ask(client, question)` and `classify(client, text)`, both using the Responses API (not Chat Completions), with `classify` using `zodTextFormat` + `responses.parse()` for structured output validated by a Zod schema.
+
+No client was created and no API keys were read, per the task constraints — verification used a mock client to confirm correct SDK usage without making real network/API calls.

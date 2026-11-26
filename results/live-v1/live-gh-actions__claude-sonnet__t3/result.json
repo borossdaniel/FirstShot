@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "live-gh-actions",
+  "taskName": "GitHub Actions CI",
+  "package": null,
+  "agent": "claude",
+  "model": "sonnet",
+  "variant": null,
+  "trial": 3,
+  "ok": false,
+  "category": "outdated_fact",
+  "detail": "outdated: actions/checkout@v4 (current v7); actions/setup-node@v4 (current v7)",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 35.4,
+  "costUsd": 0.23429999999999998,
+  "turns": 10,
+  "installedVersion": null,
+  "finishedAt": "2026-11-26T18:00:17.147Z"
+}

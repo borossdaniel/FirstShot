@@ -1,0 +1,7 @@
+Everything's verified. Created in this folder:
+
+- **`server.js`** — plain `node:http` server returning "ok" on port 3000
+- **`package.json`** — minimal manifest with a `start` script, no dependencies
+- **`Dockerfile`** — `node:26-alpine` (current Node LTS, confirmed via firstshot), copies the app, chowns to the built-in `node` user, runs as `USER node`, exposes port 3000
+
+Verified: syntax checked, actually ran the server and curled it (got `200 ok`), then stopped it. `check_project` confirms no outdated dependencies.

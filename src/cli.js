@@ -6,26 +6,30 @@ import { preflight } from './agents.js';
 import { adviseOne, checkProject, formatProjectReport, parseTarget } from './advisor.js';
 import { init, stopHook } from './install.js';
 import { startMcpServer } from './mcp.js';
+import { currentFacts, formatFacts } from './livefacts.js';
 import { writeReport } from './report.js';
 import { AgentUnavailableError, loadTasks, runAll, runTrial, VERSION } from './runner.js';
 
-const HELP = `firstshot ${VERSION} — can an AI agent use your library on the first try?
+const HELP = `oneshot-agent ${VERSION}: your AI agent, current on the first try
 
 Usage (for your project):
-  firstshot check [package...] [--pypi]         Current version + known agent mistakes for packages
-                                                (npm by default; --pypi or pypi:<name> for Python);
-                                                with no names, check this project's package.json,
-                                                requirements.txt and pyproject.toml
-  firstshot init [--local]                      Add FirstShot to this project (MCP tools, Claude Code
-                                                Stop hook, one line in CLAUDE.md)
-  firstshot mcp                                 Run the MCP server (stdio)
-  firstshot hook                                Claude Code Stop hook (reads hook JSON on stdin)
+  oneshot-agent check [package...] [--pypi]         Current version + known agent mistakes for packages
+                                                      (npm by default; --pypi or pypi:<name> for Python);
+                                                      with no names, check this project's package.json,
+                                                      requirements.txt and pyproject.toml
+  oneshot-agent init [--local]                      Add OneShot to this project (MCP tools, Claude Code
+                                                      Stop hook, one line in CLAUDE.md)
+  oneshot-agent facts [models|github-actions|runtimes]
+                                                      Today's AI model names, GitHub Actions versions,
+                                                      Node/Python LTS and Docker images
+  oneshot-agent mcp                                 Run the MCP server (stdio)
+  oneshot-agent hook                                Claude Code Stop hook (reads hook JSON on stdin)
 
 Usage (benchmark):
-  firstshot run <task-or-tasks-dir> [options]   Run agents on tasks, save results
-  firstshot report <results-dir> [--out site]   Build the leaderboard page + badges
-  firstshot verify-tasks [tasks-dir] [ids...]   Prove each task's check accepts a known-good
-                                                solution and rejects known-bad ones (no AI used)
+  oneshot-agent run <task-or-tasks-dir> [options]   Run agents on tasks, save results
+  oneshot-agent report <results-dir> [--out site]   Build the leaderboard page + badges
+  oneshot-agent verify-tasks [tasks-dir] [ids...]   Prove each task's check accepts a known-good
+                                                      solution and rejects known-bad ones (no AI used)
 
 Run options:
   --agent <name>        claude | codex | gemini | fake        (default: claude)
@@ -35,7 +39,8 @@ Run options:
   --max-budget-usd <n>  per-run spending cap (claude only)      (default: 2)
   --fixture <dir>       folder the fake agent copies in (tests only)
   --parallel <n>        trials to run at the same time         (default: 1)
-  --with-firstshot      install the FirstShot add-on in each workspace first (A/B test)
+  --with-oneshot      install the OneShot add-on in each workspace first (A/B test)
+  --with-oneline        control: only a one-line 'install the latest' instruction in CLAUDE.md
   --keep                keep the temporary workspaces
   --json                print results as JSON
 
@@ -54,9 +59,14 @@ export async function main(argv) {
     return 0;
   }
   if (cmd === 'check') return cmdCheck(rest);
+  if (cmd === 'facts') {
+    const f = await currentFacts(rest.find((a) => !a.startsWith('--')) || 'all');
+    console.log(rest.includes('--json') ? JSON.stringify(f, null, 2) : formatFacts(f));
+    return 0;
+  }
   if (cmd === 'init') {
     const done = init(process.cwd(), { local: rest.includes('--local') });
-    console.log(`FirstShot added:\n${done.map((d) => `  - ${d}`).join('\n')}\nRestart your agent so it picks up the new tools.`);
+    console.log(`OneShot added:\n${done.map((d) => `  - ${d}`).join('\n')}\nRestart your agent so it picks up the new tools.`);
     return 0;
   }
   if (cmd === 'mcp') {
@@ -85,7 +95,7 @@ async function cmdCheck(args) {
     const rep = await checkProject(process.cwd());
     if (json) console.log(JSON.stringify(rep, null, 2));
     else console.log(formatProjectReport(rep));
-    return rep.outdated.length ? 1 : 0;
+    return rep.outdated.length || (rep.facts || []).length ? 1 : 0;
   }
   const system = args.includes('--pypi') || args.includes('--python') ? 'pypi' : 'npm';
   const out = await Promise.all(names.map((n) => adviseOne(...parseTarget(n, system).reverse())));
@@ -108,7 +118,9 @@ async function cmdRun(args) {
       keep: { type: 'boolean', default: false },
       json: { type: 'boolean', default: false },
       parallel: { type: 'string', default: '1' },
-      'with-firstshot': { type: 'boolean', default: false },
+      'with-oneshot': { type: 'boolean', default: false },
+      'with-oneline': { type: 'boolean', default: false },
+      'with-oneline-all': { type: 'boolean', default: false },
     },
   });
   if (!positionals[0]) throw new Error('run: give a task folder or a folder of tasks');
@@ -118,7 +130,7 @@ async function cmdRun(args) {
   const log = values.json ? () => {} : (m) => console.log(m);
   const notReady = await preflight(values.agent);
   if (notReady) throw new Error(notReady);
-  log(`FirstShot ${VERSION}: ${tasks.length} task(s) × ${values.trials} trial(s) with ${values.agent}${values.model ? `/${values.model}` : ''} → ${outDir}`);
+  log(`OneShot ${VERSION}: ${tasks.length} task(s) × ${values.trials} trial(s) with ${values.agent}${values.model ? `/${values.model}` : ''} → ${outDir}`);
   let results;
   try {
     results = await runAll({
@@ -132,7 +144,7 @@ async function cmdRun(args) {
       keep: values.keep,
       log,
       parallel: Number(values.parallel) || 1,
-      variant: values['with-firstshot'] ? 'firstshot' : null,
+      variant: values['with-oneshot'] ? 'oneshot' : values['with-oneline'] ? 'oneline' : values['with-oneline-all'] ? 'oneline-all' : null,
     });
   } catch (err) {
     if (!(err instanceof AgentUnavailableError)) throw err;
@@ -166,7 +178,7 @@ async function cmdVerify(args) {
   const tasksDir = args[0] || 'tasks';
   const only = args.slice(1);
   const tasks = loadTasks(tasksDir).filter((t) => !only.length || only.includes(t.id));
-  const outDir = mkdtempSync(join(tmpdir(), 'firstshot-verify-'));
+  const outDir = mkdtempSync(join(tmpdir(), 'oneshot-verify-'));
   let bad = 0;
   let total = 0;
   for (const task of tasks) {

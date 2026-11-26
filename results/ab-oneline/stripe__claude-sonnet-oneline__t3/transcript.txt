@@ -1,0 +1,7 @@
+Project is set up and working:
+
+- **`package.json`** — ES module project (`"type": "module"`), dependency `stripe@^23.2.0` (latest, installed via npm).
+- **`solution.mjs`** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`. Creates a `mode: 'subscription'` Checkout Session with `line_items: [{ price: priceId, quantity: 1 }]`, `customer_email: email`, `success_url` containing the `{CHECKOUT_SESSION_ID}` template so the success page can read `session_id` from its query string and look up the session via `stripe.checkout.sessions.retrieve`, and `cancel_url` pointing to `<baseUrl>/pricing`. Returns `session.url`.
+- **`verify.mjs`** — a mock-Stripe-client smoke test confirming the function builds the right session params and returns the hosted checkout URL. Ran successfully (`node verify.mjs` → `OK: https://checkout.stripe.com/...`). Left in place since the sandbox denied deleting it, but it's harmless and doubles as a usage example.
+
+No real Stripe API key was available in this environment, so verification used a mock `stripe.checkout.sessions.create` rather than hitting the real API — the function itself never creates a client or touches env vars, per the spec.

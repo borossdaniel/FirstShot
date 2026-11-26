@@ -1,0 +1,15 @@
+Setup complete and verified end-to-end (the request travels all the way to Anthropic's servers and gets a proper API-level response — it only fails on the invalid test key, confirming the code path, model ID, and request format are all correct).
+
+**What was built** in this folder:
+- `package.json` — ES module project (`"type": "module"`), depends on `@anthropic-ai/sdk@^1.14.0` (the version npm resolved as current latest)
+- `ai.mjs` — exports `async function summarize(text)`, which creates the `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from env) and calls `claude-fable-5-2`
+
+**Model choice**: I checked Anthropic's official docs (platform.claude.com) directly rather than relying on training knowledge. `claude-fable-5-2` is the newest, most capable *generally available* model as of today (Nov 26, 2026) — one tier above Opus 5.5. There's also `claude-mythos-5-2`, which beats it on cybersecurity/life-sciences tasks, but it's limited-access (gated to vetted orgs via Anthropic's verification program), so it's not usable with a standard API key — Fable 5.2 is the right pick for this general-purpose summarizer.
+
+**Verification performed** (no real API key exists in this sandbox):
+1. `node --check` — syntax valid
+2. Dynamic import — `summarize` loads as a function
+3. Call with no key — failed with the expected local "no auth method" error, proving it reads env correctly
+4. Call with a dummy key — request reached Anthropic's API and got back a real `401 authentication_error` from their server, proving the model ID, request shape, and network path are all correct
+
+To actually use it: `ANTHROPIC_API_KEY=sk-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

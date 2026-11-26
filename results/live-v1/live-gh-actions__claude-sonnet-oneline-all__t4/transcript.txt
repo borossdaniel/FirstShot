@@ -1,0 +1,9 @@
+That extra validation step was denied, which is fine — not essential since I already verified the file contents directly. The task is complete.
+
+**Summary:**
+- `package.json` — minimal project with `test` script running `node --test`
+- `test/basic.test.js` — trivial passing test
+- `package-lock.json` — generated via `npm install` (required for `npm ci` in CI)
+- `.github/workflows/ci.yml` — runs on every push/PR, uses `actions/checkout@v7.0.1` and `actions/setup-node@v7.1.0` (current latest tags, verified against GitHub releases), targets `lts/*` (Node.js 26, current LTS) with npm caching, then runs `npm ci` and `npm test`
+
+Verified locally: `npm ci && npm test` passes (1 test, 0 failures). Nothing was committed, per your instruction.

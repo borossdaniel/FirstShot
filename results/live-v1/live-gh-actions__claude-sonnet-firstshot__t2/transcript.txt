@@ -1,0 +1,8 @@
+The file exists fine (the earlier `find` just missed it, likely a glob quirk). Everything is in place and verified:
+
+- `package.json` with a `test` script running Node's built-in test runner
+- `package-lock.json` generated so `npm ci` works
+- `test/basic.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7`), sets up Node 26 LTS with npm caching (`actions/setup-node@v7`), then `npm ci` and `npm test`
+
+Verified locally: `npm ci` and `npm test` both succeed. No git repo exists, so nothing was committed, per instructions.

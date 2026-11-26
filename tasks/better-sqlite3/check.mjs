@@ -17,7 +17,7 @@ runCheck(async (ws) => {
   for (const f of ['openDb', 'insertUsers', 'addOrder', 'getUserByEmail', 'topSpenders']) expect(typeof m[f] === 'function', `${f} is not exported`);
   const Database = (await importFromWorkspace(ws, 'better-sqlite3')).default;
 
-  const dir = mkdtempSync(join(tmpdir(), 'firstshot-bsq3-'));
+  const dir = mkdtempSync(join(tmpdir(), 'oneshot-bsq3-'));
   const file = join(dir, 'shop.db');
   let db;
   let db2;

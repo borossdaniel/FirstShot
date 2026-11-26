@@ -1,0 +1,9 @@
+{
+  "id": "live-dockerfile",
+  "name": "Node.js Dockerfile",
+  "package": null,
+  "homepage": "https://hub.docker.com/_/node",
+  "kind": "live-fact",
+  "timeoutSec": 600,
+  "prompt": "In this folder, create a tiny Node.js web server in `server.js` (plain `node:http`, responds \"ok\" on port 3000) with a `package.json`. Then write a production `Dockerfile` for it that uses the current Node.js LTS version on a slim or alpine base image and runs as a non-root user. You don't need to build the image."
+}

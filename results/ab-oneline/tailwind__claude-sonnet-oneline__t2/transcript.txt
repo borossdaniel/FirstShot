@@ -1,0 +1,8 @@
+Everything is in place and verified working:
+
+- **`index.html`** — static page with `bg-brand`, `text-brand`, and `hover:bg-brand/90` classes
+- **`src/input.css`** — imports Tailwind v4 and defines `--color-brand: #0e7490` via `@theme`
+- **`package.json`** — `npm run build:css` runs `tailwindcss -i src/input.css -o dist/output.css --minify` (using `@tailwindcss/cli@4.3.5`, the latest version, no bundler needed)
+- **`dist/output.css`** — generated output confirmed to contain only the ~15 utility classes actually used in `index.html`, plus the `brand` color resolving to `#0e7490`
+
+`npm run build:css` ran successfully end-to-end.

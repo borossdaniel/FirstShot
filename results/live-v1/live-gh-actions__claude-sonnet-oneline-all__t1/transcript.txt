@@ -1,0 +1,8 @@
+Both commands pass cleanly. Final state:
+
+- `package.json` — `npm test` runs `node --test` (Node's built-in test runner, no extra deps needed)
+- `test/sample.test.js` — trivial sanity test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out with `actions/checkout@v7`, sets up Node via `actions/setup-node@v7` with `node-version: 'lts/*'` (resolves to current LTS — Node 26 as of today) and npm caching, then `npm ci && npm test`
+
+Verified `npm ci` and `npm test` locally and both succeed.

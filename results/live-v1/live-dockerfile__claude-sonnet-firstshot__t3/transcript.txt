@@ -1,0 +1,7 @@
+Everything's done and verified:
+
+- **server.js** — plain `node:http` server returning "ok" on port 3000
+- **package.json** — minimal, no dependencies (`check_project` confirms nothing outdated)
+- **Dockerfile** — `node:26-alpine` (current Node LTS per firstshot facts), runs as a non-root `app` user
+
+Verified locally: started the server, curled `localhost:3000`, got `200` / `ok`, then stopped it. Dockerfile wasn't built per your instructions, but it mirrors the verified runtime behavior.

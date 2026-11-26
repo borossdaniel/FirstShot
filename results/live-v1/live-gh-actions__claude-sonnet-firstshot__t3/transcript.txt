@@ -1,0 +1,7 @@
+`npm install`, `npm ci`, and `npm test` all pass. There are no dependencies to check with firstshot (none added), and the Node/Actions versions used (Node 26, `actions/checkout@v7`, `actions/setup-node@v7`) were pulled from current_facts rather than memory.
+
+Files created, nothing committed:
+- `package.json` — test script runs `node --test`
+- `test/basic.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node 26 with npm caching, runs `npm ci` then `npm test`
+- `package-lock.json` — generated so `npm ci` works in CI

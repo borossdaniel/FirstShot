@@ -1,0 +1,7 @@
+Everything is set up and verified. Summary:
+
+- **package.json**: `"type": "module"`, dependency `commander@^15.1.0` (latest, installed via `npm install commander@latest`)
+- **solution.mjs**: exports `buildProgram()` building a Commander program named `hello`, with `--version 1.2.3`, and a `greet <name>` subcommand supporting `--shout` and `--times <n>` (validated via a custom parser that throws `InvalidArgumentError` for non-positive-integers)
+- **cli.mjs**: calls `buildProgram().parse()`
+
+Verified: plain greet, `--shout`, `--times 3`, combined flags, `--version`, and invalid `--times` values (`abc`, `0`, `-1`) all correctly produce Commander's invalid-argument error.
