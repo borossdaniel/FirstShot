@@ -1,0 +1,7 @@
+I'll leave `test.mjs` in place rather than deleting it, since removal was blocked. It's a harmless verification script and doesn't interfere with `solution.mjs`.
+
+The project is set up and verified:
+
+- **`package.json`** — ES module project with `@trpc/server` and `zod` installed via npm.
+- **`solution.mjs`** — exports `appRouter` and `createCaller`. `greeting.hello` validates a 1–50 char name. `todo.add`/`todo.list`/`todo.toggle` all run through an auth middleware that throws `UNAUTHORIZED` when `ctx.user` is null. `todo.add` trims the title, enforces 1–100 chars, and defaults `priority` to `normal`. `todo.toggle` requires a positive integer id and throws `NOT_FOUND` for missing or other-users' todos. IDs increment globally (1, 2, 3, ...) across all users, as required.
+- **`test.mjs`** — a verification script exercising all the validation, auth, and scoping rules; running `node test.mjs` printed "All checks passed."

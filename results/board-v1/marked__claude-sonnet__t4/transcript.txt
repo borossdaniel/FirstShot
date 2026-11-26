@@ -1,0 +1,7 @@
+The project is set up and verified. Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `marked@^18.3.0` installed.
+- `solution.mjs` — exports `renderMarkdown(markdown)`. Uses a `Marked` instance with custom `renderer.heading` and `renderer.link`:
+  - **Headings**: extracts plain text by recursively walking inline tokens (so bold/italic/code syntax doesn't leak into the slug), slugifies it (lowercase, strip anything but letters/digits/space/hyphen, spaces→hyphens), and dedupes with a `Map` that's created fresh inside each `renderMarkdown` call — appending `-1`, `-2`, etc. for repeats. Inline rendering of the heading content itself is untouched (`this.parser.parseInline`).
+  - **Links**: calls `Renderer.prototype.link.call(this, token)` to get marked's exact default `<a>` output (so escaping, titles, cleanUrl behavior all match marked exactly), then only for `http://`/`https://` hrefs splices in `target="_blank" rel="noopener noreferrer"` before the tag's closing `>`.
+- `test.mjs` — a verification script (left in the folder) confirming: heading IDs/dedup, external vs. relative/anchor/mailto link handling, bare autolinks, and byte-for-byte match against vanilla `marked.parse()` output for unrelated Markdown (bold/italic/code). All assertions pass.

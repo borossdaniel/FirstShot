@@ -1,0 +1,10 @@
+{
+  "name": "stripe-subscription-checkout",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "solution.mjs",
+  "dependencies": {
+    "stripe": "^23.2.0"
+  }
+}

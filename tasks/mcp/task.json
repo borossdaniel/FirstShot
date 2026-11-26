@@ -1,0 +1,9 @@
+{
+  "id": "mcp",
+  "name": "MCP TypeScript SDK",
+  "package": "@modelcontextprotocol/sdk",
+  "homepage": "https://modelcontextprotocol.io",
+  "currentMajor": 1,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the official Model Context Protocol TypeScript SDK and Zod. Create `solution.mjs` that exports `createServer()`, which returns an MCP server (named \"calc\", version \"1.0.0\") that is not yet connected to any transport, with:\n\n1. A tool `add` that takes two numbers `a` and `b` (validated with Zod) and returns the sum as a text result, e.g. \"5\".\n2. A resource at URI `config://app` that returns the JSON text `{\"name\":\"calc\"}` with mime type `application/json`.\n\nAlso add a `server.mjs` that connects `createServer()` to stdio so it can be used from Claude Desktop. Install the dependencies with npm."
+}

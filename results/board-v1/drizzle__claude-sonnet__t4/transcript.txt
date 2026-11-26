@@ -1,0 +1,9 @@
+The project is set up and verified. In the working directory:
+
+- **`schema.mjs`** — `authors` (`id` PK autoincrement, `name` text unique/not-null) and `books` (`id` PK autoincrement, `title`/`year`/`authorId` not-null, `authorId` references `authors.id`), built with `drizzle-orm/sqlite-core`.
+- **`solution.mjs`** — `openDb`, `addAuthor`, `addBook`, `booksSince`, using `better-sqlite3` + `drizzle-orm/better-sqlite3`, with table creation via `CREATE TABLE IF NOT EXISTS` and all data access through Drizzle's query builder.
+- Dependencies (`drizzle-orm`, `better-sqlite3`) installed via npm; `package.json` set to `"type": "module"`.
+
+I wrote a `verify.mjs` script and ran it: it confirmed inserts, the authors/books join ordered by year then title, persistence after reopening the same DB file, and that the unique constraint on author name is enforced. All checks passed.
+
+Note: a Bash permission restriction in this session blocked `rm`, so the leftover `test.sqlite` (and its WAL/SHM siblings) and `verify.mjs` from the test run are still sitting in the folder alongside `schema.mjs`/`solution.mjs`. They're harmless but not part of the deliverable — delete them yourself if you want a clean folder.

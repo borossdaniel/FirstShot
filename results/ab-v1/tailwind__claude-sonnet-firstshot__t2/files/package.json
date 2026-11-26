@@ -1,0 +1,11 @@
+{
+  "name": "firstshot-tailwind-static-site",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i src/input.css -o dist/output.css --minify"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.5",
+    "tailwindcss": "^4.3.5"
+  }
+}

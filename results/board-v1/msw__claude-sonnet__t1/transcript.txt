@@ -1,0 +1,5 @@
+Project is set up and verified:
+
+- **`package.json`** — ES modules (`"type": "module"`), `msw@^3.0.8` installed via npm, `npm test` wired to Node's built-in test runner.
+- **`solution.mjs`** — exports `startMocking()`, which builds an MSW `setupServer` with handlers for `/products/:id`, `/search`, `/orders` (stateful incrementing `orderId` counter), and `/health` (network error via `HttpResponse.error()`). It calls `server.listen({ onUnhandledRequest: 'error' })` and returns the server; nothing runs on import.
+- **`solution.test.mjs`** — 8 tests covering all the spec'd behaviors, including that unmatched requests reject rather than hitting the real network. All pass (`node --test`).

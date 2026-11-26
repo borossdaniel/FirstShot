@@ -1,0 +1,7 @@
+No servers left running. Everything is set up and verified in `/private<workspace>`:
+
+- Next.js 15 (App Router, JavaScript) with `dev`/`build`/`start` scripts, deps installed via npm.
+- `/` → "FirstShot home"; `/posts/<slug>` → `<h1>Post: <slug></h1>`.
+- `GET /api/health` → `{"status":"ok"}`; `GET /api/users/<id>` → `{"id":"<id>"}`.
+- `middleware.js` intercepts `/old/*` and redirects to `/new/*`, preserving the query string (verified `/old/docs/intro?x=1` → `307` to `/new/docs/intro?x=1`).
+- `npm run build` succeeds; confirmed all routes work by running `next start` and curling each one, then stopped the server.

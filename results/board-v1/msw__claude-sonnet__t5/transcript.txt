@@ -1,0 +1,13 @@
+Set up and verified. In the project folder:
+
+- **`package.json`** — ES module project (`"type": "module"`), `msw@^3.0.8` installed via npm.
+- **`solution.mjs`** — exports `startMocking()`, which builds an MSW `setupServer` with handlers for the four endpoints and calls `server.listen({ onUnhandledFrame: 'error' })` only when invoked (not on import), then returns the server.
+
+Key implementation notes:
+- `GET /products/:id` → `{id, name}`, or 404 `{error: "not found"}` for id `"0"`.
+- `GET /search` → reads `q` from the URL, returns `{query, results: []}`.
+- `POST /orders` → validates `quantity` is a positive integer, else 400; otherwise increments an in-closure counter and returns 201 with a sequential `ord_<n>` id.
+- `GET /health` → `HttpResponse.error()` to simulate a network failure.
+- `onUnhandledFrame: 'error'` ensures any non-matching request (including to other hosts) throws instead of touching the real network — MSW 3.x renamed this option from the older `onUnhandledRequest` to `onUnhandledFrame`, which I confirmed by reading the installed package source.
+
+I wrote a throwaway verification script exercising all cases (success/error paths for each endpoint, plus an unmocked route and an unrelated host) and confirmed every assertion passes with no real network access occurring.

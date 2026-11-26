@@ -1,0 +1,15 @@
+The `rm` was blocked by permission settings. That's fine — I'll just leave `verify.mjs` in place rather than fight the restriction; it doesn't interfere with anything and serves as a working example/test.
+
+Setup is complete and verified in this directory:
+
+- **package.json** — `"type": "module"`, depends on `pino` (installed via npm, 0 vulnerabilities).
+- **logger.mjs** — exports `createLogger({ service, destination, level })` and `forRequest(logger, requestId)`.
+- **verify.mjs** — the test script I used to confirm behavior (left in place, not required but harmless).
+
+Confirmed via actual runs (writing to a real `Writable` stream, never stdout/file from inside the logger):
+- `service` present on every line; `pid`/`hostname` absent (via `base: { service }` overriding pino's default base).
+- `level` renders as the string name (`"info"`, `"warn"`, `"debug"`), not a number.
+- `time` is ISO 8601 (`pino.stdTimeFunctions.isoTime`).
+- Redaction works for top-level `password`, one-level-deep `user.password`, and `req.headers.authorization` — all replaced with `"[REDACTED]"` while sibling fields (`other`, `user.name`, `req.headers.accept`) are untouched.
+- `forRequest` child logger lines carry `requestId`; parent logger lines never do.
+- `level` option defaults to `"info"` (suppresses `debug`) and is respected when overridden (e.g. `"debug"`).

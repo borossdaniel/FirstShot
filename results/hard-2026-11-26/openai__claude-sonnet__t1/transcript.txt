@@ -1,0 +1,7 @@
+The project is set up (the leftover scratchpad verify file is harmless, left in the scratch dir, not the project). Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `openai` and `zod` installed via npm.
+- `solution.mjs` exports:
+  - `ask(client, question)` — calls `client.responses.create({ model: "gpt-5.2", input: question })` and returns `response.output_text` as a plain string.
+  - `classify(client, text)` — calls `client.responses.parse(...)` with a Zod schema (`z.object({ label: z.enum(["spam", "ham"]) })`) converted via `zodTextFormat` from `openai/helpers/zod`, returning `response.output_parsed`.
+- Verified with a mocked client (no real API key used, per your instructions) that both functions build the correct request payloads and return the expected shapes — `ask` returns a string, `classify` returns `{ label: "spam" }`.

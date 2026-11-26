@@ -1,0 +1,8 @@
+Cleaned up. The project is set up and verified.
+
+**Summary:**
+- `package.json` configured as ES module (`"type": "module"`), with `openai` and `zod` installed as dependencies.
+- `solution.mjs` exports:
+  - `ask(client, question)` — calls `client.responses.create({ model: "gpt-5.2", input: question })` and returns `response.output_text`.
+  - `classify(client, text)` — calls `client.responses.parse({ model: "gpt-5.2", input: text, text: { format: zodTextFormat(schema, "classification") } })` using a Zod schema (`z.object({ label: z.enum(["spam", "ham"]) })`), returning `response.output_parsed`.
+- Verified against the actual installed SDK's type definitions (`openai@7.65.0`) to confirm `zodTextFormat`/`responses.parse`/`output_text` are real APIs, then smoke-tested both functions against a mock client (no real network/API key used) — both returned correctly shaped results.

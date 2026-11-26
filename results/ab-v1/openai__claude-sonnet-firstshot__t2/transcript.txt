@@ -1,0 +1,7 @@
+Dependencies are confirmed current. The `rm` command was blocked by the permission system (unattended "don't ask" mode flags removal ops) — I'll leave `smoke-test.mjs` in place rather than attempt a workaround; it's a harmless verification artifact, not part of the deliverable.
+
+**Summary**: Set up `package.json` (ES modules) with `openai@7.65.0` and `zod@4.6.7` (versions confirmed via firstshot's `check_package`, not from memory). `solution.mjs` exports:
+- `ask(client, question)` — calls `client.responses.create({ model: "gpt-5.2", input: question })`, returns `response.output_text`.
+- `classify(client, text)` — calls `client.responses.parse(...)` with a Zod schema (`z.object({ label: z.enum(["spam","ham"]) })`) converted via `zodTextFormat` from `openai/helpers/zod`, returns `response.output_parsed`.
+
+Verified: module imports cleanly, both functions pass a mock-client smoke test matching the real SDK's response shapes, and `zodTextFormat` was confirmed (via actual library code, not mocked) to emit a correct strict JSON-schema format. `check_project` confirms no outdated majors. `smoke-test.mjs` remains in the folder as a leftover test file (deletion was blocked by sandbox permissions) — safe to remove manually if you don't want it.

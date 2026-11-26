@@ -1,0 +1,6 @@
+Permission to run that `rm` was denied. The file `verify.mjs` is harmless (just the test script I used to confirm things work) so I'll leave it in place rather than retry.
+
+Setup complete:
+- `package.json` configured as an ES module project with `uuid` ^14.0.3 installed
+- `solution.mjs` exports `newId()`, `newEventId(timestampMs)`, `isValidUuid(value)`, `uuidVersion(value)` — all verified working (v4/v7 generation, timestamp encoding, creation-order sorting, and invalid-input handling all passed)
+- `verify.mjs` is left in the folder as a test script; delete it manually if you don't want it kept

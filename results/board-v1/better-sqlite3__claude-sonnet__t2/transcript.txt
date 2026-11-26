@@ -1,0 +1,6 @@
+All checks passed, including FK rejection, transactional rollback on duplicate email, and data persistence across reopening. Cleaning up the verify artifact's leftover db file isn't needed since it self-deletes, but I'll leave `verify.mjs` in place as a usable test script.
+
+Set up in this folder:
+- `package.json` — ES module project with `better-sqlite3` dependency (installed via npm)
+- `db.mjs` — exports `openDb`, `insertUsers`, `addOrder`, `getUserByEmail`, `topSpenders`, all using prepared statements with bound params; migration guarded by `user_version` pragma; `orders.user_id` has a `REFERENCES users(id)` FK with `PRAGMA foreign_keys = ON` enforced per connection
+- `verify.mjs` — exercises every function plus edge cases (duplicate-email rollback, FK rejection on bad `userId`, reopening an existing file preserves data) — run with `node verify.mjs`

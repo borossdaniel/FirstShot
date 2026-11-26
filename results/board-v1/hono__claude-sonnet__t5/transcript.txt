@@ -1,0 +1,8 @@
+Deletion was blocked by permissions, so I'll leave `verify.mjs` in place — it's harmless and doubles as a smoke test.
+
+Setup complete in this folder:
+- `package.json` (`"type": "module"`, `hono` as dependency)
+- `solution.mjs` — exports `app`, a Hono instance with all four routes/middleware behaviors
+- `verify.mjs` — smoke test using `app.request()`; all 6 checks passed (health, echo, unauthorized x2, authorized, 404)
+
+No server is started in `solution.mjs`, as required.

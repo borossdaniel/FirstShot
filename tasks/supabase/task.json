@@ -1,0 +1,9 @@
+{
+  "id": "supabase",
+  "name": "Supabase (JavaScript client)",
+  "package": "@supabase/supabase-js",
+  "homepage": "https://supabase.com/docs/reference/javascript",
+  "currentMajor": 2,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that reads and writes a Supabase database with the official Supabase JavaScript client. The database has a `tasks` table with columns `id` (generated), `project_id` (text), `title` (text), `done` (boolean) and `created_at` (timestamp, set by the database). Create `solution.mjs` that exports two functions. Each takes an already-configured Supabase client as its first argument (do not create a client or read keys or environment variables):\n\n1. `listOpenTasks(supabase, projectId, limit)`: returns an array of the open tasks (`done` is false) of that project, newest first by `created_at`, at most `limit` rows, with only the columns `id`, `title` and `created_at`.\n2. `addTask(supabase, projectId, title)`: inserts a new task for that project with `done` set to false and returns the inserted row as stored by the database, including its generated `id` and `created_at`.\n\nBoth functions must throw if Supabase reports an error.\n\nInstall the dependencies with npm."
+}

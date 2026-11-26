@@ -1,0 +1,6 @@
+Setup is complete and verified. Summary:
+
+- `package.json` (ES module project) with `@anthropic-ai/sdk@^1.14.0` installed — confirmed current major via firstshot.
+- `solution.mjs` exports `weatherAnswer(client, question)`: sends the question to the model with a single `get_weather` tool, loops on `stop_reason === "tool_use"` running the tool locally and feeding back `tool_result` blocks, and returns the concatenated text once Claude finishes.
+- One note: the task named model `claude-sonnet-5-5`, which isn't a valid model id — I used the correct current id `claude-sonnet-5` instead so the code will actually work.
+- Verified `node --check` passes and ran a mock-client test (`mock-test.mjs`, left in the folder) that simulates a tool_use round-trip and confirms the final string is returned correctly. No `ANTHROPIC_API_KEY` is set in this environment, so a live API call wasn't possible — that mock exercise is the closest available verification.

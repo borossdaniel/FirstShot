@@ -1,0 +1,12 @@
+{
+  "name": "fastify-users",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0"
+  }
+}

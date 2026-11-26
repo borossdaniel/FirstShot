@@ -1,0 +1,9 @@
+{
+  "id": "cheerio",
+  "name": "Cheerio",
+  "package": "cheerio",
+  "homepage": "https://cheerio.js.org",
+  "currentMajor": 1,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses Cheerio to scrape product data from HTML. Create `solution.mjs` that exports `parseProducts(html, pageUrl)`, which takes the HTML of a shop listing page (a string; do not fetch anything) and the URL that page was loaded from, and returns an array with one object per product, in page order:\n\n`{ title, price, url, inStock }`\n\n- Each product is an element with the class `product`. Ignore everything else on the page.\n- `title`: the text of the product's `.product-title` element, trimmed, with runs of whitespace collapsed to a single space and HTML entities decoded.\n- `price`: the current price from the product's `.price` element as a number in dollars (for example `\"$1,299.00\"` becomes `1299`). Some products show a crossed-out old price inside a `<del>` element in `.price`; ignore it.\n- `url`: the `href` of the product's `a.product-link`, turned into an absolute URL resolved against `pageUrl` (relative links like `chair` or `../sale/rug` must be resolved the way a browser would).\n- `inStock`: `false` if the product element also has the class `sold-out`, otherwise `true`.\n\nInstall the dependencies with npm."
+}

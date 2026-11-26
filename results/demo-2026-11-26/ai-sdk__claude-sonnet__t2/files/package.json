@@ -1,0 +1,11 @@
+{
+  "name": "firstshot-ai-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "ai": "^5.0.0",
+    "zod": "^3.24.1"
+  }
+}

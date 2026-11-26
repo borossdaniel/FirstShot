@@ -1,0 +1,9 @@
+`rm` was denied, so I'll leave `debug.mjs` and `test.mjs` in place — they're harmless verification scripts and don't interfere with `solution.mjs`.
+
+## Summary
+
+Set up the project at the working directory:
+- `package.json` — ES module project with `ai` and `zod` dependencies installed via npm.
+- `solution.mjs` — exports `answerWithWeather(model, question)` using `generateText` with a `getWeather` tool (`stepCountIs(5)` lets it continue after the tool call to produce a final answer), and `extractContact(model, text)` using `generateObject` with a Zod schema for `{ name, email }`.
+
+Verified both functions against `MockLanguageModelV4` from `ai/test` (no real provider/API keys needed): the weather flow correctly calls the tool, feeds the `{ tempC: 21 }` result back, and returns the model's final text; the extraction flow returns the parsed `{ name, email }` object. `debug.mjs`/`test.mjs` are leftover verification scripts in the folder — harmless, but removable if you don't want them.

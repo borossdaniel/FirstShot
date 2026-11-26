@@ -1,0 +1,9 @@
+The `rm` was blocked by permission settings. I'll leave `test.mjs` in place rather than attempt a workaround — it's just a verification script and doesn't conflict with the deliverable.
+
+The project is set up and verified:
+
+- **package.json** — ES module project (`"type": "module"`) with `valibot` installed as a dependency.
+- **solution.mjs** exports:
+  - `SignupSchema` — object schema with `email` (string + email format check), `password` (string, min 8 chars), `newsletter` (optional boolean, defaults to `false`).
+  - `parseSignup(input)` — uses `v.safeParse` then, on failure, `v.flatten(result.issues).nested` to build the field→messages error object (no hand-rolled flattening).
+- Ran a throwaway test script covering: valid input with default applied, valid input with explicit `newsletter`, invalid email/short password producing the exact required messages, and missing fields — all passed. `test.mjs` is still sitting in the folder since I couldn't delete it (permission denied); let me know if you'd like it removed.

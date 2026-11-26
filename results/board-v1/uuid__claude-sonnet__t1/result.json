@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "uuid",
+  "taskName": "uuid",
+  "package": "uuid",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "uuid@11.1.1 installed, current major is 14",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 38.5,
+  "costUsd": 0.2316897,
+  "turns": 9,
+  "installedVersion": "11.1.1",
+  "finishedAt": "2026-11-26T17:19:23.226Z"
+}

@@ -1,0 +1,6 @@
+Everything checks out:
+- `nextBusinessDays("2026-11-26", 5)` correctly skips the weekend (Fri 11/27 → Mon 11/30 → ...).
+- `humanGap` returns strict phrasing like "3 days" / "1 month" with no "about"/"almost".
+- `weekLabel("2026-11-26")` → `"2026-W48"`, and ISO edge case `2026-01-01` → `"2026-W01"` is handled correctly.
+
+Project is set up at the given folder with `package.json` (ES modules, `date-fns@4.4.0` dependency) and `solution.mjs` exporting the three functions, verified by running them directly with Node.

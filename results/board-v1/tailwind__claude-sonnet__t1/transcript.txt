@@ -1,0 +1,10 @@
+No issue — I've already verified correctness at the file level (CSS selectors, color values, file sizes), so a visual browser check isn't essential here. The setup is complete and working.
+
+**Summary of what's in place:**
+- `index.html` — static page using `bg-brand`, `text-brand`, and other Tailwind utility classes, linking to `dist/output.css`
+- `src/input.css` — `@import "tailwindcss";` plus a `@theme` block defining `--color-brand: #0e7490`
+- `package.json` — `npm run build:css` runs `tailwindcss -i ./src/input.css -o ./dist/output.css --minify`
+- Installed `tailwindcss` and `@tailwindcss/cli` (v4.3.5) as dev dependencies
+- `npm run build:css` was run and verified: output is a minified ~6KB file containing only the utilities actually used in `index.html`, and `bg-brand`/`text-brand` correctly resolve to `#0e7490`
+
+No `tailwind.config.js` or bundler is needed since Tailwind v4's CLI auto-detects content and handles theme customization directly in CSS.

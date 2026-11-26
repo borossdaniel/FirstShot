@@ -1,0 +1,9 @@
+{
+  "id": "google-genai",
+  "name": "Google Gen AI SDK (Gemini)",
+  "package": "@google/genai",
+  "homepage": "https://ai.google.dev/gemini-api/docs",
+  "currentMajor": 3,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that calls Gemini using Google's official Gen AI SDK for JavaScript. Create `solution.mjs` that exports two functions. Each takes an already-configured client from that SDK as its first argument (do not create a client or read API keys):\n\n1. `ask(ai, question)`: sends the question to model `gemini-2.5-flash` and returns the answer text as a string.\n2. `extractContact(ai, text)`: uses model `gemini-2.5-flash` to pull the person's name and email address out of free text. Use Gemini's structured output with a response schema so the model must return JSON with string fields `name` and `email`, and return the parsed object `{ name, email }`.\n\nInstall the dependencies with npm."
+}

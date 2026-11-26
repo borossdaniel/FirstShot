@@ -1,0 +1,14 @@
+The `rm` command was blocked by permission settings. The test script (`test-run.mjs`) is harmless — it's just the verification script I used to confirm the server works — so I'll leave it in place rather than attempt a workaround.
+
+Setup complete in this folder:
+- `package.json` (ESM project, `hono` dependency)
+- `solution.mjs` — exports `app` with all four routes/behaviors
+- `test-run.mjs` — the verification script I used (left in place since I couldn't remove it); safe to delete manually if you don't want it
+
+Verified by running the app with `@hono/node-server` and hitting each route:
+- `GET /health` → 200 `{"status":"ok"}`
+- `POST /echo` → 201, body echoed back
+- `GET /users/42` without/with wrong key → 401 `{"error":"unauthorized"}`; with `x-api-key: secret` → 200 `{"id":"42"}`
+- `GET /nope` → 404 `{"error":"not found"}`
+
+All passed as expected.

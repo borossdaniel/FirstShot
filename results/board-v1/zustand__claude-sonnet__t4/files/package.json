@@ -1,0 +1,9 @@
+{
+  "name": "zustand-cart-store",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "zustand": "^5.1.0"
+  }
+}

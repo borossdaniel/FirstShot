@@ -1,0 +1,7 @@
+Done. Project is set up in this folder:
+
+- `npm init` + `npm install @anthropic-ai/sdk` (v1.14.0), `package.json` set to `"type": "module"`.
+- `solution.mjs` exports `async function weatherAnswer(client, question)` — it builds a `messages` array, calls `client.messages.create({ model, max_tokens: 1024, tools: [get_weather], messages })`, and loops: whenever `stop_reason === "tool_use"` it pushes the assistant turn, runs `get_weather` locally (`{ city, temp_c: 21 }`), sends a `tool_result` block back as a user turn, and calls again — until Claude returns a final turn, whose concatenated text blocks are returned as a plain string.
+- Verified with a mock client simulating a real two-turn SDK exchange (tool_use → tool_result → end_turn): the tool call, result payload, and final string all came out correct (`node test.mjs` → `TEST PASSED`). I didn't test against the live API since I have no key and was told not to create a client or read keys.
+
+One thing to flag: you specified model `claude-sonnet-5-5`, which I used literally — but the known current model ID is `claude-sonnet-5` (no trailing `-5`). If `claude-sonnet-5-5` isn't a real model on your account, the SDK call will 404; the fix is just changing the `MODEL` constant at the top of `solution.mjs`.

@@ -1,0 +1,13 @@
+{
+  "name": "hello-cli",
+  "version": "1.2.3",
+  "type": "module",
+  "private": true,
+  "main": "solution.mjs",
+  "bin": {
+    "hello": "cli.mjs"
+  },
+  "dependencies": {
+    "commander": "^15.1.0"
+  }
+}

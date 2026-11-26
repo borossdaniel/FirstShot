@@ -1,0 +1,10 @@
+{
+  "id": "next",
+  "name": "Next.js",
+  "package": "next",
+  "homepage": "https://nextjs.org",
+  "currentMajor": 16,
+  "timeoutSec": 1200,
+  "checkTimeoutSec": 240,
+  "prompt": "In this folder, set up a small Next.js app using the App Router (JavaScript or TypeScript, your choice) with the standard `dev`, `build` and `start` npm scripts. It needs:\n\n1. `/` renders a page that contains the text `FirstShot home`.\n2. `/posts/<slug>` renders a page whose `<h1>` is `Post: <slug>`, for example `/posts/hello-world` shows `Post: hello-world`.\n3. `GET /api/health` returns JSON `{ \"status\": \"ok\" }`.\n4. `GET /api/users/<id>` returns JSON `{ \"id\": \"<id>\" }`.\n5. Any request to a path under `/old/` is redirected to the same path under `/new/`, keeping the query string, so `/old/docs/intro?x=1` goes to `/new/docs/intro?x=1`. Do this in code that intercepts requests before they are routed, not with `redirects` in the Next.js config.\n\nDo not use external fonts or anything that needs network access at build time. Make sure `npm run build` succeeds, and do not leave a server running when you are done.\n\nInstall the dependencies with npm."
+}

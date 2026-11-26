@@ -1,0 +1,11 @@
+Done. The project is set up in the working directory with Commander.js installed:
+
+- **`solution.mjs`** exports `buildProgram()` — builds the `hello` program with the `greet <name>` subcommand (`--shout`, `--times <n>` validated via a custom `InvalidArgumentError`-throwing parser, default `1`) and `--version` set to `1.2.3`. No `process.argv` parsing inside.
+- **`cli.mjs`** calls `buildProgram().parse()`.
+
+Verified behavior:
+- `--version` → `1.2.3`
+- `greet World` → `Hello, World!`
+- `greet World --shout` → `HELLO, WORLD!`
+- `greet World --times 3` → prints three times
+- `greet World --times abc` and `--times 0` → both exit 1 with Commander's own `error: option '--times <n>' argument ... is invalid` message

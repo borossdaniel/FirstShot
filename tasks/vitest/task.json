@@ -1,0 +1,9 @@
+{
+  "id": "vitest",
+  "name": "Vitest",
+  "package": "vitest",
+  "homepage": "https://vitest.dev",
+  "currentMajor": 5,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules). Create `math.mjs` exporting `sum(a, b)` and `clamp(n, min, max)`. Add Vitest and write tests for both functions in `test/math.test.mjs`, including edge cases for `clamp`. `npm test` must run the test suite once and exit (no watch mode), and must exit with a failure code if any test fails. Install the dependencies with npm and make sure `npm test` passes."
+}

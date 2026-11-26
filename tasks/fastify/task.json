@@ -1,0 +1,9 @@
+{
+  "id": "fastify",
+  "name": "Fastify",
+  "package": "fastify",
+  "homepage": "https://fastify.dev",
+  "currentMajor": 5,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the Fastify web framework. Create `solution.mjs` that exports `buildApp()`, which returns a new Fastify instance (do not call `listen` in that file) with an in-memory user store that starts empty for each new app:\n\n1. `POST /users` takes a JSON body with `name` (1 to 50 characters), `email` (a valid email address) and `password` (at least 8 characters), all required. It stores the user with ids 1, 2, 3, ... and returns status 201 with `{ \"id\", \"name\", \"email\" }`.\n2. `GET /users/:id` returns `{ \"id\", \"name\", \"email\" }` for that user, or status 404 with `{ \"error\": \"not found\" }`. `id` must be a positive integer.\n3. `GET /users?limit=<n>` returns `{ \"limit\": <n>, \"users\": [...] }` with the first `n` users. `limit` is an integer from 1 to 50 and defaults to 10.\n\nInvalid input must get status 400 from Fastify's built-in JSON Schema validation. The password must never appear in any response; enforce that with response schemas rather than by hand.\n\nInstall the dependencies with npm."
+}

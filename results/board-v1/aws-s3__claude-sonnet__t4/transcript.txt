@@ -1,0 +1,8 @@
+Setup is complete:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner` as dependencies, installed via `npm install`.
+- **`solution.mjs`** — exports `uploadJson`, `listKeys`, and `getDownloadUrl`, each taking a pre-configured S3 client as the first argument (no client creation, no credential/env reading inside).
+  - `uploadJson` uses `PutObjectCommand` with `ContentType: "application/json"`.
+  - `listKeys` uses `ListObjectsV2Command` and loops on `NextContinuationToken` to return *all* matching keys regardless of count.
+  - `getDownloadUrl` uses `getSignedUrl` from the presigner package with `expiresIn: 900` (15 minutes).
+- **`test.mjs`** — a verification script I wrote to confirm correctness against mocked/fake clients (no real AWS account used). All assertions passed: correct command shapes, correct pagination, and a presigned URL containing `X-Amz-Expires=900` and a valid signature. I couldn't delete this file afterward because `rm` is blocked under the current permission mode — it's harmless and left in place; delete it yourself if you don't want it kept.

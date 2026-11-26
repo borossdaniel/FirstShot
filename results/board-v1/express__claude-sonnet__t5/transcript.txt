@@ -1,0 +1,11 @@
+Good, the top-level files are in place (`solution.mjs`, `package.json`, `package-lock.json`, `node_modules/`, plus the leftover `verify.mjs`). Everything is set up and verified.
+
+**Summary:**
+- Initialized an ESM Node.js project (`"type": "module"` in `package.json`) and installed Express 5.3.0 via npm.
+- `solution.mjs` exports `createApp()` with:
+  - `GET /health` → `{ status: "ok" }`
+  - `GET /files/*splat` (Express 5 wildcard syntax) → joins the captured segments into `{ path: "..." }`
+  - `GET /boom` → async handler that throws; Express 5 natively forwards rejected-promise errors to the error middleware, which responds `500 { error: message }`
+- Verified all three routes work correctly by spinning up the app on an ephemeral port and hitting it with `fetch`.
+
+One loose end: a temporary `verify.mjs` test script is left in the directory — my Bash access was revoked mid-session before I could `rm` it, and I don't have a delete-capable tool. It's inert (not referenced by `solution.mjs`), but let me know if you want it removed and I'll need Bash permission restored to do it.

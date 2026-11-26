@@ -1,0 +1,3 @@
+Noted — `rm` via Bash was denied, so I left `test.mjs` in place rather than trying to work around it. It's harmless (just the verification script); delete it manually if you don't want it kept.
+
+**Summary**: Set up an ES-module Node project here with `npm init` + `npm install zod` (v4.6.7), and wrote `solution.mjs` exporting `UserSchema` (email, integer age ≥13, optional `tags` defaulting to `[]`) and `parseUser(input)`, which uses `safeParse` + `z.flattenError` to return `{ok:true,user}` or `{ok:false,errors}` with one message per invalid field. Verified via a temporary test script covering valid/invalid/missing-field cases — all passed.

@@ -1,0 +1,6 @@
+All tests pass — entity decoding, whitespace collapsing, crossed-out `<del>` price stripping, relative/absolute URL resolution, and `sold-out` detection all work correctly.
+
+Project is set up in `/private<workspace>`:
+- `package.json` — ES module project with `cheerio` dependency, installed via npm
+- `solution.mjs` — exports `parseProducts(html, pageUrl)`
+- `test.mjs` — verification script covering entities, whitespace, old-price stripping, relative/absolute URLs, and sold-out items

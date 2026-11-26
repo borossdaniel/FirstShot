@@ -1,0 +1,9 @@
+{
+  "id": "ai-sdk",
+  "name": "Vercel AI SDK",
+  "package": "ai",
+  "homepage": "https://ai-sdk.dev",
+  "currentMajor": 7,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the Vercel AI SDK (the `ai` npm package) and Zod. Create `solution.mjs` that exports two async functions. Both take the language model as their first argument (do not create a provider or read API keys):\n\n1. `answerWithWeather(model, question)`: call the model with the question and give it one tool named `getWeather` that takes `{ city: string }` and returns `{ city, tempC: 21 }`. Let the model call the tool and then continue so it can write its final answer. Return the final answer text.\n2. `extractContact(model, text)`: use the AI SDK's structured output support with a Zod schema to extract `{ name: string, email: string }` from the text, and return that object.\n\nInstall the dependencies with npm."
+}

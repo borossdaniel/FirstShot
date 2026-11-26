@@ -1,0 +1,6 @@
+Everything is set up and verified working:
+
+- `src/input.css` — imports Tailwind and defines `--color-brand: #0e7490` via `@theme`, enabling `bg-brand`, `text-brand`, etc.
+- `index.html` — a plain static page using Tailwind utility classes including `bg-brand`/`text-brand`.
+- `package.json` — `npm run build:css` runs `tailwindcss -i ./src/input.css -o ./dist/output.css --minify` (Tailwind v4's `@tailwindcss/cli`, which auto-scans `index.html` for used classes — no bundler or config file needed).
+- Ran `npm install` and `npm run build:css` — confirmed `dist/output.css` (9.3 KB minified) contains `#0e7490` and `bg-brand`, proving the custom brand color and content-detection scan both work.

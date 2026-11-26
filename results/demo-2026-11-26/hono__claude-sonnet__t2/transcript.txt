@@ -1,0 +1,6 @@
+`rm` is blocked by the sandbox, so I'll leave `_verify_server.mjs` in place — it's a harmless helper script, not part of the required deliverable. Everything else is done and verified.
+
+Summary:
+- `package.json` configured with `"type": "module"`, dependencies `hono` and `@hono/node-server` installed.
+- `solution.mjs` exports `app` (no server started) with all four routes/middleware, verified live via curl: `/health` → 200 `{"status":"ok"}`, `/echo` → 201 echoes body, `/users/:id` → 401 without/with wrong `x-api-key`, 200 `{"id":"42"}` with `x-api-key: secret`, unknown route → 404 `{"error":"not found"}`.
+- Leftover helper `_verify_server.mjs` (used only to spin up the app for curl testing) remains in the folder since deletion was blocked by sandbox permissions — safe to remove manually if you don't want it.

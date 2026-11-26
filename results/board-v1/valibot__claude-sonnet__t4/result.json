@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "valibot",
+  "taskName": "Valibot",
+  "package": "valibot",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 4,
+  "ok": true,
+  "category": "pass",
+  "detail": "valibot@1.5.0: schema, default and flattened field errors correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 36.8,
+  "costUsd": 0.22765769999999996,
+  "turns": 9,
+  "installedVersion": "1.5.0",
+  "finishedAt": "2026-11-26T17:20:50.712Z"
+}

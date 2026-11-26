@@ -1,0 +1,9 @@
+{
+  "id": "aws-s3",
+  "name": "AWS S3 (JavaScript SDK)",
+  "package": "@aws-sdk/client-s3",
+  "homepage": "https://docs.aws.amazon.com/sdk-for-javascript/",
+  "currentMajor": 3,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that works with Amazon S3 using the AWS SDK for JavaScript. Create `solution.mjs` that exports three functions. Each takes an already-configured S3 client as its first argument (do not create a client or read credentials or environment variables):\n\n1. `uploadJson(s3, bucket, key, data)`: uploads `data` as a JSON object at `bucket/key`, with the content type set to `application/json`.\n2. `listKeys(s3, bucket, prefix)`: returns an array of all object keys in the bucket that start with `prefix`, however many there are.\n3. `getDownloadUrl(s3, bucket, key)`: returns a presigned URL that lets anyone download that object for the next 15 minutes.\n\nInstall the dependencies with npm."
+}

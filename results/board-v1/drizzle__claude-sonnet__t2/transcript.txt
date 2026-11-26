@@ -1,0 +1,8 @@
+`rm` is blocked in this environment, so I'll leave `verify.mjs` in place rather than work around it — it's just a harmless test script that already confirmed everything works and cleans up its own database file.
+
+Setup is complete and verified in `/private<workspace>`:
+
+- **`schema.mjs`** — `authors` (auto-increment id, unique required `name`) and `books` (auto-increment id, required `title`/`year`/`authorId` referencing `authors.id`).
+- **`solution.mjs`** — `openDb`, `addAuthor`, `addBook`, `booksSince`, all using Drizzle's query builder (`drizzle-orm/better-sqlite3`) over a `better-sqlite3` file connection; `openDb` creates both tables if missing and persists across reopens.
+- Dependencies (`drizzle-orm`, `better-sqlite3`) installed via npm; `package.json` set to `"type": "module"`.
+- Ran a verification script that inserted authors/books, reopened the DB file to confirm persistence, checked `booksSince` ordering/join output, and confirmed the unique-name constraint rejects a duplicate author — all passed. `verify.mjs` is left in the folder as a leftover test file (not part of the deliverables) since `rm` was blocked by the sandbox; delete it anytime with `rm verify.mjs`.

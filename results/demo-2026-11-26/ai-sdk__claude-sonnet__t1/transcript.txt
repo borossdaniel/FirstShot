@@ -1,0 +1,14 @@
+`rm` is being blocked by the sandbox in this mode, so `debug.mjs` (a scratch script I used while debugging) is still sitting in the folder — it's harmless and not part of the deliverable, feel free to delete it. Everything else checks out and `node verify.mjs` passed.
+
+Summary of what's set up in this folder:
+
+- **`package.json`** — ES module project (`"type": "module"`), depends on `ai@^7.0.183` and `zod@^4.6.7`, installed via npm.
+- **`solution.mjs`** — exports `answerWithWeather(model, question)` and `extractContact(model, text)`:
+  - `answerWithWeather` uses `generateText` with a single `getWeather` tool (`inputSchema: z.object({ city: z.string() })`, returns `{ city, tempC: 21 }`) and `stopWhen: stepCountIs(5)` so the model can call the tool and then produce its final answer text.
+  - `extractContact` uses `generateObject` with a Zod schema `{ name, email }` and returns the parsed object.
+  - Neither function creates a provider or touches API keys — both take `model` as the first argument.
+- **`verify.mjs`** — a sanity check using `ai/test`'s `MockLanguageModelV4` (no real API calls) that drives a two-step tool-call → final-answer flow and a structured-extraction flow, with `assert` checks. Ran successfully:
+  - `answerWithWeather` → `"It is 21C in Paris right now."`
+  - `extractContact` → `{ name: 'Jane Doe', email: 'jane.doe@example.com' }`
+
+One note: this AI SDK version prints a deprecation warning for `generateObject` (suggesting the newer `generateText({ output })` pattern), but it still works correctly — I kept `generateObject` since it's the well-established structured-output API the task referenced.

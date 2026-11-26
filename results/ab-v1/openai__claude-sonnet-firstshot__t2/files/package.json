@@ -1,0 +1,11 @@
+{
+  "name": "firstshot-openai-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "openai": "^7.65.0",
+    "zod": "^4.6.7"
+  }
+}

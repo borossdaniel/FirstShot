@@ -1,0 +1,8 @@
+Everything checks out:
+
+- Both pages built with relative asset paths (`./assets/...`, `./about.html`) — will work from any subfolder.
+- `VITE_APP_TITLE=FirstShot` from `.env` got inlined into `main.js`, setting the `<h1>` text.
+- `robots.txt` copied unchanged to `dist/` root.
+- `npm run build` runs cleanly end-to-end.
+
+Setup is complete and verified in `/private<workspace>` — `npm run build` produces a working `dist/` with both pages, relative paths, the env-driven title, and `robots.txt`.

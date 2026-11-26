@@ -1,0 +1,8 @@
+Deletion was denied by the sandbox, so I'll leave `test.mjs` in place — it's a harmless verification script (using `ai/test`'s mock model, no API keys) that confirms both functions work.
+
+Setup complete in this folder:
+- `package.json` (ES modules, deps: `ai` and `zod`)
+- `solution.mjs` exporting `answerWithWeather(model, question)` and `extractContact(model, text)`
+- `test.mjs` — a local verification script using `MockLanguageModelV4` from `ai/test`, confirming both functions work correctly (weather tool gets called, then the model continues to produce a final answer; contact extraction returns a validated `{name, email}` object)
+
+Note: this `ai` package version (7.0.183) uses `inputSchema` (not `parameters`) for tool definitions, `stopWhen: isStepCount(n)` (not `maxSteps`) to allow multi-step tool loops, and `Output.object({schema})` passed to `generateText`'s `output` option for structured extraction (the standalone `generateObject` function still exists but is now deprecated in favor of this).

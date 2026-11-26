@@ -1,0 +1,6 @@
+Bash access was denied, so I couldn't remove the temporary `test-manual.mjs` verification script — it's harmless (just the test harness I used), but you may want to delete it yourself.
+
+**Setup complete:**
+- `package.json` configured with `"type": "module"`, Fastify installed as a dependency.
+- `solution.mjs` exports `buildApp()`, returning a fresh Fastify instance with an empty in-memory user store per call, implementing all three endpoints with JSON Schema validation (body/params/querystring) and response schemas that only include `id`, `name`, `email` — so passwords are stripped from output by Fastify itself, not manual filtering.
+- Verified via `app.inject()`: valid creates return 201, invalid email/password/name/missing-field all return 400 from Fastify's built-in validation, `GET /users/:id` returns 404 for missing/correct data for existing, non-integer/negative ids return 400, `GET /users` pagination and limit bounds (1–50, default 10) all work, and no response ever contained the password string.

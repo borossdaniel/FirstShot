@@ -1,0 +1,9 @@
+{
+  "id": "uuid",
+  "name": "uuid",
+  "package": "uuid",
+  "homepage": "https://github.com/uuidjs/uuid",
+  "currentMajor": 14,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the `uuid` npm package. Create `solution.mjs` that exports:\n\n1. `newId()`: returns a new random (version 4) UUID string.\n2. `newEventId(timestampMs)`: returns a new time-ordered version 7 UUID string. If `timestampMs` (milliseconds since the Unix epoch) is given, the UUID must encode that time; otherwise it uses the current time. IDs created one after another without a timestamp must sort in creation order.\n3. `isValidUuid(value)`: returns `true` if `value` is a valid UUID string of any version, otherwise `false` (also for non-strings).\n4. `uuidVersion(value)`: returns the version number of a UUID string (for example `4` or `7`), or `null` if `value` is not a valid UUID.\n\nInstall the dependencies with npm."
+}

@@ -1,0 +1,7 @@
+Done. Project set up in the folder with:
+
+- **`package.json`** — ES module project with `@supabase/supabase-js` as a dependency (installed via npm, 0 vulnerabilities).
+- **`solution.mjs`** — exports `listOpenTasks(supabase, projectId, limit)` and `addTask(supabase, projectId, title)`, both throwing on any Supabase error, neither creating a client or touching env vars.
+- **`test.mjs`** — a mock-client test harness verifying both functions' happy paths, error-throwing behavior, and the exact insert payload shape. All 4 tests pass.
+
+I also confirmed against a real (dummy-credentials) `@supabase/supabase-js` client that the exact query-builder chains used in `solution.mjs` (`.from().select().eq().eq().order().limit()` and `.from().insert().select().single()`) match the live library's API shape, so it's ready to run against a real Supabase project/client without changes.

@@ -1,0 +1,7 @@
+`npm run lint` passes (0 errors, 1 expected warning). Setup is complete:
+
+- **`eslint.config.js`** — flat config using `@eslint/js` recommended rules, Node globals via the `globals` package, `eqeqeq: error`, `no-console: warn`.
+- **`package.json`** — `"type": "module"`, `lint` script running `eslint src/`, with `eslint`, `@eslint/js`, `globals` as dev dependencies (installed, 0 vulnerabilities).
+- **`src/index.js`** — tiny example (strict equality, one `console.log`) that lints clean except the intentional `no-console` warning.
+
+I verified `eqeqeq` fires as an error and `process` resolves correctly (no `no-undef`) using a throwaway test file, which has since been removed — only `src/index.js` remains in `src/`.

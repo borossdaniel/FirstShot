@@ -1,0 +1,11 @@
+`rm` is blocked under this permission mode, so I'll leave `test.mjs` and `test.mock.mjs` in place rather than force a workaround — they're harmless verification scripts, not part of the deliverable.
+
+Setup is complete in this folder:
+- **package.json** — `"type": "module"`, dependency on `@anthropic-ai/sdk`
+- **node_modules** — installed via `npm install @anthropic-ai/sdk`
+- **solution.mjs** — exports `weatherAnswer(client, question)`:
+  - Calls `client.messages.create` with `model: "claude-sonnet-5-5"`, `max_tokens: 1024`, and the `get_weather` tool (`{ city: string }` input schema)
+  - Loops while `stop_reason === "tool_use"`: appends the assistant turn, runs `getWeather(city)` locally (returns `{ city, temp_c: 21 }`), sends it back as a `tool_result` message keyed to the correct `tool_use_id`
+  - Returns the concatenated text blocks once Claude stops with a final answer
+
+Verified with a mock client simulating the real Messages API shape (one `tool_use` turn, then `end_turn`) — confirmed correct model/params, correct tool-result formatting/IDs, and correct loop termination with the right final string returned. No live API key was present in this environment, so I couldn't make a real network call, but the logic path matches the SDK's documented request/response shapes exactly.

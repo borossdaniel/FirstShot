@@ -1,0 +1,9 @@
+{
+  "name": "uuid-solution",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "uuid": "^14.0.3"
+  }
+}

@@ -1,0 +1,1 @@
+{ "name": "ref", "private": true, "type": "module", "scripts": { "lint": "eslint src" }, "devDependencies": { "eslint": "^10.0.0", "@eslint/js": "^10.0.0", "globals": "^17.0.0" } }

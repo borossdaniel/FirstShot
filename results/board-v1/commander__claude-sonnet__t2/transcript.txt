@@ -1,0 +1,1 @@
+Project is set up and fully verified: `package.json` (ES module, Commander dependency), `solution.mjs` exporting `buildProgram()`, and `cli.mjs` calling `.parse()`. Tested `greet`, `--shout`, `--times` (valid and invalid values rejected by Commander with exit code 1), and `--version` printing `1.2.3` — all work correctly.

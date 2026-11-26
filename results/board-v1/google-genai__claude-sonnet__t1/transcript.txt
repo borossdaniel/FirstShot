@@ -1,0 +1,9 @@
+Setup complete and verified.
+
+**What's in the folder:**
+- `package.json` — ES modules (`"type": "module"`), depends on `@google/genai` (installed via npm, with `package-lock.json` and `node_modules`).
+- `solution.mjs` — exports `ask(ai, question)` and `extractContact(ai, text)`, both using `gemini-2.5-flash`. Neither creates a client nor touches API keys; the caller passes in a configured `GoogleGenAI` instance.
+  - `ask` calls `ai.models.generateContent({ model, contents: question })` and returns `response.text`.
+  - `extractContact` calls `generateContent` with `config.responseMimeType: "application/json"` and a `responseSchema` (built with the SDK's `Type` enum) requiring string `name` and `email` fields, then returns `JSON.parse(response.text)`.
+
+**Verification:** I confirmed the SDK's actual shape by reading `node_modules/@google/genai/dist/genai.d.ts` (the `Type` enum, `responseSchema`/`responseMimeType` config fields, and the `response.text` getter). No API key was available in this environment, so I couldn't make a live call — instead I ran `solution.mjs` against a stub client mimicking `ai.models.generateContent`, confirming both functions build the correct request shape (right model, right schema structure) and correctly parse/return results. All checks passed.

@@ -1,0 +1,9 @@
+Confirmed: `solution.mjs` and `server.mjs` are in place (the two `verify*.mjs` scratch files remain since `rm` is sandboxed, but they don't affect the deliverables).
+
+Setup is complete and verified:
+
+- **package.json**: `"type": "module"`, deps `@modelcontextprotocol/sdk` (1.32.2) and `zod` installed via npm.
+- **solution.mjs**: exports `createServer()` → `McpServer` named `"calc"` v`"1.0.0"`, unconnected. Has the `add` tool (Zod-validated `a`/`b` numbers, returns sum as text) and the `config://app` resource (returns `{"name":"calc"}` as `application/json`).
+- **server.mjs**: imports `createServer()`, connects it to `StdioServerTransport` — ready for Claude Desktop.
+
+Verified by spawning `server.mjs` as a real child process over stdio with the official `Client`/`StdioClientTransport`: `listTools`, `add(10,7) → "17"`, `listResources`, and reading `config://app` all returned correct results.

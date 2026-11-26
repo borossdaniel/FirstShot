@@ -1,0 +1,7 @@
+Set up and verified:
+
+- **package.json** — ES module project, Cheerio as the only dependency.
+- **solution.mjs** — exports `parseProducts(html, pageUrl)`: selects `.product` elements, extracts `.product-title` text (entity-decoded and whitespace-collapsed by Cheerio's text parsing + a regex collapse), parses `.price` after cloning and stripping any `<del>` element, resolves `a.product-link[href]` against `pageUrl` via `new URL(href, pageUrl)`, and flips `inStock` to `false` when the product also has `sold-out`.
+- **test.mjs** — covers entity decoding, whitespace collapsing, comma-formatted prices, `<del>` old-price stripping, relative (`chair`, `../sale/rug`) and absolute-path (`/absolute/lamp`) URL resolution, and the `sold-out` class.
+
+Ran `node test.mjs` — all assertions pass.

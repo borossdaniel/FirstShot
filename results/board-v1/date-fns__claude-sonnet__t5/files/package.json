@@ -1,0 +1,9 @@
+{
+  "name": "date-fns-solution",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "date-fns": "^4.4.0"
+  }
+}

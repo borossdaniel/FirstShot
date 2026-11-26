@@ -1,0 +1,8 @@
+Deletion via `rm` is blocked in this environment (destructive-command guard), so I'll leave `verify.mjs` in place rather than force it — it's a harmless smoke-test script, not part of the required deliverable.
+
+Setup complete in this folder:
+- `package.json` — ES module project with `@google/genai` installed via npm
+- `solution.mjs` — exports `ask(ai, question)` and `extractContact(ai, text)`, both using `gemini-2.5-flash`; `extractContact` uses `responseMimeType: "application/json"` + a `responseSchema` (via the SDK's `Type` enum) requiring string `name` and `email` fields, and returns the parsed object
+- `verify.mjs` — smoke test (not required, feel free to delete) that confirms both functions build valid requests and reach Google's API correctly; it fails only on auth since no real API key exists in this environment
+
+To use it for real, construct a client yourself and pass it in, e.g. `new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })`, then call `ask(ai, "...")` or `extractContact(ai, "...")`.

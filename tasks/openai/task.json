@@ -1,0 +1,9 @@
+{
+  "id": "openai",
+  "name": "OpenAI SDK (Responses API)",
+  "package": "openai",
+  "homepage": "https://platform.openai.com/docs",
+  "currentMajor": 7,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the official `openai` npm package and Zod. Create `solution.mjs` that exports two async functions. Both take an already-configured OpenAI client as their first argument (do not create a client or read API keys):\n\n1. `ask(client, question)`: send the question to model `gpt-5.2` using the Responses API (not Chat Completions) and return the answer as a plain string.\n2. `classify(client, text)`: use the Responses API with structured outputs and a Zod schema so the model must return `{ \"label\": \"spam\" | \"ham\" }`, and return that parsed object.\n\nInstall the dependencies with npm."
+}

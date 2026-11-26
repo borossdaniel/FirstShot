@@ -1,0 +1,5 @@
+Done. Project set up in this folder:
+
+- `package.json` — ES module project with `openai@^7.65.0` and `zod@^4.6.7` (both current majors, confirmed via firstshot).
+- `solution.mjs` — exports `ask(client, question)` using `client.responses.create()` (returns `response.output_text`), and `classify(client, text)` using `client.responses.parse()` with `zodTextFormat` to enforce `{ label: "spam" | "ham" }`, returning `response.output_parsed`. Both take the client as the first argument; no client/key creation in the file.
+- `verify.mjs` — smoke test with a mock client (no real API key available in this environment) confirming both functions call the Responses API with the right shape and return the right values. `node verify.mjs` passes.

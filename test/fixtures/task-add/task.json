@@ -1,0 +1,1 @@
+{ "id": "add", "name": "Add (test task)", "prompt": "Create solution.mjs exporting add(a, b).", "timeoutSec": 30 }

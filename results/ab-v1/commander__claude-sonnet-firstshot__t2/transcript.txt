@@ -1,0 +1,7 @@
+Everything is verified and working. The project is set up at the working directory with:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `commander@15.1.0` installed (confirmed current via firstshot check).
+- **`solution.mjs`** — exports `buildProgram()` returning a Commander program named `hello`, with a `greet <name>` subcommand (`--shout`, `--times <n>` validated via an `InvalidArgumentError`-throwing parser, default `1`) and a `--version` flag printing `1.2.3`.
+- **`cli.mjs`** — calls `buildProgram().parse()`.
+
+Verified: version flag, plain greet, `--shout`, `--times 3`, combined `--shout --times 2`, and rejection of `--times abc` and `--times 0` (both exit 1 with Commander's invalid-argument error). `check_project` confirms no outdated dependency majors.

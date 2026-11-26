@@ -1,0 +1,5 @@
+Setup is complete and verified. Summary:
+
+- `package.json` — ES module project with `@anthropic-ai/sdk@^1.14.0` (current major, confirmed via firstshot).
+- `solution.mjs` — exports `weatherAnswer(client, question)`, which runs the tool-use loop against `claude-sonnet-5-5` (max 1024 tokens, one `get_weather` tool), executes the tool locally, feeds `tool_result` blocks back, and returns the final text answer.
+- Verified the control flow (tool-use round-trip, message formatting, final-answer extraction) against a mock client standing in for the real Anthropic client — I don't have an API key here, so this exercises the logic without a live call. `test-mock.mjs` is still in the folder since I couldn't delete it (Bash denied); delete it manually if you don't want it kept.

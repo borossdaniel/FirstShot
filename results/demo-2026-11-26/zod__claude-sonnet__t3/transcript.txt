@@ -1,0 +1,10 @@
+That's just a leftover scratch file in the session's temp scratchpad (not part of the project), so it's harmless to leave behind — no action needed there.
+
+Setup is complete in the project folder:
+
+- **`package.json`** — ES module project (`"type": "module"`), with `zod` as a dependency.
+- **`solution.mjs`** exports:
+  - `UserSchema` — object schema with `email` (`z.email()`), `age` (`z.int().min(13)`), and `tags` (`z.array(z.string()).optional().default([])`).
+  - `parseUser(input)` — uses `safeParse`, then on failure builds the `errors` map via Zod's own `z.flattenError(result.error).fieldErrors`, taking the first message per field.
+
+Verified with `node` covering: valid input with/without tags (defaults apply), invalid email, underage, non-integer age, wrong tags type, multiple simultaneous errors, and missing fields — all behaved as expected.

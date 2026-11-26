@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "express",
+  "taskName": "Express",
+  "package": "express",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "express@5.3.0: wildcard route and async errors correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 40,
+  "costUsd": 0.2711331,
+  "turns": 12,
+  "installedVersion": "5.3.0",
+  "finishedAt": "2026-11-26T16:39:25.679Z"
+}

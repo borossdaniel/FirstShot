@@ -1,0 +1,16 @@
+{
+  "name": "firstshot-valibot-c3hx8v",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "valibot": "^1.5.0"
+  }
+}

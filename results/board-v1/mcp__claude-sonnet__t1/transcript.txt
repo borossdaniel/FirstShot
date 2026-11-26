@@ -1,0 +1,7 @@
+File deletion is blocked under this session's "don't ask" safety mode, so I'll leave `test-client.mjs` in place rather than force it — it's a harmless verification script, not part of the required deliverables, and doesn't interfere with `solution.mjs`/`server.mjs`.
+
+Setup is complete and verified:
+- `package.json` (`type: module`) with `@modelcontextprotocol/sdk` and `zod` installed via npm.
+- `solution.mjs` exports `createServer()` — an unconnected MCP server named `calc` v1.0.0 with the `add` tool (Zod-validated `a`/`b`, returns sum as text) and the `config://app` resource (returns `{"name":"calc"}` as `application/json`).
+- `server.mjs` connects `createServer()` to `StdioServerTransport` for use with Claude Desktop.
+- Verified via an in-memory MCP client: `add(2,3)` → `"5"`, and reading `config://app` → `{"name":"calc"}` with correct mime type. Also confirmed `server.mjs` correctly completes the stdio `initialize` handshake.

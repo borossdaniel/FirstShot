@@ -1,0 +1,10 @@
+rm is blocked by the sandbox, so `smoke-test.mjs` (my verification script) remains in the folder — harmless, but flagging it since I couldn't clean it up.
+
+Setup complete:
+
+- `package.json` — ES module project with `openai` (4.104.0) and `zod` (3.24.x) installed via npm.
+- `solution.mjs` exports:
+  - `ask(client, question)` — calls `client.responses.create({ model: 'gpt-5.2', input: question })` and returns `response.output_text`.
+  - `classify(client, text)` — calls `client.responses.parse()` with `zodTextFormat` built from a `z.object({ label: z.enum(['spam','ham']) })` schema, returning `response.output_parsed`.
+
+Verified by running both functions against a mocked client (checked request shape and return values) since no real client/API key is available in this environment — confirmed the `openai/helpers/zod` import resolves correctly and both functions execute end-to-end logically.

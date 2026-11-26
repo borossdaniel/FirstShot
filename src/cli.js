@@ -1,0 +1,190 @@
+import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { parseArgs } from 'node:util';
+import { preflight } from './agents.js';
+import { adviseOne, checkProject, formatProjectReport, parseTarget } from './advisor.js';
+import { init, stopHook } from './install.js';
+import { startMcpServer } from './mcp.js';
+import { writeReport } from './report.js';
+import { AgentUnavailableError, loadTasks, runAll, runTrial, VERSION } from './runner.js';
+
+const HELP = `firstshot ${VERSION} — can an AI agent use your library on the first try?
+
+Usage (for your project):
+  firstshot check [package...] [--pypi]         Current version + known agent mistakes for packages
+                                                (npm by default; --pypi or pypi:<name> for Python);
+                                                with no names, check this project's package.json,
+                                                requirements.txt and pyproject.toml
+  firstshot init [--local]                      Add FirstShot to this project (MCP tools, Claude Code
+                                                Stop hook, one line in CLAUDE.md)
+  firstshot mcp                                 Run the MCP server (stdio)
+  firstshot hook                                Claude Code Stop hook (reads hook JSON on stdin)
+
+Usage (benchmark):
+  firstshot run <task-or-tasks-dir> [options]   Run agents on tasks, save results
+  firstshot report <results-dir> [--out site]   Build the leaderboard page + badges
+  firstshot verify-tasks [tasks-dir] [ids...]   Prove each task's check accepts a known-good
+                                                solution and rejects known-bad ones (no AI used)
+
+Run options:
+  --agent <name>        claude | codex | gemini | fake        (default: claude)
+  --model <name>        model passed to the agent, e.g. sonnet  (default: agent's default)
+  --trials <n>          runs per task                           (default: 3)
+  --out <dir>           where results go                        (default: results/<timestamp>)
+  --max-budget-usd <n>  per-run spending cap (claude only)      (default: 2)
+  --fixture <dir>       folder the fake agent copies in (tests only)
+  --parallel <n>        trials to run at the same time         (default: 1)
+  --with-firstshot      install the FirstShot add-on in each workspace first (A/B test)
+  --keep                keep the temporary workspaces
+  --json                print results as JSON
+
+Re-running the same command with the same --out skips trials already saved.
+Exit code: 0 all passed, 1 some failed, 3 stopped because the agent was unavailable.
+`;
+
+export async function main(argv) {
+  const [cmd, ...rest] = argv;
+  if (!cmd || cmd === '-h' || cmd === '--help' || cmd === 'help') {
+    process.stdout.write(HELP);
+    return 0;
+  }
+  if (cmd === '--version' || cmd === '-v') {
+    console.log(VERSION);
+    return 0;
+  }
+  if (cmd === 'check') return cmdCheck(rest);
+  if (cmd === 'init') {
+    const done = init(process.cwd(), { local: rest.includes('--local') });
+    console.log(`FirstShot added:\n${done.map((d) => `  - ${d}`).join('\n')}\nRestart your agent so it picks up the new tools.`);
+    return 0;
+  }
+  if (cmd === 'mcp') {
+    startMcpServer();
+    return new Promise(() => {}); // keep running until stdin closes
+  }
+  if (cmd === 'hook') {
+    const chunks = [];
+    for await (const c of process.stdin) chunks.push(c);
+    const r = await stopHook(Buffer.concat(chunks).toString('utf8'));
+    if (r.message) process.stderr.write(r.message + '\n');
+    return r.code;
+  }
+  if (cmd === 'run') return cmdRun(rest);
+  if (cmd === 'report') return cmdReport(rest);
+  if (cmd === 'verify-tasks') return cmdVerify(rest);
+  console.error(`unknown command "${cmd}"\n`);
+  process.stdout.write(HELP);
+  return 2;
+}
+
+async function cmdCheck(args) {
+  const json = args.includes('--json');
+  const names = args.filter((a) => !a.startsWith('--'));
+  if (!names.length) {
+    const rep = await checkProject(process.cwd());
+    if (json) console.log(JSON.stringify(rep, null, 2));
+    else console.log(formatProjectReport(rep));
+    return rep.outdated.length ? 1 : 0;
+  }
+  const system = args.includes('--pypi') || args.includes('--python') ? 'pypi' : 'npm';
+  const out = await Promise.all(names.map((n) => adviseOne(...parseTarget(n, system).reverse())));
+  if (json) console.log(JSON.stringify(out, null, 2));
+  else console.log(out.map((o) => o.advice).join('\n\n'));
+  return out.every((o) => o.exists) ? 0 : 1;
+}
+
+async function cmdRun(args) {
+  const { values, positionals } = parseArgs({
+    args,
+    allowPositionals: true,
+    options: {
+      agent: { type: 'string', default: 'claude' },
+      model: { type: 'string' },
+      trials: { type: 'string', default: '3' },
+      out: { type: 'string' },
+      'max-budget-usd': { type: 'string', default: '2' },
+      fixture: { type: 'string' },
+      keep: { type: 'boolean', default: false },
+      json: { type: 'boolean', default: false },
+      parallel: { type: 'string', default: '1' },
+      'with-firstshot': { type: 'boolean', default: false },
+    },
+  });
+  if (!positionals[0]) throw new Error('run: give a task folder or a folder of tasks');
+  const tasks = loadTasks(positionals[0]);
+  if (!tasks.length) throw new Error(`no tasks found in ${positionals[0]}`);
+  const outDir = resolve(values.out || join('results', new Date().toISOString().replace(/[:.]/g, '-')));
+  const log = values.json ? () => {} : (m) => console.log(m);
+  const notReady = await preflight(values.agent);
+  if (notReady) throw new Error(notReady);
+  log(`FirstShot ${VERSION}: ${tasks.length} task(s) × ${values.trials} trial(s) with ${values.agent}${values.model ? `/${values.model}` : ''} → ${outDir}`);
+  let results;
+  try {
+    results = await runAll({
+      tasks,
+      agent: values.agent,
+      model: values.model,
+      trials: Number(values.trials),
+      outDir,
+      fixture: values.fixture && resolve(values.fixture),
+      maxBudgetUsd: Number(values['max-budget-usd']) || undefined,
+      keep: values.keep,
+      log,
+      parallel: Number(values.parallel) || 1,
+      variant: values['with-firstshot'] ? 'firstshot' : null,
+    });
+  } catch (err) {
+    if (!(err instanceof AgentUnavailableError)) throw err;
+    console.error(`\nStopped: ${err.message}\n${err.results.length} trial(s) saved, ${err.remaining} not run. Run the same command again later to continue.`);
+    return 3;
+  }
+  const passes = results.filter((r) => r.ok).length;
+  if (values.json) console.log(JSON.stringify(results, null, 2));
+  else console.log(`\n${passes}/${results.length} runs worked. Results in ${outDir}`);
+  return passes === results.length ? 0 : 1;
+}
+
+async function cmdReport(args) {
+  const { values, positionals } = parseArgs({
+    args,
+    allowPositionals: true,
+    options: { out: { type: 'string', default: 'site' }, 'include-fake': { type: 'boolean', default: false } },
+  });
+  const resultsDir = positionals[0] || 'results';
+  const outDir = resolve(values.out);
+  const { rows, results } = writeReport({ resultsDir, outDir, excludeAgents: values['include-fake'] ? [] : ['fake'] });
+  console.log(`Leaderboard: ${rows.length} row(s) from ${results.length} run(s) → ${join(outDir, 'index.html')}`);
+  return 0;
+}
+
+/**
+ * For each task with a reference/ folder: reference/good must pass, and every
+ * reference/bad-<category> must fail with exactly <category>. Uses the fake agent.
+ */
+async function cmdVerify(args) {
+  const tasksDir = args[0] || 'tasks';
+  const only = args.slice(1);
+  const tasks = loadTasks(tasksDir).filter((t) => !only.length || only.includes(t.id));
+  const outDir = mkdtempSync(join(tmpdir(), 'firstshot-verify-'));
+  let bad = 0;
+  let total = 0;
+  for (const task of tasks) {
+    const refDir = join(task.dir, 'reference');
+    if (!existsSync(refDir)) {
+      console.log(`- ${task.id}: no reference/ folder, skipped`);
+      continue;
+    }
+    for (const name of readdirSync(refDir).sort()) {
+      const want = name === 'good' ? 'pass' : name.replace(/^bad-/, '');
+      const r = await runTrial({ task, agent: 'fake', trial: name, outDir, fixture: join(refDir, name) });
+      total++;
+      const okay = r.category === want;
+      if (!okay) bad++;
+      console.log(`${okay ? '✓' : '✗'} ${task.id}/${name}: expected ${want}, got ${r.category}${okay ? '' : ` — ${r.detail}`}`);
+    }
+  }
+  rmSync(outDir, { recursive: true, force: true });
+  console.log(`\n${total - bad}/${total} reference checks behaved as expected.`);
+  return bad ? 1 : 0;
+}

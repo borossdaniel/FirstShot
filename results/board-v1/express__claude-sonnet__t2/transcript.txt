@@ -1,0 +1,7 @@
+Project is set up and verified in `firstshot-express-3EnvzU/`:
+
+- `package.json` — ES modules (`"type": "module"`), Express 5.3.0 as dependency, `npm start` runs `server.mjs`
+- `solution.mjs` — exports `createApp()` with `/health`, wildcard `/files/*splat`, async `/boom` (no try/catch), and error-handling middleware returning 500 JSON
+- `server.mjs` — separate entry point that calls `createApp().listen(...)`
+
+Tested live: `/health` → `{"status":"ok"}`, `/files/a/b/c.txt` → `{"path":"a/b/c.txt"}`, `/boom` → 500 with `{"error":"boom"}` (Express 5's built-in async-rejection handling routes it to the error middleware automatically).

@@ -1,0 +1,9 @@
+{
+  "id": "better-sqlite3",
+  "name": "better-sqlite3",
+  "package": "better-sqlite3",
+  "homepage": "https://github.com/WiseLibs/better-sqlite3",
+  "currentMajor": 13,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that stores data in SQLite using the better-sqlite3 library. Create `db.mjs` that exports:\n\n1. `openDb(filePath)`: opens (or creates) the SQLite database file at `filePath` and returns the better-sqlite3 database. It must run the schema migration: a `users` table (`id` integer primary key, `email` text, unique and required, `name` text, required) and an `orders` table (`id` integer primary key, `user_id` referencing `users.id`, `total_cents` integer, required). Track the schema version with SQLite's `user_version` pragma (it must be 1 after the migration) and only run the migration when the database is not yet at version 1, so opening an existing file again keeps its data. Orders must not be allowed to point to a user that does not exist: the database itself must reject them.\n2. `insertUsers(db, users)`: inserts an array of `{ email, name }` objects in a single transaction. If any row fails (for example a duplicate email), none of the rows may be saved and the error must be thrown. Returns the number of inserted users.\n3. `addOrder(db, { userId, totalCents })`: inserts an order and returns its new id as a number.\n4. `getUserByEmail(db, email)`: returns `{ id, email, name }` or `null` if there is no such user.\n5. `topSpenders(db, limit)`: returns up to `limit` users as `{ email, totalCents }` (the sum of their orders), highest total first, leaving out users with no orders.\n\nUse prepared statements with bound parameters for all queries that take input. Install the dependencies with npm."
+}

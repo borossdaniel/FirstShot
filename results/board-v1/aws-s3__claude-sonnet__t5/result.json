@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "aws-s3",
+  "taskName": "AWS S3 (JavaScript SDK)",
+  "package": "@aws-sdk/client-s3",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 5,
+  "ok": true,
+  "category": "pass",
+  "detail": "@aws-sdk/client-s3@3.1178.0: upload, paginated listing and presigned GET URL correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 82.4,
+  "costUsd": 0.4359644999999999,
+  "turns": 16,
+  "installedVersion": "3.1178.0",
+  "finishedAt": "2026-11-26T16:55:29.871Z"
+}

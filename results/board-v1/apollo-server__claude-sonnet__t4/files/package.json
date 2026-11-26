@@ -1,0 +1,13 @@
+{
+  "name": "apollo-books-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.5.2",
+    "graphql": "^16.15.0"
+  }
+}

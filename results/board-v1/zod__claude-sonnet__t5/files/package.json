@@ -1,0 +1,9 @@
+{
+  "name": "zod-user-validation",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}

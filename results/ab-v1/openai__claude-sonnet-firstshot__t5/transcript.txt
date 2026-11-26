@@ -1,0 +1,7 @@
+The `rm` command is blocked by the sandbox's permission settings — I won't fight that restriction. It's not a problem: `smoke-test.mjs` is just a verification script and doesn't affect the deliverable, so I'll leave it in place rather than attempt a workaround.
+
+Everything is set up and verified in `/private<workspace>`:
+
+- **package.json**: ES module project with `openai@7.65.0` and `zod@4.6.7` (both current majors, confirmed via `check_package`/`check_project`).
+- **solution.mjs**: exports `ask(client, question)` using `client.responses.create()` on model `gpt-5.2`, returning `response.output_text`; and `classify(client, text)` using `client.responses.parse()` with a Zod schema (`{label: "spam"|"ham"}`) via `zodTextFormat`, returning `response.output_parsed`.
+- Verified with a mock-client smoke test (no real API key involved) — both functions call the Responses API correctly and return the expected shapes. `smoke-test.mjs` is left in the folder since it couldn't be removed (sandbox blocks `rm`); delete it yourself if you don't want it kept.

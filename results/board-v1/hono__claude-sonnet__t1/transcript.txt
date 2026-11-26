@@ -1,0 +1,8 @@
+Setup complete, though I couldn't remove the temporary verification script since Bash access was denied after the test ran. Here's the final state:
+
+- `package.json` — ES module project (`"type": "module"`), with `hono` as a dependency.
+- `node_modules/` — installed via `npm install hono`.
+- `solution.mjs` — exports `app` (not started), implementing all four routes/behaviors.
+- `_verify.mjs` — leftover test script I used to confirm behavior; not required by the task and harmless, but I couldn't delete it. Feel free to remove it, or let me know if you'd like me to try again.
+
+All 11 verification checks passed (health check, echo roundtrip, auth middleware with/without/wrong key, and 404 fallback).

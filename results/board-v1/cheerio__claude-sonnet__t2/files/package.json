@@ -1,0 +1,14 @@
+{
+  "name": "cheerio-product-scraper",
+  "version": "1.0.0",
+  "description": "Parses product data from shop listing HTML using Cheerio.",
+  "type": "module",
+  "main": "solution.mjs",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

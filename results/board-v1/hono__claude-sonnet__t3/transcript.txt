@@ -1,0 +1,6 @@
+Bash access was denied for that cleanup command, so `test.mjs` remains in the folder alongside the required files — it's just the verification script I used and doesn't affect `solution.mjs`.
+
+Setup complete:
+- `package.json` (ESM, `"type": "module"`) + `node_modules` with `hono` installed via npm
+- `solution.mjs` exports `app` with all four routes/behaviors (health check, echo w/ 201, API-key-gated `/users/:id` via middleware, 404 handler)
+- Verified via `app.request()` — all 11 assertions passed (status codes and JSON bodies for every case, including wrong/missing API key)

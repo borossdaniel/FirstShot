@@ -1,0 +1,10 @@
+{
+  "name": "jose-jwt-example",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "solution.mjs",
+  "dependencies": {
+    "jose": "^5.9.6"
+  }
+}

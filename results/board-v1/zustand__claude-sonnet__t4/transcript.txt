@@ -1,0 +1,7 @@
+I'll leave `verify.mjs` in place rather than delete it — it's a working test file that confirms the solution behaves correctly, not just scratch debris.
+
+The project is set up in the working folder:
+
+- **`package.json`** — ES module project with `zustand` installed as a dependency.
+- **`solution.mjs`** — exports `createCartStore()`, `selectTotalCents()`, `selectItemCount()`, `onTotalChange()`, built on `createStore` from `zustand/vanilla`. All state updates use `.map()`/`.filter()`/spread to stay immutable.
+- **`verify.mjs`** — a test script exercising add/increment/setQty/remove/clear, immutability (checks array and item references change), and `onTotalChange` firing only on actual total changes (including unsubscribe behavior). Ran it with `node verify.mjs` — all checks passed.

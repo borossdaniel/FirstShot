@@ -1,0 +1,8 @@
+Server stopped. The Next.js app is set up at the project root with:
+
+- `app/page.js`, `app/posts/[slug]/page.js` — pages
+- `app/api/health/route.js`, `app/api/users/[id]/route.js` — API routes
+- `middleware.js` — handles the `/old/*` → `/new/*` redirect (query string preserved) before routing, matched only on `/old/:path*`
+- No external fonts or network-dependent build steps
+
+`npm install` and `npm run build` both succeed, and I verified all 5 behaviors against a running production server (now stopped) with curl.

@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "apollo-server",
+  "taskName": "Apollo Server",
+  "package": "@apollo/server",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 4,
+  "ok": true,
+  "category": "pass",
+  "detail": "@apollo/server@5.5.2: schema, nested resolvers, context and error codes correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 43.3,
+  "costUsd": 0.23431140000000003,
+  "turns": 7,
+  "installedVersion": "5.5.2",
+  "finishedAt": "2026-11-26T16:52:56.624Z"
+}

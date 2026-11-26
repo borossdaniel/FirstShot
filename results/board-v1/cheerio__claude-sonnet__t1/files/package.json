@@ -1,0 +1,9 @@
+{
+  "name": "cheerio-product-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  }
+}

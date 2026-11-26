@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "stripe",
+  "taskName": "Stripe Checkout",
+  "package": "stripe",
+  "agent": "claude",
+  "model": "sonnet+firstshot",
+  "variant": "firstshot",
+  "trial": 4,
+  "ok": true,
+  "category": "pass",
+  "detail": "stripe@23.2.0: subscription Checkout Session correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 49.1,
+  "costUsd": 0.2734614,
+  "turns": 11,
+  "installedVersion": "23.2.0",
+  "finishedAt": "2026-11-26T17:05:56.233Z"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "uuid-solution",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "uuid": "^11.0.0"
+  }
+}

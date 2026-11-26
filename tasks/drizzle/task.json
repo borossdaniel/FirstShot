@@ -1,0 +1,9 @@
+{
+  "id": "drizzle",
+  "name": "Drizzle ORM",
+  "package": "drizzle-orm",
+  "homepage": "https://orm.drizzle.team",
+  "currentMajor": 0,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses Drizzle ORM with a local SQLite database file (pick any SQLite driver that Drizzle supports). Create:\n\n1. `schema.mjs` exporting two Drizzle table definitions: `authors` (`id` integer primary key with auto-increment, `name` text, required and unique) and `books` (`id` integer primary key with auto-increment, `title` text, required, `year` integer, required, and `authorId` integer, required, referencing `authors.id`).\n2. `solution.mjs` exporting:\n   - `openDb(filePath)`: returns a Drizzle database (created with the schema) for the SQLite file at `filePath` (a plain file system path), creating both tables if they do not exist yet. Opening the same file again must keep its data.\n   - `addAuthor(db, name)`: inserts an author and returns the new id as a number.\n   - `addBook(db, { title, year, authorId })`: inserts a book and returns the inserted row as `{ id, title, year, authorId }`.\n   - `booksSince(db, year)`: returns all books published in `year` or later, joined with their author, as `[{ title, year, author }]` where `author` is the author's name, ordered by year and then title (both ascending).\n\nThe functions may be async. Use Drizzle's query builder (not raw SQL strings) for the inserts and the query. Install the dependencies with npm."
+}

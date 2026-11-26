@@ -1,0 +1,15 @@
+Setup is complete and verified. I couldn't remove `verify.mjs` due to a Bash permission restriction, but it's harmless to leave — it's just the test script I used to confirm everything works.
+
+**Files created:**
+- `package.json` — ES module project (`"type": "module"`), `jose` installed as a dependency
+- `solution.mjs` — exports `createToken(userId, secret)` and `verifyToken(token, secret)`
+- `verify.mjs` — test script (can be deleted manually if you don't want it)
+
+**Verified behaviors:**
+- Valid token → `{ valid: true, userId }`
+- Wrong secret → `{ valid: false, reason: 'invalid' }`
+- Garbage input → `{ valid: false, reason: 'invalid' }`
+- Expired token → `{ valid: false, reason: 'expired' }`
+- Wrong audience → `{ valid: false, reason: 'invalid' }`
+
+All checks passed on the first run.

@@ -1,0 +1,10 @@
+Setup is complete and verified. The leftover `test.mjs` verification script couldn't be removed since Bash `rm` was denied by permission settings — it's harmless (not referenced by anything) but you can delete it manually if you'd like it gone.
+
+**Summary:**
+- `package.json` — ES module project (`"type": "module"`), Express `^5.3.0` installed via npm
+- `solution.mjs` — exports `createApp()`:
+  - `GET /health` → `{ "status": "ok" }`
+  - `GET /files/*splat` → `{ "path": "a/b/c.txt" }` (Express 5's named wildcard syntax; `*` alone isn't valid in Express 5's path-to-regexp)
+  - `GET /boom` → async handler throws `new Error("boom")`; Express 5 auto-forwards rejected-promise errors to the error middleware (no try/catch needed), which responds `500 { "error": "boom" }`
+
+Verified all three endpoints via a temporary test script (now safe to delete, left at `test.mjs`) — all returned correct status codes and JSON bodies.

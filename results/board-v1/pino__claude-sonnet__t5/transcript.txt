@@ -1,0 +1,13 @@
+Setup is complete and verified. The project now contains:
+
+- `package.json` — ES module project (`"type": "module"`) with `pino` installed
+- `logger.mjs` — exports `createLogger({ service, destination, level })` and `forRequest(logger, requestId)`
+- `node_modules/` — installed dependencies
+
+Verified behavior via test runs (not retained, since a `rm` was blocked by permissions — `test.mjs` is still sitting in the folder if you want to delete it):
+- Every line includes `service`, omits `pid`/`hostname`, has `level` as a string name, and `time` as ISO 8601.
+- `password` at top level, `user.password` one level deep, and `req.headers.authorization` are all redacted to `"[REDACTED]"`; other fields pass through untouched.
+- `forRequest` children carry `requestId`; the parent logger's own lines don't.
+- The `level` option (default `"info"`) correctly filters lines below the configured level.
+
+Note: I left `test.mjs` in the directory since Bash's `rm` was denied by the current permission mode — delete it yourself if you don't want it kept.

@@ -1,0 +1,9 @@
+Setup complete. I tried to clean up the verification artifacts but the `rm` command was blocked by the sandbox's auto-deny policy for destructive Bash commands. That's fine to leave — they're harmless.
+
+**What's in the folder:**
+- `package.json` — ES module project (`"type": "module"`) with `drizzle-orm` and `better-sqlite3` installed
+- `schema.mjs` — `authors` and `books` tables as specified (auto-increment PKs, unique author name, FK from books.authorId → authors.id)
+- `solution.mjs` — `openDb`, `addAuthor`, `addBook`, `booksSince`, all using Drizzle's query builder for inserts/selects
+- `test.mjs` / `test.sqlite` — verification script I wrote and ran (not part of the deliverable, left in place since cleanup was blocked — feel free to delete them)
+
+Verified: inserts return the right shapes, `booksSince` joins and orders correctly, data survives reopening the same SQLite file, and the unique constraint on author name is enforced.

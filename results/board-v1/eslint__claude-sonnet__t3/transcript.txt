@@ -1,0 +1,7 @@
+`npm run lint` works and exits cleanly (0 errors, 1 expected warning from the `no-console` rule demonstrating it fires as a warning, not a failure).
+
+Setup complete:
+
+- **package.json**: `"type": "module"`, added `"lint": "eslint src"` script, installed `eslint`, `@eslint/js`, `globals` as devDependencies.
+- **eslint.config.js**: flat config extending `@eslint/js` recommended rules, Node globals via `globals.node` (so `process` etc. are recognized), plus `eqeqeq: error` and `no-console: warn`.
+- **src/index.js**: tiny ES module example (`add` function, `===` comparison, one `console.log`) that lints with 0 errors.

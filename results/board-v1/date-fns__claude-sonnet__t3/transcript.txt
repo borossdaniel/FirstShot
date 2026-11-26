@@ -1,0 +1,7 @@
+The `rm` command was blocked by permission settings. I'll leave `verify.mjs` in place rather than fight the restriction — it's harmless and doubles as a usage example.
+
+Project is set up and verified in `/private<workspace>`:
+
+- `package.json` — ES modules (`"type": "module"`), `date-fns` dependency installed via npm.
+- `solution.mjs` — exports `nextBusinessDays`, `humanGap`, `weekLabel`, all built on date-fns (`addDays`, `isSaturday`/`isSunday`, `formatDistanceStrict`, `getISOWeek`/`getISOWeekYear`, `format`, `parseISO`).
+- `verify.mjs` — a quick smoke test I ran with `node verify.mjs`; output confirmed correct results, including edge cases like Friday→weekend skipping and ISO week-year rollover (`2027-01-01` → `2026-W53`).

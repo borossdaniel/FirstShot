@@ -1,0 +1,12 @@
+Everything checks out. Project is set up at `/private<workspace>`:
+
+- `package.json` — ES module project (`"type": "module"`), `commander@^15.1.0` (current major, verified via firstshot).
+- `solution.mjs` — exports `buildProgram()`: builds a `hello` Commander program with `--version` → `1.2.3`, and a `greet <name>` subcommand with `--shout` and `--times <n>` (validated via a parser function that throws `InvalidArgumentError` for non-integers or non-positive values — no `process.argv` parsing inside this file).
+- `cli.mjs` — calls `buildProgram().parse()`.
+
+Verified behavior:
+- `node cli.mjs --version` → `1.2.3`
+- `node cli.mjs greet World` → `Hello, World!`
+- `node cli.mjs greet World --shout --times 3` → `HELLO, WORLD!` printed 3 times
+- `node cli.mjs greet World --times abc` → Commander errors: `option '--times <n>' argument 'abc' is invalid. must be a positive integer.` (exit code 1)
+- `node cli.mjs greet World --times 0` → same style of Commander validation error (exit code 1)

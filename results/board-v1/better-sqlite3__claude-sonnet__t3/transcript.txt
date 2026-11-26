@@ -1,0 +1,5 @@
+Project is set up and verified:
+
+- **`package.json`** — ES module project, `better-sqlite3` dependency installed.
+- **`db.mjs`** — exports `openDb`, `insertUsers`, `addOrder`, `getUserByEmail`, `topSpenders`. Migration runs only when `user_version < 1`; `foreign_keys = ON` is set per connection so orphan orders are rejected by SQLite itself; all queries use prepared statements with bound params; `insertUsers` wraps inserts in a `db.transaction` so a duplicate email rolls back the whole batch.
+- **`verify.mjs`** — exercises every requirement (migration idempotency/persistence across reopen, transactional rollback, FK rejection, null on missing user, top-spenders ordering/limit excluding orderless users). Ran it: `ALL CHECKS PASSED`.

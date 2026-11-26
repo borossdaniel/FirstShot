@@ -1,0 +1,8 @@
+Project is set up and working.
+
+**What's there:**
+- `package.json` — ES modules (`"type": "module"`), deps `openai@^6.49.0` and `zod@^4.6.7` (upgraded from the npm-installed `^3.25.76` to resolve a high-severity zod advisory; `openai` supports both v3 and v4)
+- `node_modules` / `package-lock.json` — installed via `npm install`, 0 vulnerabilities
+- `solution.mjs` — exports `ask(client, question)` and `classify(client, text)`, both using the Responses API (`client.responses.create` / `client.responses.parse`) with model `gpt-5.2`; `classify` uses `zodTextFormat` from `openai/helpers/zod` with a `z.object({ label: z.enum(['spam', 'ham']) })` schema for structured output
+
+**Verification:** I don't have an API key (and wasn't meant to use one — the client is injected), so I ran a mock-client test exercising both functions: it asserts the request bodies sent to `responses.create`/`responses.parse` are shaped correctly (right model, right input, and — critically — that the real `zodTextFormat` call produces a strict `json_schema` format with the `spam`/`ham` enum), and that both functions correctly unwrap `output_text` / `output_parsed`. Both passed. The real network call will work identically once a configured client is passed in.

@@ -1,0 +1,7 @@
+Setup complete. In this folder:
+
+- **package.json** — ES module project (`"type": "module"`) with `@supabase/supabase-js` as a dependency, installed via npm.
+- **solution.mjs** — exports `listOpenTasks(supabase, projectId, limit)` and `addTask(supabase, projectId, title)`, both throwing on any Supabase error.
+- **test.mjs** — a mock-client test verifying the exact query chain (`select/eq/eq/order/limit` for reads, `insert/select/single` for writes) and that errors propagate as throws. All 4 tests pass.
+
+Since no real credentials/env vars were permitted, I verified correctness via the mock client rather than a live database; the real client just needs to be passed in by the caller.

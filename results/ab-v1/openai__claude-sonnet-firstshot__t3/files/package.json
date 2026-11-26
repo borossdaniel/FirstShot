@@ -1,0 +1,10 @@
+{
+  "name": "firstshot-openai-sample",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "openai": "^7.65.0",
+    "zod": "^4.6.7"
+  }
+}

@@ -1,0 +1,9 @@
+Confirmed working end-to-end over real HTTP, not just `inject()`.
+
+**Summary:** Set up an ES-module Node project with Fastify 5 (`npm install` done, 0 vulnerabilities). `solution.mjs` exports `buildApp()` with a fresh in-memory user array per call, and implements:
+
+- `POST /users` — schema-validates `name` (1–50 chars), `email` (format: email), `password` (≥8 chars), all required; returns 201 with `{id, name, email}` via a response schema that omits `password`.
+- `GET /users/:id` — integer `id` ≥ 1 via params schema; 200 with user or 404 `{error: "not found"}`.
+- `GET /users?limit=` — integer 1–50, default 10; returns `{limit, users}`.
+
+Invalid input (bad email, short password, long name, missing fields, bad/zero/negative id, out-of-range limit) is rejected with 400 by Fastify's built-in AJV validation — verified with both `test.mjs` (covers all success/failure/boundary cases, all passing) and a real HTTP listen+fetch check.

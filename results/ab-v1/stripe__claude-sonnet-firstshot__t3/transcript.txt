@@ -1,0 +1,8 @@
+The `rm` was blocked by the sandbox's don't-ask mode (destructive command auto-denied). That's fine — `verify.mjs` is harmless to leave; it's just the test script I used to confirm the function works, not part of the required deliverable.
+
+Dependency check confirms `stripe` is on its current major version. Everything is set up and verified:
+
+- `package.json` — ES module project with `stripe@23.2.0`
+- `node_modules/` installed via npm
+- `solution.mjs` — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, creates a subscription-mode Checkout Session (price + quantity 1), pre-fills `customer_email`, sets `success_url` to `<baseUrl>/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can look up the completed session), `cancel_url` to `<baseUrl>/pricing`, and returns `session.url`
+- Verified by running it against a mock Stripe client — it returned the checkout URL and passed all the session-parameter assertions

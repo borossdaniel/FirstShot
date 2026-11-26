@@ -1,0 +1,9 @@
+{
+  "id": "trpc",
+  "name": "tRPC",
+  "package": "@trpc/server",
+  "homepage": "https://trpc.io",
+  "currentMajor": 11,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with a tRPC server router and Zod for input validation. No HTTP server is needed. Create `solution.mjs` that exports `appRouter` and `createCaller`, where `createCaller(ctx)` returns a server-side caller for the router. The context is `{ user: { id: string } | null }`. Keep todos in memory, with ids 1, 2, 3, ... across all users.\n\n1. `greeting.hello` query: input `{ name }`, a string of 1 to 50 characters. Returns `Hello, <name>!`.\n2. `todo.add` mutation: input `{ title, priority }`. `title` is trimmed and must then be 1 to 100 characters; `priority` is `low`, `normal` or `high` and defaults to `normal`. Returns the new todo `{ id, title, priority, done: false }` for the current user.\n3. `todo.list` query: returns the current user's todos only.\n4. `todo.toggle` mutation: input `{ id }`, a positive integer. Flips `done` on one of the current user's todos and returns it.\n\nInvalid input must be rejected by the Zod input validation. Every `todo.*` procedure requires a signed-in user and must fail with tRPC's standard unauthorized error code otherwise; use a middleware for this. Toggling a todo that does not exist or belongs to someone else must fail with tRPC's standard not-found error code.\n\nInstall the dependencies with npm."
+}

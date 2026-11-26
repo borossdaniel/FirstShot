@@ -1,0 +1,7 @@
+Project is set up and verified. Summary:
+
+- **package.json** — ES module project (`"type": "module"`) with `stripe@^23.2.0` (current latest per firstshot check) as a dependency, already installed via `npm install stripe@latest`.
+- **solution.mjs** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which creates a `subscription`-mode Checkout Session (price + quantity 1), pre-fills `customer_email`, sets `success_url` to `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` (per firstshot's note, so the success page can look up the completed session from the query string) and `cancel_url` to `${baseUrl}/pricing`, and returns `session.url`.
+- Verified behavior by running it against a mock Stripe client (`verify.mjs`) — confirmed correct params and return value, then ran `firstshot check_project`, which reports the one dependency is on its current major.
+
+One note: I wrote a small `verify.mjs` test script to confirm the function works, then tried to delete it via Bash `rm`, but that was denied by the current permission mode. It's harmless to leave (or you can delete it yourself) — it's not part of the required deliverable, just the proof it runs.

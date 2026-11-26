@@ -1,0 +1,5 @@
+Project is set up and verified:
+
+- **`package.json`** — ES modules (`"type": "module"`), depends on `uuid@^14.0.3`, `npm test` runs the test script.
+- **`solution.mjs`** — exports `newId()` (v4), `newEventId(timestampMs)` (v7, uses `{ msecs }` option when given, defaults to current time otherwise), `isValidUuid(value)`, `uuidVersion(value)`.
+- **`test.mjs`** — verifies random v4 uniqueness/validity, that successive v7 ids without a timestamp sort in creation order, that identical timestamps produce matching time-prefixes and differing timestamps sort correctly, and the validity/version checks for invalid/non-string inputs. `npm test` passes.

@@ -1,0 +1,5 @@
+Everything works as expected: valid input passes through (with `newsletter` defaulting to `false` when omitted), and invalid input returns the correctly flattened per-field error-message arrays, including the custom messages for `email` and `password`.
+
+Project is set up at the working directory:
+- `package.json` — ES module, `valibot` dependency installed via npm
+- `solution.mjs` — exports `SignupSchema` and `parseSignup(input)`, using `v.safeParse` + `v.flatten(result.issues).nested` for the error object

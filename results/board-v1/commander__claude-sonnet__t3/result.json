@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "commander",
+  "taskName": "Commander.js",
+  "package": "commander",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 3,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "commander@12.1.0 installed, current major is 15",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 45.1,
+  "costUsd": 0.2749082999999999,
+  "turns": 12,
+  "installedVersion": "12.1.0",
+  "finishedAt": "2026-11-26T16:36:09.325Z"
+}

@@ -1,0 +1,8 @@
+The project is set up and verified. Final state in the folder:
+
+- `package.json` — ES module project (`"type": "module"`), deps on `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner`
+- `package-lock.json`, `node_modules/` — installed via npm
+- `solution.mjs` — exports `uploadJson`, `listKeys`, `getDownloadUrl`, each taking an already-configured S3 client as the first argument
+- `verify.mjs` — a test harness (mock client for upload/list, real `S3Client` with dummy static credentials for the presigner) confirming correct behavior without touching real AWS or env vars
+
+Verified: `uploadJson` sends `PutObjectCommand` with `ContentType: application/json` and JSON body; `listKeys` pages through `ListObjectsV2Command` via `ContinuationToken`/`IsTruncated` to return all matching keys; `getDownloadUrl` produces a presigned GET URL with `X-Amz-Expires=900` (15 minutes). All checks passed with no credentials or environment variables read by `solution.mjs` itself.

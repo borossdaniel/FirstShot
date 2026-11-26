@@ -1,0 +1,10 @@
+{
+  "name": "apollo-books-server",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@apollo/server": "^5.5.2",
+    "graphql": "^16.15.0"
+  }
+}

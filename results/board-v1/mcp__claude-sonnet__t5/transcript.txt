@@ -1,0 +1,11 @@
+The `rm` command is being blocked in this environment's non-interactive mode. I'll leave `test-verify.mjs` in place — it's a harmless verification script, not a deliverable you need to use, but feel free to delete it.
+
+Setup complete:
+
+- **package.json** — ES module project (`"type": "module"`) with `@modelcontextprotocol/sdk` (1.32.2) and `zod` installed via npm.
+- **solution.mjs** — exports `createServer()`, returning an unconnected `McpServer` named `"calc"` v`"1.0.0"` with:
+  - tool `add` (Zod-validated `a`/`b` numbers) → returns sum as text, e.g. `"5"`
+  - resource `config://app` → returns `{"name":"calc"}` as `application/json`
+- **server.mjs** — imports `createServer()`, connects it to `StdioServerTransport`, ready to be wired into Claude Desktop's MCP config.
+
+Verified end-to-end using the SDK's in-memory client/transport: `add(2,3)` returned `"5"`, and reading `config://app` returned the exact JSON text with the correct mime type. Also confirmed `server.mjs` boots cleanly over stdio with no errors.

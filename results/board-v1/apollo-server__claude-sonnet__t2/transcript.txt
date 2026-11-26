@@ -1,0 +1,6 @@
+That glob recursed into node_modules too. Top-level files are already confirmed via Read/Write earlier — `package.json`, `package-lock.json`, `node_modules/`, and `solution.mjs` are all in place at the project root. The smoke test confirmed everything works correctly.
+
+**Summary:**
+- `package.json` — ES module project (`"type": "module"`) with `@apollo/server` v5 and `graphql` as dependencies, installed via `npm install`.
+- `solution.mjs` — exports `createServer()`, returning a fresh `ApolloServer` instance each call, with in-memory authors/books data created in a closure (so each call starts fresh and instances don't share state).
+- Verified via a full smoke test covering: `books` (all + filtered by `authorId`, id-ordered), `book(id)` (found/not-found → null), nested `Author.books`/`Book.author` resolvers, `addBook` success (sequential ids "4", "5", ...), `addBook` without a user → `UNAUTHENTICATED`, `addBook` with a nonexistent `authorId` → `BAD_USER_INPUT`, optional `year` defaulting to null, and isolation between separate `createServer()` instances. All checks passed.

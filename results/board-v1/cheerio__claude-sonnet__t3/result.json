@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "cheerio",
+  "taskName": "Cheerio",
+  "package": "cheerio",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 3,
+  "ok": true,
+  "category": "pass",
+  "detail": "cheerio@1.2.0: products, prices, absolute links and stock status correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 37.8,
+  "costUsd": 0.2024187,
+  "turns": 7,
+  "installedVersion": "1.2.0",
+  "finishedAt": "2026-11-26T16:57:38.226Z"
+}

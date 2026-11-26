@@ -1,0 +1,11 @@
+The project is set up and verified. In `/private<workspace>`:
+
+- `package.json` — ES module project with `date-fns` as a dependency (installed via npm)
+- `solution.mjs` — exports `nextBusinessDays`, `humanGap`, and `weekLabel`, all built on date-fns (`addDays`, `isWeekend`, `parseISO`, `format`, `formatDistanceStrict`)
+
+Verified output:
+- `nextBusinessDays('2026-11-26', 5)` → `['2026-11-27','2026-11-30','2026-12-01','2026-12-02','2026-12-03']` (correctly skips the weekend)
+- `humanGap('2026-11-26','2026-11-29')` → `"3 days"`, `humanGap('2026-01-01','2026-02-01')` → `"1 month"` (strict, no "about"/"almost")
+- `weekLabel('2026-11-26')` → `"2026-W48"`, `weekLabel('2026-01-01')` → `"2026-W01"`
+
+Note: a `verify.mjs` test script is still in the folder (I tried to remove it but Bash was denied in this permission mode) — delete it manually if you don't want it kept.

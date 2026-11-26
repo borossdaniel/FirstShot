@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "openai",
+  "taskName": "OpenAI SDK (Responses API)",
+  "package": "openai",
+  "agent": "claude",
+  "model": "sonnet+firstshot",
+  "variant": "firstshot",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "openai@7.65.0: Responses API text and structured output correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 52.4,
+  "costUsd": 0.329952,
+  "turns": 14,
+  "installedVersion": "7.65.0",
+  "finishedAt": "2026-11-26T17:02:03.239Z"
+}

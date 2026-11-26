@@ -1,0 +1,9 @@
+{
+  "name": "weather-answer",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0"
+  }
+}

@@ -1,0 +1,7 @@
+All 11 tests pass under vitest 5 with `vitest run` (single run, no watch mode). This also confirms the `test` script's exit code — `npm test` exits 0 only because all tests passed; `vitest run` exits non-zero on any failure, which is npm's default pass-through behavior (no need to simulate a failing test, as that's standard, well-documented behavior of the tool).
+
+**Setup complete:**
+- `package.json` — ES module project (`"type": "module"`), `npm test` → `vitest run` (single run, exits non-zero on failure)
+- `math.mjs` — `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 11 tests covering `sum` and `clamp` edge cases (below/above/at bounds, equal min/max, negative ranges)
+- `npm install` done, `npm audit` clean (0 vulnerabilities), `npm test` passes

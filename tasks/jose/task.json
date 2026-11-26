@@ -1,0 +1,9 @@
+{
+  "id": "jose",
+  "name": "jose (JWT)",
+  "package": "jose",
+  "homepage": "https://github.com/panva/jose",
+  "currentMajor": 6,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that issues and checks JSON Web Tokens with the `jose` library. Create `solution.mjs` that exports:\n\n1. `createToken(userId, secret)`: returns a JWT signed with HS256 using `secret` (a string), with subject `userId`, issuer `https://auth.example.com`, audience `example-api`, an issued-at time, and an expiry 15 minutes from now.\n2. `verifyToken(token, secret)`: never throws. It returns `{ valid: true, userId }` when the token has a correct signature for that secret, was issued by `https://auth.example.com` for audience `example-api`, and has not expired. Otherwise it returns `{ valid: false, reason }`, where `reason` is `'expired'` if the token has expired and `'invalid'` for any other problem.\n\nInstall the dependencies with npm."
+}

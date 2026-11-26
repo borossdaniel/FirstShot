@@ -1,0 +1,9 @@
+I'll leave `test.mjs` in place rather than fight the permission denial — it's harmless and actually doubles as a verification script.
+
+Project is set up and verified in `/private<workspace>/`:
+
+- **`package.json`** — ES module project with `date-fns` as a dependency
+- **`solution.mjs`** — exports `nextBusinessDays`, `humanGap`, `weekLabel`, all implemented with date-fns
+- **`test.mjs`** — quick verification script (ran successfully, kept for reference)
+
+All three functions produced correct output, including ISO week-year edge cases (Dec 29, 2025 → `2026-W01`).

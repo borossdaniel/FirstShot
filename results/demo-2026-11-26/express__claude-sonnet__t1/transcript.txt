@@ -1,0 +1,9 @@
+`rm`/`unlink` are blocked in this sandboxed mode (destructive-command guard), so I can't delete the leftover `_test-server.mjs`. It's inert—just the smoke-test harness I wrote to confirm the server boots—and doesn't affect `solution.mjs` or the npm setup. The deliverables are complete:
+
+- **package.json**: `"type": "module"`, Express `^5.3.0` installed via npm.
+- **solution.mjs**: exports `createApp()` (no `listen` call) with:
+  - `GET /health` → `{"status":"ok"}`
+  - `GET /files/*splat` → joins `req.params.splat` into `{"path": "..."}` (verified with `/files/a/b/c.txt` → `{"path":"a/b/c.txt"}`)
+  - `GET /boom` → async handler throws; Express 5 forwards the rejection automatically to the error middleware (no try/catch needed), which responds `500` with `{"error":"boom"}`
+
+All three were exercised against a live running instance and returned the expected output.

@@ -1,0 +1,9 @@
+{
+  "id": "stripe",
+  "name": "Stripe",
+  "package": "stripe",
+  "homepage": "https://docs.stripe.com",
+  "currentMajor": 23,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the official `stripe` npm package. Create `solution.mjs` that exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`. It takes an already-configured Stripe client (do not create a client or read API keys) and creates a Stripe Checkout Session for a monthly subscription to that price (quantity 1), pre-filled with the customer's email. After payment the customer goes to `<baseUrl>/success`, and that page must be able to look up which Checkout Session just completed from the URL. If they cancel they go to `<baseUrl>/pricing`. Return the URL the customer should be redirected to.\n\nInstall the dependencies with npm."
+}

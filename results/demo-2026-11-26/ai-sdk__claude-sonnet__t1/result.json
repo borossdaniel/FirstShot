@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "ai-sdk",
+  "taskName": "Vercel AI SDK",
+  "package": "ai",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "ai@7.0.183: multi-step tool call and structured output correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 249.6,
+  "costUsd": 1.7437602,
+  "turns": 51,
+  "installedVersion": "7.0.183",
+  "finishedAt": "2026-11-26T16:02:09.532Z"
+}

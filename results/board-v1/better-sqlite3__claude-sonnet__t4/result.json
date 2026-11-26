@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "better-sqlite3",
+  "taskName": "better-sqlite3",
+  "package": "better-sqlite3",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 4,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "better-sqlite3@11.10.0 installed, current major is 13",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 59.5,
+  "costUsd": 0.21005820000000003,
+  "turns": 7,
+  "installedVersion": "11.10.0",
+  "finishedAt": "2026-11-26T16:56:50.349Z"
+}

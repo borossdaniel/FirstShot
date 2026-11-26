@@ -1,0 +1,15 @@
+Setup complete and verified. Summary:
+
+- **`index.html`** — static page using `bg-brand`, `text-brand`, and other Tailwind utility classes, linking to `./dist/output.css`.
+- **`src/input.css`** — standard `@tailwind base/components/utilities` entry point.
+- **`tailwind.config.js`** — `content: ['./index.html']` and `theme.extend.colors.brand = '#0e7490'`.
+- **`package.json`** — `tailwindcss` installed as a dev dependency (`npm install` ran clean, 0 vulnerabilities), with script `"build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify"`.
+
+Ran `npm run build:css` — it succeeded and produced `dist/output.css` (6KB minified, confirming the content scan correctly purged unused classes rather than shipping the full Tailwind library). Verified the generated CSS directly:
+
+```
+.bg-brand{...background-color:rgb(14 116 144/...)}
+.text-brand{...color:rgb(14 116 144/...)}
+```
+
+`14 116 144` = `#0e7490`, matching the requested brand colour. Everything is in place and working.

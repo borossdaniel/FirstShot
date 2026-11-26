@@ -1,0 +1,9 @@
+{
+  "id": "zustand",
+  "name": "Zustand",
+  "package": "zustand",
+  "homepage": "https://zustand.docs.pmnd.rs",
+  "currentMajor": 5,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses Zustand for state management outside of React (this is a plain Node module, do not install or use React). Create `solution.mjs` that exports:\n\n1. `createCartStore()`: returns a new Zustand vanilla store (an object with `getState`, `setState` and `subscribe`). Its state has `items`, an array of `{ id, name, priceCents, qty }` (empty at the start), and these actions on the state:\n   - `addItem({ id, name, priceCents })`: adds the item with `qty` 1, or increases `qty` by 1 if an item with that id is already in the cart;\n   - `setQty(id, qty)`: sets the quantity; a quantity of 0 or less removes the item;\n   - `removeItem(id)`;\n   - `clear()`.\n   State updates must be immutable: never change the existing `items` array or item objects in place.\n2. `selectTotalCents(state)` and `selectItemCount(state)`: selectors returning the cart total (sum of `priceCents * qty`) and the total number of units.\n3. `onTotalChange(store, listener)`: subscribes to the store and calls `listener(newTotalCents, previousTotalCents)` only when the total actually changes. Returns an unsubscribe function.\n\nInstall the dependencies with npm."
+}

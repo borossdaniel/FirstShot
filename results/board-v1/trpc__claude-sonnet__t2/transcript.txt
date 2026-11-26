@@ -1,0 +1,8 @@
+All tests pass. Project is set up at the working directory: `package.json` (ES modules, deps `@trpc/server` and `zod`), `solution.mjs` exporting `appRouter` and `createCaller`, and `test.mjs` (verification script, not required by the task but confirms everything works — safe to delete).
+
+Implementation notes:
+- `greeting.hello` validates name length 1–50, no auth required.
+- `todo.add`/`list`/`toggle` use a shared `isSignedIn` middleware that throws `UNAUTHORIZED` when `ctx.user` is null.
+- `title` is validated via `z.string().trim().pipe(z.string().min(1).max(100))` so trimming happens before the length check.
+- `priority` is `z.enum(['low','normal','high']).default('normal')`.
+- Todos are stored in memory with a global auto-incrementing id across all users; `list`/`toggle` filter by `ctx.user.id`, and `toggle` throws `NOT_FOUND` for missing or other-users' todos.

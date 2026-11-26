@@ -1,0 +1,9 @@
+{
+  "id": "marked",
+  "name": "Marked",
+  "package": "marked",
+  "homepage": "https://marked.js.org",
+  "currentMajor": 18,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the marked library to render Markdown. Create `solution.mjs` that exports `renderMarkdown(markdown)`, which returns the HTML string, with two customisations done through marked's renderer or extension API (not by editing the HTML afterwards):\n\n1. Every heading gets an `id` attribute with a slug of its text: the plain heading text (no Markdown syntax), lowercased, with every character that is not a letter, digit, space or hyphen removed, and spaces replaced by hyphens. If the same slug appears again in the same document, add `-1`, `-2` and so on to the repeats. Each call to `renderMarkdown` starts counting from scratch.\n2. Links to external `http://` or `https://` URLs open in a new tab: they get `target=\"_blank\"` and `rel=\"noopener noreferrer\"`. Other links (relative paths, `#anchors`, `mailto:`) are rendered normally, without those attributes.\n\nEverything else must render exactly as marked normally does, including inline formatting inside headings and link text, and link titles. Install the dependencies with npm."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "commander",
+  "name": "Commander.js",
+  "package": "commander",
+  "homepage": "https://github.com/tj/commander.js",
+  "currentMajor": 15,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses Commander.js for a command-line tool. Create `solution.mjs` that exports `buildProgram()`, which returns a new Commander program (do not parse `process.argv` in that file) named `hello` with:\n\n1. A subcommand `greet <name>` with options `--shout` (uppercase the greeting) and `--times <n>` (how many times to print it, a positive integer, default 1). The action prints `Hello, <name>!` with `console.log` once per time. `--times` must be validated by Commander itself: a value like `abc` or `0` must make Commander report an invalid-argument error.\n2. A `--version` flag that prints `1.2.3`.\n\nAlso add `cli.mjs` that runs `buildProgram().parse()`. Install the dependencies with npm."
+}

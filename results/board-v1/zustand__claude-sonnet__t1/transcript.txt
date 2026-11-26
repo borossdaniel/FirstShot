@@ -1,0 +1,7 @@
+I'll leave `verify.mjs` in place rather than deleting it — it's a harmless test script and the setup is already verified working.
+
+Setup complete in this folder:
+
+- **package.json** — ES module project (`"type": "module"`) with `zustand` installed via npm.
+- **solution.mjs** — exports `createCartStore()`, `selectTotalCents`, `selectItemCount`, `onTotalChange`, built on `zustand/vanilla` (no React).
+- **verify.mjs** — test script confirming immutable updates, qty-0 removal, change-detection in `onTotalChange`, and unsubscribe behavior. Ran successfully (`All checks passed.`).

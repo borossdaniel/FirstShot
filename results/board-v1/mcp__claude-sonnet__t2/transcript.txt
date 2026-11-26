@@ -1,0 +1,9 @@
+`rm` is blocked by the sandbox policy, so `test-client.mjs` (my verification script) remains in the folder — it's harmless but not part of the deliverable; delete it manually if you'd like it gone.
+
+Setup complete and verified:
+
+- **package.json** — ES module project with `@modelcontextprotocol/sdk` and `zod` installed via npm.
+- **solution.mjs** — exports `createServer()`, returning an unconnected `McpServer` named `"calc"` v`1.0.0` with the `add` tool (Zod-validated `a`/`b`, returns sum as text) and the `config://app` resource (`{"name":"calc"}`, `application/json`).
+- **server.mjs** — connects `createServer()` to `StdioServerTransport`, ready for Claude Desktop.
+
+I verified it end-to-end with a real MCP client over stdio: `add(2,3)` returned `"5"`, and reading `config://app` returned `{"name":"calc"}` with the correct mime type.

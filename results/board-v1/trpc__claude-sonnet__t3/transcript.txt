@@ -1,0 +1,10 @@
+Done. Project is set up in the working directory with:
+
+- **`package.json`** — ES module project with `@trpc/server` and `zod` installed via npm.
+- **`solution.mjs`** — exports `appRouter` and `createCaller`:
+  - `greeting.hello` query, no auth needed, validates `name` (1–50 chars).
+  - `todo.add` mutation (protected via a `requireUser` middleware), trims `title` then validates 1–100 chars, `priority` enum defaults to `normal`, returns the new todo with a global incrementing id.
+  - `todo.list` query (protected), returns only the caller's todos.
+  - `todo.toggle` mutation (protected), validates `id` as a positive integer, throws `NOT_FOUND` if the todo doesn't exist or belongs to another user.
+  - All `todo.*` procedures use a shared `protectedProcedure` built from the middleware, throwing `UNAUTHORIZED` when `ctx.user` is null.
+- **`test.mjs`** — a verification script exercising all scenarios (valid/invalid inputs, cross-user isolation, id continuity, unauthorized/not-found errors). Ran it with `node test.mjs` — all assertions pass.

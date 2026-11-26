@@ -1,0 +1,8 @@
+That's just scratchpad cleanup (non-essential), not the project itself — fine to skip. The project is complete and verified.
+
+Set up in `/private<workspace>/`:
+- `package.json` (ESM, `drizzle-orm` + `better-sqlite3`)
+- `schema.mjs` — `authors` and `books` tables with the specified constraints
+- `solution.mjs` — `openDb`, `addAuthor`, `addBook`, `booksSince`, all using Drizzle's query builder
+
+Verified via a throwaway script: inserts return correct ids/rows, data persists across reopening the same file, `booksSince` joins and orders correctly, and the unique constraint on `authors.name` is enforced.

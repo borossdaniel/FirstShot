@@ -1,0 +1,8 @@
+The `rm` command was blocked by permission settings, so `test.mjs` (my verification script, not a required deliverable) is still present. It's harmless to leave — just say so.
+
+Project is set up and verified:
+- `package.json` configured with `"type": "module"`, `zod` installed (v4.6.7)
+- `solution.mjs` exports `UserSchema` and `parseUser(input)`, using `z.flattenError` for error formatting
+- Ran a full test suite covering valid input, default `tags`, invalid email, underage, non-integer age, wrong-typed tags, and multi-field errors — all passed
+
+Note: I couldn't delete my scratch `test.mjs` file due to a blocked `rm` permission — it's left in the folder alongside `solution.mjs`; delete it manually if you don't want it kept.

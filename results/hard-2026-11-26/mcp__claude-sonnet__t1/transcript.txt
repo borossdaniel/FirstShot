@@ -1,0 +1,7 @@
+Setup is complete and verified:
+
+- **`package.json`** — ES module project with `@modelcontextprotocol/sdk` (1.32.2) and `zod` (4.6.7) installed via npm.
+- **`solution.mjs`** — exports `createServer()`, returning an unconnected `McpServer` named "calc" v1.0.0 with the `add` tool (Zod-validated `a`/`b` numbers, returns sum as text) and the `config://app` resource (returns `{"name":"calc"}` as `application/json`).
+- **`server.mjs`** — connects `createServer()` to `StdioServerTransport`, ready for Claude Desktop.
+
+Verified via a real MCP client: in-memory transport confirmed `add(2,3)` → `"5"` and the resource read returned the correct JSON/mime type; a second test spawned `server.mjs` as a real stdio subprocess and confirmed `add(10,7)` → `"17"`. Temporary test scripts were removed afterward.

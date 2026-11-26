@@ -1,0 +1,7 @@
+I'll leave `test.mjs` in place since removing it isn't permitted — it's a harmless verification script anyway and doesn't interfere with `solution.mjs`.
+
+The project is set up and verified in `/private<workspace>`:
+
+- **package.json** — ES module project, `jose` installed as a dependency.
+- **solution.mjs** — exports `createToken(userId, secret)` and `verifyToken(token, secret)` per spec (HS256, issuer `https://auth.example.com`, audience `example-api`, 15-minute expiry, never throws).
+- **test.mjs** — verification script covering happy path, wrong secret, garbage token, expired token, wrong issuer, and wrong audience. All 6 cases passed.

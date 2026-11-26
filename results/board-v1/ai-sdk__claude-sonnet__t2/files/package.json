@@ -1,0 +1,10 @@
+{
+  "name": "ai-sdk-solution",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "ai": "^7.0.183",
+    "zod": "^4.6.7"
+  }
+}

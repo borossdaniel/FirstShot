@@ -1,0 +1,6 @@
+All cases work correctly — valid input gets defaults applied (`tags: []`), invalid input returns per-field error messages via Zod's `flattenError` helper. No deprecation warnings from `z.string().email()` or `z.int()` in this Zod 4.6.7 install.
+
+Setup is complete and verified in `/private<workspace>/`:
+- `package.json` (ES modules, `zod` dependency)
+- `node_modules/` (installed via `npm install zod`)
+- `solution.mjs` exporting `UserSchema` and `parseUser(input)`

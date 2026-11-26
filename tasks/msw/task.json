@@ -1,0 +1,9 @@
+{
+  "id": "msw",
+  "name": "Mock Service Worker",
+  "package": "msw",
+  "homepage": "https://mswjs.io",
+  "currentMajor": 3,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses Mock Service Worker (MSW) to mock our shop API at `https://api.shop.test` in Node.js, for tests that use the global `fetch`. Create `solution.mjs` that exports `startMocking()`, which creates the MSW server, starts intercepting requests and returns the server so the caller can close it later (do not start it when the file is imported). Mock these endpoints:\n\n1. `GET /products/:id` returns `{ \"id\": \"<id>\", \"name\": \"Product <id>\" }`; for id `0` it returns status 404 with `{ \"error\": \"not found\" }`.\n2. `GET /search?q=<term>` returns `{ \"query\": \"<term>\", \"results\": [] }`.\n3. `POST /orders` takes a JSON body `{ productId, quantity }` and returns status 201 with `{ \"orderId\": \"ord_<n>\", \"productId\", \"quantity\" }`, where `n` counts orders from 1. If `quantity` is not a positive integer it returns status 400 with `{ \"error\": \"invalid quantity\" }`.\n4. `GET /health` simulates an outage: the request fails with a network error.\n\nAny request that no handler matches must fail with an error. It must never be sent to the real network.\n\nInstall the dependencies with npm."
+}
