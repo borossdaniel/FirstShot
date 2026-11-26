@@ -18,7 +18,7 @@ Without help, agents wrote `claude-opus-4-8`, `actions/checkout@v4` and `node:24
 npx oneshot-agent init        # MCP tools + a Claude Code Stop hook + one line in CLAUDE.md
 ```
 
-Not on npm yet? Run it from GitHub: `npx github:borossdaniel/FirstShot facts`
+Not on npm yet? Run it from GitHub: `npx github:borossdaniel/OneShot facts`
 
 | Command | What it does |
 |---|---|
@@ -72,7 +72,7 @@ These are small samples, so read them as hints, not rankings.
 ## Quick start
 
 ```bash
-git clone https://github.com/borossdaniel/FirstShot.git && cd OneShot
+git clone https://github.com/borossdaniel/OneShot.git && cd OneShot
 npm test                     # pipeline tests, no AI needed
 npm run verify-tasks         # proves each check passes good code and fails bad code
 node bin/oneshot.js run tasks --agent claude --model sonnet --trials 3
