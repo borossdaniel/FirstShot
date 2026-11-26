@@ -10,6 +10,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from '
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { formatRules, loadRules, modelRule } from './rules.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TTL_MS = 6 * 3600 * 1000;
@@ -57,10 +58,40 @@ async function getJson(url) {
 }
 
 const today = () => process.env.ONESHOT_TODAY || new Date().toISOString().slice(0, 10);
+
+// Hosted facts (oneshotagent.dev/facts.json) are refreshed from live sources every few hours,
+// so they're newer than the data shipped in the npm package. Used first; direct sources and
+// the bundled data are the fallback. Set ONESHOT_FACTS_URL=off to skip.
+let HOSTED = null;
+export async function loadHosted() {
+  const env = process.env.ONESHOT_FACTS_URL;
+  if (env === 'off') return null;
+  if (HOSTED) return HOSTED;
+  const urls = env ? [env] : ['https://oneshotagent.dev/facts.json', 'https://oneshot-tawny.vercel.app/facts.json'];
+  try {
+    HOSTED = await cached('hosted', async () => {
+      for (const u of urls) {
+        try {
+          const r = await fetch(u, { headers: { 'user-agent': 'oneshot-agent' }, signal: AbortSignal.timeout(5000) });
+          if (!r.ok) continue;
+          const d = await r.json();
+          if (d && d.generatedAt && d.models) return d;
+        } catch {
+          /* try the next one */
+        }
+      }
+      throw new Error('hosted facts unreachable');
+    });
+  } catch {
+    HOSTED = null;
+  }
+  return HOSTED;
+}
 const daysUntil = (date) => Math.round((Date.parse(date) - Date.parse(today())) / 86400000);
 
 /** Official retirement schedules (data/retirements.json), keyed by model name. */
 export function retirements() {
+  if (HOSTED?.retirements?.models) return { ...HOSTED.retirements, index: new Map(HOSTED.retirements.models.map((r) => [r.model, r])) };
   const p = join(here, '..', 'data', 'retirements.json');
   if (!existsSync(p)) return { index: new Map(), rows: [] };
   const d = JSON.parse(readFileSync(p, 'utf8'));
@@ -78,6 +109,7 @@ export function modelStatus(id) {
 
 /** Node.js and Python: current LTS / latest, plus matching Docker image tags. */
 export function runtimes() {
+  if (HOSTED?.runtimes?.node?.ltsMajor) return Promise.resolve(HOSTED.runtimes);
   return cached('runtimes', async () => {
     const [node, py] = await Promise.all([getJson(`${EOL()}/api/nodejs.json`), getJson(`${EOL()}/api/python.json`)]);
     const supported = (x) => x.eol === false || String(x.eol) > today();
@@ -105,6 +137,7 @@ export function runtimes() {
 
 /** Latest major for popular GitHub Actions. */
 export function actions() {
+  if (HOSTED?.actions && Object.keys(HOSTED.actions).length > 5) return Promise.resolve(HOSTED.actions);
   return cached('actions', async () => {
     const out = {};
     await Promise.all(ACTIONS.map(async (a) => {
@@ -122,17 +155,20 @@ export function actions() {
 
 /** Current AI model names (curated list shipped with the package). */
 export function models() {
+  if (HOSTED?.models?.providers) return HOSTED.models;
   const p = join(here, '..', 'data', 'models.json');
   return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : { providers: {} };
 }
 
-export async function currentFacts(topic = 'all') {
+export async function currentFacts(topic = 'all', dir = process.cwd()) {
+  await loadHosted();
   const want = (t) => topic === 'all' || topic === t;
   const out = {};
   const errors = [];
   if (want('models')) out.models = models();
   if (want('runtimes')) out.runtimes = await runtimes().catch((e) => (errors.push(e.message), null));
   if (want('github-actions')) out.actions = await actions().catch((e) => (errors.push(e.message), null));
+  out.rules = await loadRules(dir);
   return { ...out, errors };
 }
 
@@ -161,6 +197,8 @@ export function formatFacts(f) {
     lines.push(`Retiring soon (don't use; requests will fail after the date): ${soon.slice(0, 10).map((r) => `${r.model} on ${r.retires} → ${r.replacement}`).join('; ')}.`);
   }
   if (f.errors?.length) lines.push(`(Some sources were unreachable: ${f.errors.join('; ')})`);
+  const team = formatRules(f.rules);
+  if (team) lines.push(team);
   return lines.join('\n');
 }
 
@@ -197,11 +235,13 @@ function listFiles(dir, test, max = 400) {
 
 /** Find outdated model names, GitHub Action versions and runtime images in a project. */
 export async function scanProjectFacts(dir) {
+  await loadHosted();
+  const rules = await loadRules(dir);
   const problems = [];
   const m = models();
   const allCurrent = new Set(Object.values(m.providers || {}).flatMap((p) => p.newest.concat(p.alsoCurrent || [])));
   const oldModel = new RegExp(Object.values(m.providers || {}).map((p) => p.outdatedPattern).filter(Boolean).join('|') || '$^');
-  const codeFile = (p) => (/\.(m?[jt]sx?|cjs|py|json|ya?ml|toml|go|rb|java|kt|cs|php|rs|swift)$/.test(p) || /(^|\/)\.env(\.[\w-]+)?$/.test(p)) && !/(package-lock\.json|pnpm-lock\.yaml|yarn\.lock)$/.test(p);
+  const codeFile = (p) => (/\.(m?[jt]sx?|cjs|py|json|ya?ml|toml|go|rb|java|kt|cs|php|rs|swift)$/.test(p) || /(^|\/)\.env(\.[\w-]+)?$/.test(p)) && !/(package-lock\.json|pnpm-lock\.yaml|yarn\.lock|\.oneshot\.json)$/.test(p);
   const MODEL = /(?<![\w./@-])((?:claude-[a-z0-9.-]*[a-z0-9])|(?:gpt-[0-9](?:[a-z0-9.-]*[a-z0-9])?)|chatgpt-4o-latest|text-davinci-00\d|(?:babbage|davinci)-002)(?![\w.-])/g;
   const OMODEL = /['"`](o[1-4](?:-[a-z0-9-]+)?)['"`]/g;
   for (const f of listFiles(dir, codeFile)) {
@@ -209,6 +249,11 @@ export async function scanProjectFacts(dir) {
     readFileSync(f, 'utf8').split('\n').forEach((text, i) => {
       const ids = new Set([...text.matchAll(MODEL)].map((x) => x[1]).concat([...text.matchAll(OMODEL)].map((x) => x[1])));
       for (const id of ids) {
+        const team = modelRule(rules, id);
+        if (team && !team.ok) {
+          problems.push({ kind: 'team-rule', level: 'error', file: rel, line: i + 1, found: id, fix: (rules.models.allowed || [])[0] || 'an approved model', message: team.why });
+          continue;
+        }
         const st = modelStatus(id);
         if (st) {
           problems.push({ kind: st.state === 'retired' ? 'model-retired' : 'model-retiring', level: st.level, file: rel, line: i + 1, found: id, fix: st.replacement, message: st.message, retires: st.retires });

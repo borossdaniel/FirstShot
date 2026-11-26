@@ -3,7 +3,7 @@
 // deploy/oneshot/: a full HTML document plus data.json. Deploy with:
 //   node web/build-data.mjs && node web/build-site.mjs && vercel deploy deploy/oneshot --prod
 
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, cpSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,8 +43,14 @@ ${body}
 `;
 writeFileSync(join(out, 'index.html'), html);
 copyFileSync(join(here, 'data.json'), join(out, 'data.json'));
+// Hosted facts: a serverless function at /facts.json (see web/api/facts.js).
+mkdirSync(join(out, 'api', '_data'), { recursive: true });
+copyFileSync(join(here, 'api', 'facts.js'), join(out, 'api', 'facts.js'));
+for (const f of ['models.json', 'retirements.json']) copyFileSync(join(here, '..', 'data', f), join(out, 'api', '_data', f));
+writeFileSync(join(out, 'package.json'), JSON.stringify({ private: true, type: 'module' }, null, 2) + '\n');
 writeFileSync(join(out, 'vercel.json'), JSON.stringify({
   cleanUrls: true,
+  rewrites: [{ source: '/facts.json', destination: '/api/facts' }],
   headers: [
     { source: '/data.json', headers: [{ key: 'Cache-Control', value: 'public, max-age=300' }] },
     { source: '/(.*)', headers: [{ key: 'X-Content-Type-Options', value: 'nosniff' }, { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' }] },

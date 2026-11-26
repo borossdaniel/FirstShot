@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describeFacts, packageFacts } from './facts.js';
 import { scanProjectFacts } from './livefacts.js';
+import { loadRules, packageProblems } from './rules.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const REGISTRY = () => (process.env.ONESHOT_REGISTRY || 'https://registry.npmjs.org').replace(/\/$/, '');
@@ -170,6 +171,8 @@ export async function checkProject(dir = process.cwd()) {
   const npmDeps = existsSync(pj) ? (({ dependencies, devDependencies }) => ({ ...(dependencies || {}), ...(devDependencies || {}) }))(readJson(pj, {})) : {};
   const pyDeps = readPythonDeps(dir);
   const facts = await scanProjectFacts(dir).catch(() => []);
+  const rules = await loadRules(dir);
+  facts.push(...packageProblems(rules, npmDeps, declaredMajor));
   const found = existsSync(pj) || Object.keys(pyDeps).length > 0 || facts.length > 0;
   if (!found) return { dir, found: false, outdated: [], checked: [], skipped: [], facts };
   const checked = [];
@@ -208,7 +211,7 @@ export function formatProjectReport(rep) {
     const errors = facts.filter((f) => f.level === 'error');
     const warnings = facts.filter((f) => f.level !== 'error');
     if (errors.length) {
-      lines.push(`${errors.length} problem${errors.length === 1 ? '' : 's'} that will break (or already break) your app:`);
+      lines.push(`${errors.length} problem${errors.length === 1 ? '' : 's'} to fix (these break your app or your team's rules):`);
       for (const f of errors) lines.push(`  ✗ ${f.file}${f.line ? `:${f.line}` : ''}: ${f.message || `${f.found} → ${f.fix}`}`);
     }
     if (warnings.length) {

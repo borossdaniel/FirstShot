@@ -8,6 +8,7 @@ import { startMockServer } from '../src/check-helpers.js';
 import { declaredMajor, checkProject, adviseOne } from '../src/advisor.js';
 import { init, stopHook } from '../src/install.js';
 
+process.env.ONESHOT_FACTS_URL = 'off'; // tests use only bundled data and fake servers
 // A fake npm registry so tests never touch the network.
 const LATEST = { commander: '15.1.0', zod: '4.6.7', vitest: '5.1.2', '@scope/lib': '2.0.0', tiny: '0.4.1' };
 let registry;
@@ -236,4 +237,20 @@ test('check --format=github prints annotations and fails only on errors (unless 
   writeFileSync(join(warn, 'ai.mjs'), 'export const model = "claude-sonnet-4-6";\n');
   assert.equal(spawnSync(process.execPath, [bin, 'check', `--path=${warn}`], { encoding: 'utf8', env }).status, 0, 'a merely older model only warns');
   assert.equal(spawnSync(process.execPath, [bin, 'check', '--strict', `--path=${warn}`], { encoding: 'utf8', env }).status, 1, '--strict fails on warnings');
+});
+
+test('team rules (.oneshot.json): approved models, blocked models and packages, minimum versions', async () => {
+  const { scanProjectFacts, currentFacts, formatFacts } = await import('../src/livefacts.js');
+  const { packageProblems, loadRules } = await import('../src/rules.js');
+  const dir = mkdtempSync(join(tmpdir(), 'oneshot-rules-'));
+  writeFileSync(join(dir, '.oneshot.json'), JSON.stringify({ models: { allowed: ['claude-sonnet-5-5', 'gpt-6.2-*'], blocked: ['gpt-4o*'] }, packages: { blocked: { moment: 'use date-fns' }, minMajor: { react: 19 } }, notes: ['Use @acme/ui'] }));
+  writeFileSync(join(dir, 'ai.mjs'), 'a = "gpt-4o-mini"; b = "gpt-6.2-sol"; c = "claude-opus-5-5"; d = "claude-sonnet-5-5";\n');
+  const found = (await scanProjectFacts(dir)).filter((p) => p.kind === 'team-rule').map((p) => p.found).sort();
+  assert.deepEqual(found, ['claude-opus-5-5', 'gpt-4o-mini'], 'the rules file itself is not scanned; approved models pass');
+  const rules = await loadRules(dir);
+  const pk = packageProblems(rules, { moment: '^2.30.0', react: '^18.3.0', zod: '^4.0.0' }, declaredMajor).map((p) => p.found).sort();
+  assert.deepEqual(pk, ['moment', 'react@^18.3.0']);
+  const text = formatFacts(await currentFacts('models', dir));
+  assert.match(text, /Only use these AI models: claude-sonnet-5-5, gpt-6\.2-\*/);
+  assert.match(text, /Use @acme\/ui/);
 });

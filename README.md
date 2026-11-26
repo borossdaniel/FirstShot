@@ -18,7 +18,7 @@ AI providers retire models on a schedule. After the date, every request to that 
 
 ```
 $ npx oneshot-agent check
-3 problems that will break (or already break) your app:
+3 problems to fix (these break your app or your team's rules):
   ✗ src/chat.ts:2: claude-sonnet-4-5 retires on 2026-11-30 (in 4 days). After that, requests fail. Use claude-sonnet-5-5.
   ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol.
   ✗ Dockerfile: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
@@ -44,6 +44,35 @@ jobs:
 ```
 
 Problems show up as annotations on the exact lines in the pull request. It fails on things that break (retired or soon-retired models, end-of-life runtimes) and only warns about things that are merely outdated. Add `with: { strict: "true" }` to fail on those too.
+
+## Install
+
+**Claude Code plugin** (tools + the "check before done" hook + instructions, one install):
+```
+/plugin marketplace add borossdaniel/OneShot
+/plugin install oneshot@oneshot
+```
+
+**Cursor:** [Add OneShot to Cursor](https://cursor.com/en/install-mcp?name=oneshot&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm9uZXNob3QtYWdlbnRAMCIsIm1jcCJdfQ==) (one click), or add to your MCP settings:
+```json
+{ "mcpServers": { "oneshot": { "command": "npx", "args": ["-y", "oneshot-agent@0", "mcp"] } } }
+```
+
+**Any agent with MCP:** `npx -y oneshot-agent mcp` · **CLI only:** `npx oneshot-agent facts` / `npx oneshot-agent check`
+
+## Team rules
+
+Put a `.oneshot.json` in your repo (or point `ONESHOT_RULES_URL` at one shared file for the whole company). Every agent gets your rules with its facts, and `check` / the GitHub Action enforce them:
+
+```json
+{
+  "models":   { "allowed": ["claude-sonnet-5-5", "gpt-6.2-*"], "blocked": ["gpt-4o*"] },
+  "packages": { "blocked": { "moment": "use date-fns" }, "minMajor": { "react": 19 } },
+  "notes":    ["Use @acme/ui for buttons and forms"]
+}
+```
+
+`npx oneshot-agent init --rules` creates an example.
 
 ## Use it in your project
 

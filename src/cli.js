@@ -17,7 +17,7 @@ Usage (for your project):
                                                       (npm by default; --pypi or pypi:<name> for Python);
                                                       with no names, check this project's package.json,
                                                       requirements.txt and pyproject.toml
-  oneshot-agent init [--local]                      Add OneShot to this project (MCP tools, Claude Code
+  oneshot-agent init [--local] [--rules]            Add OneShot to this project (MCP tools, Claude Code
                                                       Stop hook, one line in CLAUDE.md)
   oneshot-agent facts [models|github-actions|runtimes]
                                                       Today's AI model names, GitHub Actions versions,
@@ -65,6 +65,16 @@ export async function main(argv) {
     return 0;
   }
   if (cmd === 'init') {
+    if (rest.includes('--rules')) {
+      const { existsSync, writeFileSync } = await import('node:fs');
+      const { RULES_TEMPLATE } = await import('./rules.js');
+      if (existsSync('.oneshot.json')) console.log('.oneshot.json already exists; leaving it as is.');
+      else {
+        writeFileSync('.oneshot.json', JSON.stringify(RULES_TEMPLATE, null, 2) + '\n');
+        console.log('Created .oneshot.json with example team rules. Edit it, commit it, and every agent and pull request will follow it.');
+      }
+      return 0;
+    }
     const done = init(process.cwd(), { local: rest.includes('--local') });
     console.log(`OneShot added:\n${done.map((d) => `  - ${d}`).join('\n')}\nRestart your agent so it picks up the new tools.`);
     return 0;
