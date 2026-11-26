@@ -1,0 +1,13 @@
+# .github/workflows/oneshot.yml
+# Checks every pull request, plus once a week, so a model retirement never surprises you.
+name: OneShot
+on:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1" # Mondays 07:00 UTC
+jobs:
+  oneshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: borossdaniel/OneShot@v1

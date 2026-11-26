@@ -1,0 +1,9 @@
+{
+  "id": "live-py-dockerfile",
+  "name": "Python Dockerfile",
+  "package": null,
+  "homepage": "https://hub.docker.com/_/python",
+  "kind": "live-fact",
+  "timeoutSec": 600,
+  "prompt": "In this folder, create a tiny Python web server in `app.py` (standard library `http.server`, responds \"ok\" on port 8000). Then write a production `Dockerfile` for it that uses the current Python version on a slim base image and runs as a non-root user. You don't need to build the image."
+}

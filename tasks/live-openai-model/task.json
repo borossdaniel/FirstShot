@@ -1,0 +1,9 @@
+{
+  "id": "live-openai-model",
+  "name": "Newest OpenAI model",
+  "package": "openai",
+  "homepage": "https://platform.openai.com/docs",
+  "kind": "live-fact",
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the official OpenAI JavaScript SDK. Create `ai.mjs` that exports an async function `summarize(text)`: it sends the text to OpenAI's newest and most capable model and returns a one-sentence summary as a string. Create the client inside the function and read the API key from the OPENAI_API_KEY environment variable. Install the dependencies with npm."
+}
