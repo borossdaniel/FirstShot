@@ -8,7 +8,7 @@
 
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { formatRules, loadRules, modelRule } from './rules.js';
 
@@ -235,6 +235,9 @@ function listFiles(dir, test, max = 400) {
 
 /** Find outdated model names, GitHub Action versions and runtime images in a project. */
 export async function scanProjectFacts(dir) {
+  dir = resolve(dir);
+  const relOf = (f) => relative(dir, f).split(sep).join('/');
+  const lineAt = (text, idx) => text.slice(0, idx).split('\n').length;
   await loadHosted();
   const rules = await loadRules(dir);
   const problems = [];
@@ -245,7 +248,7 @@ export async function scanProjectFacts(dir) {
   const MODEL = /(?<![\w./@-])((?:claude-[a-z0-9.-]*[a-z0-9])|(?:gpt-[0-9](?:[a-z0-9.-]*[a-z0-9])?)|chatgpt-4o-latest|text-davinci-00\d|(?:babbage|davinci)-002)(?![\w.-])/g;
   const OMODEL = /['"`](o[1-4](?:-[a-z0-9-]+)?)['"`]/g;
   for (const f of listFiles(dir, codeFile)) {
-    const rel = f.slice(dir.length + 1);
+    const rel = relOf(f);
     readFileSync(f, 'utf8').split('\n').forEach((text, i) => {
       const ids = new Set([...text.matchAll(MODEL)].map((x) => x[1]).concat([...text.matchAll(OMODEL)].map((x) => x[1])));
       for (const id of ids) {
@@ -270,26 +273,30 @@ export async function scanProjectFacts(dir) {
     const [acts, rt] = await Promise.all([actions().catch(() => ({})), runtimes().catch(() => null)]);
     for (const f of ymls) {
       const y = readFileSync(f, 'utf8');
-      for (const [, a, ref] of y.matchAll(/uses:\s*['"]?([\w.-]+\/[\w.-]+)@([^\s'"#]+)/g)) {
+      for (const mt of y.matchAll(/uses:\s*['"]?([\w.-]+\/[\w.-]+)@([^\s'"#]+)/g)) {
+        const [, a, ref] = mt;
         const cur = acts[a];
         const mj = Number((ref.match(/^v?(\d+)/) || [])[1]);
-        if (cur && mj && mj < cur) problems.push({ kind: 'github-action', level: 'warning', file: f.slice(dir.length + 1), found: `${a}@${ref}`, fix: `${a}@v${cur}`, message: `${a}@${ref} is outdated; current is v${cur}.` });
+        if (cur && mj && mj < cur) problems.push({ kind: 'github-action', level: 'warning', file: relOf(f), line: lineAt(y, mt.index), found: `${a}@${ref}`, fix: `${a}@v${cur}`, message: `${a}@${ref} is outdated; current is v${cur}.` });
       }
-      const nv = (y.match(/node-version:\s*['"]?(\d+)/) || [])[1];
-      if (rt?.node?.ltsMajor && nv && Number(nv) < rt.node.ltsMajor) problems.push({ kind: 'runtime', level: 'warning', file: f.slice(dir.length + 1), found: `node-version ${nv}`, fix: `node-version: ${rt.node.ltsMajor}`, message: `Node.js ${nv} is behind the current LTS (${rt.node.ltsMajor}).` });
+      const nvm = y.match(/node-version:\s*['"]?(\d+)/);
+      const nv = nvm?.[1];
+      if (rt?.node?.ltsMajor && nv && Number(nv) < rt.node.ltsMajor) problems.push({ kind: 'runtime', level: 'warning', file: relOf(f), line: lineAt(y, nvm?.index ?? 0), found: `node-version ${nv}`, fix: `node-version: ${rt.node.ltsMajor}`, message: `Node.js ${nv} is behind the current LTS (${rt.node.ltsMajor}).` });
     }
     for (const f of dockerfiles) {
       const d = readFileSync(f, 'utf8');
-      for (const [, img] of d.matchAll(/^\s*FROM\s+(?:--platform=\S+\s+)?(\S+)/gim)) {
+      for (const mt of d.matchAll(/^\s*FROM\s+(?:--platform=\S+\s+)?(\S+)/gim)) {
+        const img = mt[1];
+        const line = lineAt(d, mt.index + mt[0].length);
         const [name, tag = ''] = img.split(':');
         const base = name.split('/').pop();
         if (base === 'node' && rt?.node?.ltsMajor) {
           const mj = Number((tag.match(/^(\d+)/) || [])[1]);
-          if (mj && mj < rt.node.ltsMajor) problems.push({ kind: 'runtime', level: rt.node.supportedMajors.includes(mj) ? 'warning' : 'error', file: f.slice(dir.length + 1), found: img, fix: `node:${rt.node.ltsMajor}-alpine`, message: rt.node.supportedMajors.includes(mj) ? `${img} is behind the current Node.js LTS (${rt.node.ltsMajor}).` : `${img} is end-of-life: no more security fixes. Use node:${rt.node.ltsMajor}-alpine.` });
+          if (mj && mj < rt.node.ltsMajor) problems.push({ kind: 'runtime', level: rt.node.supportedMajors.includes(mj) ? 'warning' : 'error', file: relOf(f), line, found: img, fix: `node:${rt.node.ltsMajor}-alpine`, message: rt.node.supportedMajors.includes(mj) ? `${img} is behind the current Node.js LTS (${rt.node.ltsMajor}).` : `${img} is end-of-life: no more security fixes. Use node:${rt.node.ltsMajor}-alpine.` });
         }
         if (base === 'python' && rt?.python?.supported?.length) {
           const ver = (tag.match(/^(\d+\.\d+)/) || [])[1];
-          if (ver && !rt.python.supported.includes(ver)) problems.push({ kind: 'runtime', level: 'error', file: f.slice(dir.length + 1), found: img, fix: `python:${rt.python.latest}-slim`, message: `${img} is end-of-life: no more security fixes. Use python:${rt.python.latest}-slim.` });
+          if (ver && !rt.python.supported.includes(ver)) problems.push({ kind: 'runtime', level: 'error', file: relOf(f), line, found: img, fix: `python:${rt.python.latest}-slim`, message: `${img} is end-of-life: no more security fixes. Use python:${rt.python.latest}-slim.` });
         }
       }
     }
