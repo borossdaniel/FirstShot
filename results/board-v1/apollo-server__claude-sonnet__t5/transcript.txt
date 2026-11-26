@@ -1,0 +1,8 @@
+I'll leave `verify.mjs` in place since removal was denied — it's harmless and doesn't affect `solution.mjs`.
+
+The project is set up and verified in `/private<workspace>`:
+
+- **`package.json`** — ES module project with `@apollo/server` and `graphql` installed via npm.
+- **`solution.mjs`** — exports `createServer()`, returning a fresh `ApolloServer` instance each call with in-memory data reset (authors 1/2, books 1-3 as specified).
+- Schema matches exactly what was requested; `books(authorId)` filters, `book(id)` returns null when missing, `addBook` auto-increments ids starting at `4`, throws `UNAUTHENTICATED` when `context.user` is null, and `BAD_USER_INPUT` when the author doesn't exist.
+- Ran a full set of assertions (query/filter/not-found/auth-error/bad-input/success/fresh-per-call-isolation) — all passed.

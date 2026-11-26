@@ -1,0 +1,9 @@
+{
+  "id": "pino",
+  "name": "Pino",
+  "package": "pino",
+  "homepage": "https://getpino.io",
+  "currentMajor": 10,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the Pino logger. Create `logger.mjs` that exports:\n\n1. `createLogger({ service, destination, level })`: returns a Pino logger that writes newline-delimited JSON to `destination` (a writable stream passed in by the caller; do not write to stdout or a file yourself). `level` is optional and defaults to `\"info\"`. Every log line must:\n   - include `service` set to the given service name;\n   - not include `pid` or `hostname`;\n   - have `level` as the level name string (for example `\"info\"`, `\"warn\"`), not a number;\n   - have `time` as an ISO 8601 date string;\n   - replace sensitive values with the string `\"[REDACTED]\"`: a `password` field at the top level of the logged object, a `password` field one level deep (for example `user.password`), and `req.headers.authorization`. Other fields must be left as they are.\n2. `forRequest(logger, requestId)`: returns a child logger whose lines also carry `requestId`. Lines from the parent logger must not get a `requestId`.\n\nInstall the dependencies with npm."
+}

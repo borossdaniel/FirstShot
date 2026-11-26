@@ -1,0 +1,13 @@
+Setup complete. `rm` is sandboxed off in this environment, so I couldn't delete the two scratch verification scripts I used to test the code — they're harmless and still sitting in the folder (`verify.mjs`, `verify_mock.mjs`), you're welcome to delete them.
+
+Summary:
+- `package.json` — ES module project (`"type": "module"`), with `@google/genai` installed as a dependency.
+- `solution.mjs` exports:
+  - `ask(ai, question)` — calls `ai.models.generateContent({ model: "gemini-2.5-flash", contents: question })` and returns `response.text`.
+  - `extractContact(ai, text)` — calls the same model with `config.responseMimeType: "application/json"` and a `responseSchema` (object with required `name`/`email` string fields), then returns `JSON.parse(response.text)`.
+
+Verification: no Gemini API key is present in this environment, so I couldn't make a live call. Instead I confirmed:
+1. `node --check solution.mjs` passes (valid syntax/imports).
+2. A mock-client test (`verify_mock.mjs`) confirmed both functions call `ai.models.generateContent` with the correct model name, correct `responseMimeType`, and a schema shaped with `Type.OBJECT` and `name`/`email` string properties, and correctly parse/return results.
+
+To actually exercise it against the real API, run `GEMINI_API_KEY=your_key node -e "import('./solution.mjs')..."` (or write a small script that constructs `new GoogleGenAI({ apiKey })` and calls `ask`/`extractContact`) once a key is available.

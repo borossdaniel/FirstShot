@@ -1,0 +1,9 @@
+Server confirmed stopped. The app is set up at `/private<workspace>`:
+
+- `app/page.js` — `/` renders "FirstShot home"
+- `app/posts/[slug]/page.js` — `<h1>Post: {slug}</h1>`
+- `app/api/health/route.js` — `GET /api/health` → `{"status":"ok"}`
+- `app/api/users/[id]/route.js` — `GET /api/users/<id>` → `{"id":"<id>"}`
+- `middleware.js` — intercepts `/old/:path*` and redirects to `/new/...` preserving the query string (307, via `NextResponse.redirect`, not `next.config` redirects)
+
+`npm run build` succeeds, and I verified every route (including the redirect with `?x=1` preserved) against a running `npm start` instance, then stopped it — no server is left running.

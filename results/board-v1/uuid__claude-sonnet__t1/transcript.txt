@@ -1,0 +1,9 @@
+Project is set up and verified. The `rm` command was blocked by the sandbox, so I'll leave `verify.mjs` in place rather than attempt a workaround — it's a harmless test script, not something you need to keep, so feel free to delete it yourself.
+
+Summary of what's in `/private<workspace>`:
+- `package.json` — ES module project (`"type": "module"`) depending on `uuid` (installed v11.1.1)
+- `node_modules/` — installed via `npm install`
+- `solution.mjs` — exports `newId()`, `newEventId(timestampMs)`, `isValidUuid(value)`, `uuidVersion(value)`
+- `verify.mjs` — ad-hoc test script I used to confirm correctness (safe to delete)
+
+All behaviors were verified to work: v4/v7 generation, timestamp encoding in v7, creation-order sorting without explicit timestamps, and correct `true`/`false`/`null` handling for invalid and non-string inputs.

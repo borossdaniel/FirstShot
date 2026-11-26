@@ -1,0 +1,6 @@
+`npm run lint` passes (exit code 0) — the `no-console` rule correctly reports a warning (not an error) on the example's `console.log`.
+
+Setup summary:
+- **package.json**: `"type": "module"`, `lint` script runs `eslint src/`, devDependencies `eslint`, `@eslint/js`, `globals`.
+- **eslint.config.js**: flat config extending `@eslint/js` recommended rules, Node.js globals via the `globals` package, `eqeqeq: error`, `no-console: warn`.
+- **src/index.js**: small ESM example using `process.argv`, `console.log`, and `===`/template literals — passes lint with only the expected warning.

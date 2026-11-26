@@ -1,0 +1,37 @@
+{
+  "name": "firstshot",
+  "version": "0.1.0",
+  "description": "Can an AI coding agent get your library working on the first try? Run real agents on real quickstart tasks, check the result with real code, publish a score.",
+  "type": "module",
+  "bin": {
+    "firstshot": "bin/firstshot.js"
+  },
+  "exports": {
+    ".": "./src/runner.js",
+    "./check": "./src/check-helpers.js",
+    "./report": "./src/report.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "tasks"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "verify-tasks": "node bin/firstshot.js verify-tasks",
+    "demo": "node bin/firstshot.js run tasks --agent claude --model sonnet --trials 2 --out results/demo && node bin/firstshot.js report results --out site"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "ai-agents",
+    "claude-code",
+    "codex",
+    "developer-experience",
+    "agent-experience",
+    "benchmark",
+    "sdk"
+  ],
+  "license": "MIT"
+}

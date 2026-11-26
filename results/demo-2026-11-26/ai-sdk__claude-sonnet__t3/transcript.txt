@@ -1,0 +1,10 @@
+Setup is complete and verified. Summary of what's in the project root (`/private<workspace>`):
+
+- `package.json` — `"type": "module"`, with `ai` and `zod` as dependencies
+- `node_modules/` — installed via `npm install`
+- `solution.mjs` — exports:
+  - `answerWithWeather(model, question)`: calls `generateText` with a `getWeather` tool (`{city}` → `{city, tempC: 21}`), `stopWhen: stepCountIs(5)` so it continues after the tool call to produce a final answer, returns `result.text`.
+  - `extractContact(model, text)`: uses `generateText` with `Output.object({ schema })` (the AI SDK's current structured-output API — `generateObject` is deprecated in this installed version, so I used the recommended replacement) to extract `{ name, email }`, returns the parsed `output`.
+- `verify.mjs` — a mock-model test harness (using `MockLanguageModelV4` from `ai/test`, no real provider/API key) that exercises both functions end-to-end; I ran it and both passed with no warnings.
+
+Both functions take the model as the first argument and never construct a provider or touch API keys, as required.

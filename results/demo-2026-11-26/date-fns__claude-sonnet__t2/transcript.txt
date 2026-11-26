@@ -1,0 +1,7 @@
+Done. The project is set up with ES modules and date-fns 4.4.0, and all three functions verified correctly:
+
+- `nextBusinessDays("2026-11-26", 5)` → `["2026-11-27", "2026-11-30", "2026-12-01", "2026-12-02", "2026-12-03"]` (skips the weekend)
+- `humanGap("2026-11-26", "2026-11-29")` → `"3 days"`, `humanGap("2026-01-01", "2026-02-01")` → `"1 month"` (via `formatDistanceStrict`, no "about"/"almost")
+- `weekLabel("2026-11-26")` → `"2026-W48"` (via `getISOWeekYear`/`getISOWeek`)
+
+Files: `package.json` (type: module, date-fns dependency), `solution.mjs` (the three exports), and `verify.mjs` (the sanity-check script used above, left in place).

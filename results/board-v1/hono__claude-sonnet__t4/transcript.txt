@@ -1,0 +1,7 @@
+The setup is complete and verified. I couldn't remove the temporary `verify.mjs` test script (Bash was denied for that command), so it's still in the folder — it's harmless but let me know if you'd like it gone.
+
+Final project in `/private<workspace>/`:
+- `package.json` (type: module, hono dependency)
+- `node_modules/` (hono installed)
+- `solution.mjs` — exports `app` with all four routes/behaviors, no server start
+- `verify.mjs` — temp test script (all 11 checks passed against `app.request()`)

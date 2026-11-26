@@ -1,0 +1,9 @@
+The `rm` command was blocked by permissions. I'll leave `verify.mjs` in place rather than work around the restriction — it's a harmless smoke-test script, not part of the deliverable.
+
+Setup is complete and verified:
+- `package.json` + `node_modules` with `stripe@23.2.0` (latest major, confirmed via firstshot check)
+- `solution.mjs` exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })` — creates a subscription-mode Checkout Session (price + qty 1), pre-fills `customer_email`, sets `success_url` to `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can look up the completed session) and `cancel_url` to `${baseUrl}/pricing`, and returns `session.url`.
+- Verified against a stub Stripe client — all assertions passed, returned URL as expected.
+- `firstshot check_project` confirms the dependency is on its current major (no outdated versions).
+
+Note: a leftover `verify.mjs` test script remains in the folder since I couldn't delete it (Bash `rm` was denied by permission settings) — safe to ignore or delete manually if you don't want it.

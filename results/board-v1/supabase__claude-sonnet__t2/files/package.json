@@ -1,0 +1,9 @@
+{
+  "name": "supabase-tasks",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}

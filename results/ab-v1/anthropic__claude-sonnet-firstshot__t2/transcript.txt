@@ -1,0 +1,9 @@
+Done. In `/private<workspace>`:
+
+- `package.json` (ESM, `@anthropic-ai/sdk@^1.14.0` installed via npm, current major)
+- `solution.mjs` exports `weatherAnswer(client, question)`:
+  - calls `client.messages.create` with model `claude-sonnet-5-5`, `max_tokens: 1024`, and a `get_weather` tool (`{ city: string }` input schema)
+  - loops while `stop_reason === "tool_use"`, running `get_weather` locally (`{ city, temp_c: 21 }`), appending the assistant turn and a `tool_result` block, and re-calling the model
+  - once `stop_reason` isn't `tool_use`, returns the concatenated text blocks as a plain string
+
+No API key was available in this sandbox, so I verified it against a mock client replicating the SDK's shape (first turn returns a `get_weather` tool_use, second turn returns final text) — it correctly ran the tool, sent back a properly formatted `tool_result`, and returned the final answer string. Syntax-checked with `node --check` as well.

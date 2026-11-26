@@ -1,0 +1,1 @@
+{ "name": "ref", "private": true, "type": "module", "dependencies": { "apollo-server": "^3.13.0", "graphql": "^16.8.0" } }

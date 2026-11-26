@@ -1,0 +1,7 @@
+Output matches exactly except for the intended differences. The project is set up and working:
+
+- `package.json` configured as ES module with `marked` installed as a dependency
+- `solution.mjs` exports `renderMarkdown(markdown)`, extending marked's `Renderer` class:
+  - **Heading IDs**: overrides `heading()`, extracting plain text via marked's own `TextRenderer` (strips all markdown syntax while keeping nested link/code text), slugifies it, and tracks per-call counts in a closure-scoped `Map` for `-1`, `-2`, ... deduplication
+  - **External links**: overrides `link()`, calling `super.link()` for the exact default-rendered `<a>` tag, then inserting `target="_blank" rel="noopener noreferrer"` only when `token.href` matches `^https?://`
+- Verified: heading inline formatting, link titles, and all other rendering is byte-identical to plain `marked.parse`; relative/anchor/mailto links are untouched; the slug counter resets to zero on each new `renderMarkdown` call.

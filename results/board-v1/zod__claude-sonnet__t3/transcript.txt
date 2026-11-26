@@ -1,0 +1,3 @@
+The project is set up: `package.json` (ESM, with `zod` as a dependency), `solution.mjs` with `UserSchema` and `parseUser`, and `node_modules` installed via npm. I left a `test.mjs` verification script in place (an `rm` to delete it was denied by sandbox permissions) — all 8 test cases passed, including valid input with defaulted/explicit tags, invalid email, underage, non-integer age, bad tag types, multiple simultaneous errors, and missing fields.
+
+`parseUser` uses `safeParse` + `z.flattenError` (Zod's built-in formatter) to build the `errors` object, taking the first message per field.

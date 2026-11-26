@@ -1,0 +1,12 @@
+Good — `solution.mjs` and `test.mjs` confirmed at the top level. Since I can't delete `test.mjs` under this permission mode, I'll leave it (it's a harmless verification script, not part of the required deliverable, but doesn't conflict with it).
+
+Setup complete and verified:
+
+- **package.json** — ES module project (`"type": "module"`), deps: `fastify` ^5, `ajv-formats` ^3 (for email format validation).
+- **solution.mjs** — exports `buildApp()`, builds a fresh Fastify instance per call with its own empty in-memory store.
+  - `POST /users` — schema-validates `name` (1–50 chars), `email` (format: email via ajv-formats), `password` (min 8 chars, all required); returns 201 with `{id, name, email}` via a response schema that omits `password` by omission from `properties`/`additionalProperties: false`.
+  - `GET /users/:id` — `id` constrained to a positive integer in the params schema; 200 with user or 404 `{error: "not found"}`, both schema-enforced.
+  - `GET /users?limit=` — integer 1–50, defaults to 10; returns `{limit, users}`.
+  - All responses use Fastify response schemas, so password can never leak regardless of handler code.
+
+Ran a 25-assertion smoke test covering valid/invalid payloads, 404/400 paths, limit boundaries, and confirmed two separate `buildApp()` instances don't share state — everything passed, and `npm install` completed with 0 vulnerabilities.

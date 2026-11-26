@@ -1,0 +1,6 @@
+The `rm` command was blocked by permissions. That's fine — I'll leave `test.mjs` in place; it's a harmless verification script, not a problem for the deliverable.
+
+Setup complete:
+- `package.json` configured as an ES module project with `uuid` installed (v14.0.3)
+- `solution.mjs` exports `newId()`, `newEventId(timestampMs)`, `isValidUuid(value)`, and `uuidVersion(value)`
+- Verified via `test.mjs` (still present in the folder): v4/v7 generation, timestamp encoding correctness, monotonic ordering of sequential `newEventId()` calls, and `isValidUuid`/`uuidVersion` correctly rejecting non-strings and invalid input — all checks passed.

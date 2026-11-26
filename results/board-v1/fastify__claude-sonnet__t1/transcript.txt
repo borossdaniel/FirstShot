@@ -1,0 +1,8 @@
+The `rm` was blocked by the permission system. I'll overwrite the leftover test file with an empty placeholder isn't ideal either — I'll just leave it since deletion tools are restricted; it's a harmless verification script, not part of the deliverable.
+
+Setup complete:
+- `package.json` configured as ES module, `fastify` installed as the only dependency.
+- `solution.mjs` exports `buildApp()` — builds a fresh Fastify instance with its own empty in-memory `users` array per call, no `listen()` call inside.
+- Verified via `fastify.inject()` and a real `listen()` + `fetch()` smoke test: valid POST returns 201 with id/name/email (no password), GET by id returns 200/404 correctly, invalid id (non-integer, ≤0) returns 400, GET list respects `limit` (default 10, range 1–50, invalid values 400), and all invalid POST bodies (missing fields, bad email, short password, name length) return 400 via Fastify's built-in AJV validation. Response schemas ensure `password` can never leak.
+
+One leftover: `test-manual.mjs`, the verification script I wrote, is still in the folder — I attempted to delete it but file deletion is blocked under the current permission mode. It's harmless and not referenced by `solution.mjs`; let me know if you'd like it removed yourself.

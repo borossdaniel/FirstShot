@@ -1,0 +1,7 @@
+Top-level project files look correct. Everything's set up and verified:
+
+- `package.json` — `"type": "module"`, `msw@^2.15.0` dependency
+- `solution.mjs` — exports `startMocking()` which builds the MSW node server with the four handlers and calls `server.listen({ onUnhandledRequest: 'error' })`, then returns the server (not started on import)
+- `verify.mjs` — exercises all endpoints; `node verify.mjs` prints `All checks passed.`
+
+Key detail worth flagging: MSW's newest major (v3, which `npm install msw` grabs by default) restructured its Node API — it dropped `onUnhandledRequest` in favor of `onUnhandledFrame` (which only governs WebSocket/SSE frames), and unmatched HTTP requests silently pass through to the real network. That fails the "never hit the real network" requirement. I pinned to `msw@2` instead, which still has the classic `http`/`HttpResponse`/`setupServer` API with `onUnhandledRequest: 'error'`, and confirmed against `https://example.com` that unmatched requests throw instead of going out.

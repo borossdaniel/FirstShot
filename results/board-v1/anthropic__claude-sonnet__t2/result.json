@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "anthropic",
+  "taskName": "Anthropic SDK (tool use)",
+  "package": "@anthropic-ai/sdk",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "@anthropic-ai/sdk@1.14.0: tool loop and final answer correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 56.3,
+  "costUsd": 0.3244554,
+  "turns": 13,
+  "installedVersion": "1.14.0",
+  "finishedAt": "2026-11-26T16:33:51.851Z"
+}

@@ -1,0 +1,10 @@
+Deleting those scratch files via `rm` was blocked by the sandbox's destructive-action policy, so `verify.mjs` and `verify_stdio.mjs` are still sitting in the folder — they're harmless (just my test scripts) but not part of what was asked for. Let me know if you'd like me to remove them; otherwise the project is complete.
+
+**Summary:**
+- `package.json` — ES module project (`"type": "module"`) with `@modelcontextprotocol/sdk` and `zod` installed via npm.
+- `solution.mjs` — exports `createServer()`, returning an unconnected `McpServer` named `"calc"` v`"1.0.0"` with:
+  - tool `add` (Zod-validated `a`, `b` numbers) → returns sum as text (verified `2+3` → `"5"`)
+  - resource `config://app` → returns `{"name":"calc"}` as `application/json`
+- `server.mjs` — connects `createServer()` to `StdioServerTransport` for use from Claude Desktop.
+
+Verified both the in-memory client round-trip (tool call, resource read, list tools/resources) and that `server.mjs` correctly responds to a real stdio `initialize` request.

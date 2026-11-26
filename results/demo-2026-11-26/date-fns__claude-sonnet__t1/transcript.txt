@@ -1,0 +1,8 @@
+No problem — I'll leave `test.mjs` in place since it's harmless and shows verification; it's not part of the required deliverable but doesn't interfere with it.
+
+Setup complete:
+- `package.json` configured with `"type": "module"` and `date-fns` installed
+- `solution.mjs` exports `nextBusinessDays`, `humanGap`, and `weekLabel`, all verified working via `node test.mjs`:
+  - `nextBusinessDays("2026-11-26", 5)` → correctly skips the weekend
+  - `humanGap(...)` → `"3 days"`, `"1 month"` (strict, no "about"/"almost")
+  - `weekLabel("2026-11-26")` → `"2026-W48"`

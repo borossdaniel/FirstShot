@@ -1,0 +1,9 @@
+All set. Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `openai` (^7.65.0) and `zod` (^4.6.7) installed via npm.
+- `solution.mjs` exports:
+  - `ask(client, question)` — uses `client.responses.create({ model: 'gpt-5.2', input: question })` and returns `response.output_text` as a plain string.
+  - `classify(client, text)` — uses `client.responses.parse(...)` with `zodTextFormat` from `openai/helpers/zod` to enforce a Zod schema (`{ label: 'spam' | 'ham' }`), returning `response.output_parsed`.
+- Verified both functions against a mock client reproducing the real Responses API shape (checked model, input, and schema params, and correct return values) — no real API key was available/created, per your instructions not to handle keys.
+
+Note: I couldn't `rm` the temporary `_verify.mjs` test script (destructive commands are blocked in this session), so it's still sitting in the folder — harmless, but let me know if you'd like it removed.

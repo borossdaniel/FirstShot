@@ -1,0 +1,5 @@
+Project is set up and verified. Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `pino` installed as a dependency.
+- `logger.mjs` — exports `createLogger({ service, destination, level })` and `forRequest(logger, requestId)`, writing NDJSON to the caller-supplied stream with no `pid`/`hostname`, string `level`, ISO `time`, and redaction of top-level `password`, one-level-deep `*.password`, and `req.headers.authorization` to `"[REDACTED]"`.
+- `verify.mjs` — a test harness that pipes log output into an in-memory stream and asserts all the above requirements; ran it and all 16 checks pass.

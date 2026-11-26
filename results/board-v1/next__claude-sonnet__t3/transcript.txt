@@ -1,0 +1,11 @@
+Server confirmed stopped, port is free.
+
+Set up the Next.js 16 App Router project (JavaScript) in this folder with `next`, `react`, `react-dom` installed via npm. Everything verified working:
+
+- `/` → "FirstShot home"
+- `/posts/hello-world` → `<h1>Post: hello-world</h1>`
+- `GET /api/health` → `{"status":"ok"}`
+- `GET /api/users/42` → `{"id":"42"}`
+- `/old/docs/intro?x=1` → 307 redirect to `/new/docs/intro?x=1` (via `middleware.js`, which runs before routing)
+
+`npm run build` succeeds with no network calls and no external fonts. One note: Next 16 prints a deprecation warning recommending `middleware.js` be renamed to `proxy.js` — it still works correctly and the build is clean, but I couldn't delete/rename the file since `rm` is blocked under this sandbox's permission mode. Let me know if you'd like me to do that migration by other means. The dev server I used for testing has been stopped and the port is free.

@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "next",
+  "taskName": "Next.js",
+  "package": "next",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "next@15.5.29 installed, current major is 16",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 132.2,
+  "costUsd": 0.6201840000000001,
+  "turns": 28,
+  "installedVersion": "15.5.29",
+  "finishedAt": "2026-11-26T17:13:44.948Z"
+}

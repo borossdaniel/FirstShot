@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "date-fns",
+  "taskName": "date-fns",
+  "package": "date-fns",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "date-fns@4.4.0: business days, distances and ISO weeks correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 39.2,
+  "costUsd": 0.39762959999999997,
+  "turns": 9,
+  "installedVersion": "4.4.0",
+  "finishedAt": "2026-11-26T15:58:39.745Z"
+}

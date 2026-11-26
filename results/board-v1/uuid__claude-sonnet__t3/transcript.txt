@@ -1,0 +1,5 @@
+All tests pass. The project is set up at the working directory with:
+
+- `package.json` — ES module project (`"type": "module"`) depending on `uuid@^14`
+- `solution.mjs` — exports `newId()`, `newEventId(timestampMs)`, `isValidUuid(value)`, `uuidVersion(value)`
+- `test.mjs` — verification script (ran successfully: v4/v7 validity, version detection, timestamp encoding, creation-order sorting, and invalid/non-string inputs all check out)

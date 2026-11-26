@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "eslint",
+  "taskName": "ESLint",
+  "package": "eslint",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "eslint@10.15.0: config, rules and globals correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 45.6,
+  "costUsd": 0.2871585,
+  "turns": 13,
+  "installedVersion": "10.15.0",
+  "finishedAt": "2026-11-26T16:38:04.914Z"
+}

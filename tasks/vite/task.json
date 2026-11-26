@@ -1,0 +1,9 @@
+{
+  "id": "vite",
+  "name": "Vite",
+  "package": "vite",
+  "homepage": "https://vite.dev",
+  "currentMajor": 8,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a Vite project (plain JavaScript, no framework) for a small static site, with an npm script `build` that does a production build into `dist/`.\n\n1. The site has two pages: `index.html`, which loads `src/main.js`, and `about.html`, which loads `src/about.js`. Both pages must be in the build output.\n2. The built site will be uploaded into a subfolder of a web server and we don't know the folder name yet, so the built files must work from any folder.\n3. `src/main.js` puts the site title into the page's `<h1>`. The title comes from the environment variable `VITE_APP_TITLE` at build time; put `VITE_APP_TITLE=FirstShot` in a `.env` file.\n4. Add a `robots.txt` that allows all crawlers and ends up unchanged at the root of the build output.\n\nInstall the dependencies with npm and make sure `npm run build` works."
+}

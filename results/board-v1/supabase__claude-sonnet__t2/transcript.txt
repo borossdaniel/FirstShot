@@ -1,0 +1,6 @@
+That `rm` was blocked by your permission settings. It's not a problem — `verify.mjs` is just a harmless test script I used to confirm the logic works; it isn't part of the required deliverable but can safely stay in the folder, or you can delete it yourself if you'd prefer it gone.
+
+Setup complete:
+- `package.json` — ES module project with `@supabase/supabase-js` installed via npm
+- `solution.mjs` — exports `listOpenTasks(supabase, projectId, limit)` and `addTask(supabase, projectId, title)`, both throwing on any Supabase error
+- Verified against a mock client (correct query chain, correct error propagation) and confirmed the real `@supabase/supabase-js` client supports the exact method chain used

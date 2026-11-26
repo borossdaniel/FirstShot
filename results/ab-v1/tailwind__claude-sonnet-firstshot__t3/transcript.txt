@@ -1,0 +1,8 @@
+Everything is set up and verified:
+
+- **`index.html`** — static page using `bg-brand`, `text-brand`, and standard Tailwind utility classes, linking to `dist/output.css`
+- **`src/input.css`** — `@import "tailwindcss";` plus `@theme { --color-brand: #0e7490; }`
+- **`package.json`** — `build:css` script: `tailwindcss -i src/input.css -o dist/output.css --minify`
+- Installed `tailwindcss@4.3.5` and `@tailwindcss/cli@4.3.5` (current versions, verified via firstshot)
+- `npm run build:css` ran successfully and `dist/output.css` contains only the utilities used in `index.html`, including `.bg-brand`/`.text-brand` resolving to `#0e7490`
+- `check_project` confirms no outdated majors in `package.json`

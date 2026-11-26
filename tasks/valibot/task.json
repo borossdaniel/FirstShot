@@ -1,0 +1,9 @@
+{
+  "id": "valibot",
+  "name": "Valibot",
+  "package": "valibot",
+  "homepage": "https://valibot.dev",
+  "currentMajor": 1,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the Valibot library for validation. Create `solution.mjs` that exports:\n\n1. `SignupSchema`: a Valibot schema for a sign-up form, an object with `email` (a string that must be a valid email address, error message `Enter a valid email address`), `password` (a string of at least 8 characters, error message `Password must be at least 8 characters`) and `newsletter` (an optional boolean that defaults to `false`).\n2. `parseSignup(input)`: returns `{ ok: true, value }` when the input is valid (with the default applied), or `{ ok: false, errors }` when it is not, where `errors` is a plain object mapping each invalid field name to an array of its error message strings. Use Valibot's own helper for flattening the issues rather than building that object by hand.\n\nInstall the dependencies with npm."
+}

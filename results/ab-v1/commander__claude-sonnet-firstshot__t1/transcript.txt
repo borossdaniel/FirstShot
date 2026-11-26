@@ -1,0 +1,6 @@
+Everything verified end-to-end: `--version` prints `1.2.3`, `greet <name>` works with and without `--shout`/`--times`, and Commander itself rejects invalid `--times` values (`abc`, `0`) with exit code 1. Dependency check confirms commander is on its current major (15.1.0).
+
+Files created in the project folder:
+- `package.json` — ES module project with `commander` as a dependency
+- `solution.mjs` — exports `buildProgram()`, builds the `hello` program with the `greet` subcommand and `--version`
+- `cli.mjs` — calls `buildProgram().parse()`

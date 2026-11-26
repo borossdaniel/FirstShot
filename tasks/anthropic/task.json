@@ -1,0 +1,9 @@
+{
+  "id": "anthropic",
+  "name": "Anthropic SDK (tool use)",
+  "package": "@anthropic-ai/sdk",
+  "homepage": "https://docs.claude.com",
+  "currentMajor": 1,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the official Anthropic TypeScript/JavaScript SDK. Create `solution.mjs` that exports `weatherAnswer(client, question)`. It takes an already-configured Anthropic client (do not create a client or read API keys) and:\n\n1. Sends the question to model `claude-sonnet-5-5` with max 1024 output tokens and one tool, `get_weather`, whose input is `{ city: string }`.\n2. When Claude asks to use the tool, runs it locally (it returns `{ city, temp_c: 21 }`), sends the result back to Claude in the correct format, and repeats until Claude gives a final answer.\n3. Returns Claude's final answer as a plain string.\n\nInstall the dependencies with npm."
+}

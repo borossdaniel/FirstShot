@@ -1,0 +1,8 @@
+Setup complete:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` installed via npm
+- **`solution.mjs`** — exports `weatherAnswer(client, question)`, which calls `claude-sonnet-5-5` (max 1024 tokens) with a `get_weather` tool, loops on `stop_reason === "tool_use"` to run the tool locally and feed results back as `tool_result` blocks, and returns the concatenated text once Claude stops with a final answer.
+
+I verified the logic with a mock client (no real API key was available in this environment) simulating one tool-use round-trip — it correctly sent the right model/params/tool definition, read `tool_use` blocks, sent back a matching `tool_result`, and returned the final text. That script is still sitting as `test-mock.mjs` since `rm` is blocked under this session's permission mode — feel free to delete it, it's harmless and makes no real API calls.
+
+One thing to flag: `claude-sonnet-5-5` isn't a model name I recognize from Anthropic's lineup (current Sonnet is `claude-sonnet-5`) — I used it exactly as you specified, but if a real call 404s on the model name, that's the first thing to check.

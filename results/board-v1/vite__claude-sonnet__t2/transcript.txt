@@ -1,0 +1,8 @@
+That extra verification step got blocked, but it's not needed — the build output I already inspected confirms the requirement: both `index.html` and `about.html` reference assets via relative paths (`./assets/...`, `./about.html`, `./index.html`), which is exactly what makes the site work when uploaded to a subfolder of any web server.
+
+Summary of what's set up in this folder:
+- **Vite project** (plain JS, no framework) with `vite` as the only dependency, installed via `npm install`.
+- Two pages, `index.html` → `src/main.js` and `about.html` → `src/about.js`, both configured as Rollup build inputs in `vite.config.js`, with `base: './'` so all output paths are relative.
+- `.env` sets `VITE_APP_TITLE=FirstShot`; `src/main.js` writes `import.meta.env.VITE_APP_TITLE` into the `<h1>` — confirmed baked into the built JS as `"FirstShot"`.
+- `public/robots.txt` (allow-all) is copied verbatim to `dist/robots.txt`.
+- `npm run build` verified working, producing `dist/` with `index.html`, `about.html`, hashed assets, and `robots.txt`, all referencing each other via relative paths.

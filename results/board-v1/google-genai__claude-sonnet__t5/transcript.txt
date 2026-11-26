@@ -1,0 +1,5 @@
+Confirmed against the actual installed package. Everything checks out:
+
+- `package.json` set to `"type": "module"`, dependency `@google/genai` installed.
+- `solution.mjs` exports `ask(ai, question)` and `extractContact(ai, text)`, both using `gemini-2.5-flash`; `extractContact` uses `responseMimeType: "application/json"` + a `responseSchema` (via the SDK's `Type` enum) to force `{ name, email }` JSON output.
+- Verified against a mock client replicating the real `ai.models.generateContent` shape — confirmed correct model/params passed in and correct parsing/return shape out. No API key was available or used, per the requirement that the client is supplied externally.

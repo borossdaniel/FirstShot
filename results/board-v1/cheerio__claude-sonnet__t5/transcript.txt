@@ -1,0 +1,6 @@
+All tests pass, confirming correct handling of HTML entities, whitespace collapsing, `<del>` price stripping, relative/absolute URL resolution, and `sold-out` stock detection.
+
+Set up in `/private<workspace>`:
+- **package.json** — ES module project with `cheerio` dependency, installed via npm.
+- **solution.mjs** — exports `parseProducts(html, pageUrl)` per spec.
+- **test.mjs** — sample listing page exercising entities, whitespace, crossed-out prices, sold-out items, and relative/absolute URLs; run with `node test.mjs`.

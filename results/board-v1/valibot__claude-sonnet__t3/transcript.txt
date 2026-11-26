@@ -1,0 +1,10 @@
+I'll leave `test.mjs` in place rather than deleting it — it's harmless and serves as a working verification script.
+
+Setup complete in this folder:
+
+- `package.json` — ES module project (`"type": "module"`) with `valibot` as a dependency
+- `node_modules/` — installed via `npm install valibot`
+- `solution.mjs` — exports `SignupSchema` and `parseSignup(input)`
+- `test.mjs` — verification script confirming: valid input defaults `newsletter` to `false`, explicit `newsletter: true` is respected, and invalid input returns `errors` built via `v.flatten(result.issues).nested`
+
+Ran `node test.mjs` — all assertions passed, including the exact error-message mapping for invalid email/password.

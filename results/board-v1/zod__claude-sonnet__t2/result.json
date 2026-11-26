@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "zod",
+  "taskName": "Zod",
+  "package": "zod",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "zod@4.6.7: schema, defaults and error messages correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 81.8,
+  "costUsd": 0.42338820000000005,
+  "turns": 18,
+  "installedVersion": "4.6.7",
+  "finishedAt": "2026-11-26T16:50:21.484Z"
+}

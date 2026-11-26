@@ -1,0 +1,13 @@
+{
+  "name": "sqlite-orders-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "db.mjs",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0"
+  }
+}

@@ -1,0 +1,7 @@
+Everything's set up and verified:
+
+- `package.json` — ES module project with `openai@^7.65.0` and `zod@^4.6.7` (versions confirmed current via the firstshot tool, and `check_project` confirms neither is on an outdated major).
+- `solution.mjs` exports:
+  - `ask(client, question)` — calls `client.responses.create({ model: "gpt-5.2", input: question })` and returns `response.output_text` as a plain string.
+  - `classify(client, text)` — calls `client.responses.parse()` with a Zod schema (`{ label: "spam" | "ham" }`) converted via `zodTextFormat` from `openai/helpers/zod`, returning `response.output_parsed`.
+- Verified both functions against a mock client (no real API key used, per your instructions) — confirmed correct model, correct Responses API usage, and correct return shapes.

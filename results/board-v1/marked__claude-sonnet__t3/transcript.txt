@@ -1,0 +1,9 @@
+Deleting the test file requires a destructive shell command that's blocked in this permission mode — I'll leave `test.mjs` in place since it's a harmless, useful verification script rather than risk working around the restriction.
+
+Setup is complete:
+
+- `package.json` configured as an ES module project with `marked` installed.
+- `solution.mjs` exports `renderMarkdown(markdown)`, implemented purely via marked's renderer API (`new Marked({ renderer: { heading, link } })`), calling `Renderer.prototype.heading`/`.link` for the default output and inserting the extra attribute into the opening tag it returns — no post-hoc regex over the full HTML.
+  - **Headings**: slug computed from the plain text extracted by walking the heading's inline token tree (so bold/italic/code markup don't leak into the slug), lowercased, stripped of anything that isn't a letter/digit/space/hyphen, spaces→hyphens, with a `Map` reset at the top of each `renderMarkdown` call to dedupe repeats as `-1`, `-2`, etc.
+  - **Links**: `target="_blank" rel="noopener noreferrer"` added only when the token's original `href` matches `^https?://`, and only when marked actually produced an `<a>` tag (not for invalid URLs where marked would render plain text).
+- Verified with a throwaway test (now left as `test.mjs`) that: heading slugging/dedup works including with inline formatting and non-ASCII text; external/relative/anchor/mailto links get correct treatment; and all other output (bold, italic, code, blockquotes, lists, fenced code) is byte-identical to vanilla `marked.parse()`.

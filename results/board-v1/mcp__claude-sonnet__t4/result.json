@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "mcp",
+  "taskName": "MCP TypeScript SDK",
+  "package": "@modelcontextprotocol/sdk",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 4,
+  "ok": true,
+  "category": "pass",
+  "detail": "@modelcontextprotocol/sdk@1.32.2: tool, validation and resource correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 81.9,
+  "costUsd": 0.5082255,
+  "turns": 21,
+  "installedVersion": "1.32.2",
+  "finishedAt": "2026-11-26T16:43:21.597Z"
+}

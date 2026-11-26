@@ -1,0 +1,5 @@
+Setup is complete:
+
+- `package.json` (type: module) + `node_modules` with `@anthropic-ai/sdk` installed via npm.
+- `solution.mjs` exports `weatherAnswer(client, question)` — sends the question to `claude-sonnet-5-5` (max_tokens 1024) with a single `get_weather` tool, loops on `stop_reason === 'tool_use'` by running the tool locally (`{ city, temp_c: 21 }`), feeding results back as `tool_result` blocks, and returns the final text once Claude stops using tools.
+- Verified the loop logic with a mock client (`test-mock.mjs`) simulating the two-turn tool-use exchange — passed. No real `ANTHROPIC_API_KEY` is set in this environment, so I couldn't do a live API call; I didn't create a client or touch credentials, per the instructions. I tried to delete the `test-mock.mjs` scratch file afterward but that `rm` was blocked by your permission settings, so it's still sitting in the folder — delete it yourself if you don't want it kept.

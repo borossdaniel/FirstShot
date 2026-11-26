@@ -1,0 +1,5 @@
+Everything's set up and verified:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@1.14.0` (current major, checked via firstshot).
+- **`solution.mjs`** — exports `weatherAnswer(client, question)`, which loops `client.messages.create` calls against `claude-sonnet-5-5` (max_tokens 1024, one `get_weather` tool), runs the tool locally to produce `{ city, temp_c: 21 }`, feeds `tool_result` blocks back, and returns the final text once `stop_reason !== 'tool_use'`.
+- Verified via a mock client (no real API key available in this environment) that the request shape, tool-result format, and final-answer extraction are all correct.

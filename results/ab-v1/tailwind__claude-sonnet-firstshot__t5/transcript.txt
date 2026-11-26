@@ -1,0 +1,8 @@
+Everything checks out: brand color `#0e7490` is baked into the compiled CSS, output is scoped to only the classes used in `index.html` (5.9KB minified), and dependencies are on current majors.
+
+Setup complete:
+- `index.html` — static page using `bg-brand`, `text-brand`, and standard Tailwind utilities, linking `dist/output.css`
+- `src/input.css` — `@import "tailwindcss";` plus `@theme { --color-brand: #0e7490; }`
+- `package.json` — `npm run build:css` runs `tailwindcss -i src/input.css -o dist/output.css --minify`
+- Installed `tailwindcss@4.3.5` and `@tailwindcss/cli@4.3.5` (Tailwind v4, CSS-first config, no `tailwind.config.js` needed)
+- Verified: build runs clean, `dist/output.css` contains the brand color and only the classes actually used.

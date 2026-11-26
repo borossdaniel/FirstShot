@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "drizzle",
+  "taskName": "Drizzle ORM",
+  "package": "drizzle-orm",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 3,
+  "ok": true,
+  "category": "pass",
+  "detail": "drizzle-orm@0.45.4: schema, inserts, filtered join and persistence correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 61.7,
+  "costUsd": 0.33276690000000003,
+  "turns": 14,
+  "installedVersion": "0.45.4",
+  "finishedAt": "2026-11-26T16:59:03.321Z"
+}

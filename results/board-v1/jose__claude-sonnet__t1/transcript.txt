@@ -1,0 +1,7 @@
+All tests pass. The project is set up at `/private<workspace>`:
+
+- **`package.json`** — ES module project with `jose` as a dependency (installed via npm, 0 vulnerabilities)
+- **`solution.mjs`** — exports `createToken` and `verifyToken` as specified
+- **`test.mjs`** — verifies valid tokens, wrong secret, malformed tokens, expired tokens, wrong issuer, and wrong audience all behave correctly (12/12 checks passed)
+
+`createToken` signs with HS256, setting subject, issuer (`https://auth.example.com`), audience (`example-api`), issued-at, and a 15-minute expiry. `verifyToken` never throws — it catches `jose`'s errors internally, distinguishing `ERR_JWT_EXPIRED` (→ `reason: 'expired'`) from all other failures like bad signature, wrong issuer/audience, or malformed input (→ `reason: 'invalid'`).

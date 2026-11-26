@@ -1,0 +1,7 @@
+Deletion was blocked by permissions. That's fine — `smoke-test.mjs` is harmless to leave; it's not part of the deliverable and the user can remove it if they don't want it.
+
+Setup is complete and verified:
+- `package.json` (ES modules, `fastify` dependency installed via npm)
+- `solution.mjs` exports `buildApp()` — builds a fresh Fastify instance with an empty in-memory user store each call, never calls `listen`
+- All three endpoints validated via Fastify JSON Schema (name 1-50 chars, valid email format, password ≥8 chars, positive-integer `id`, `limit` 1-50 defaulting to 10) with 400s on invalid input, 404 on missing user, and response schemas that exclude `password` from every response
+- Verified with 22 inject-based assertions plus a real HTTP listen/fetch round-trip — all passed

@@ -1,0 +1,7 @@
+Everything is set up and verified:
+
+- **`math.mjs`** — exports `sum(a, b)` and `clamp(n, min, max)`.
+- **`test/math.test.mjs`** — 11 tests covering `sum` (positive/negative/mixed/zero) and `clamp` (in-range, below/above range, boundary values, `min === max`, negative ranges).
+- **`package.json`** — ES module project with `"test": "vitest run"` (single run, no watch mode, non-zero exit on failure).
+- **vitest 5.1.2** installed via npm (confirmed as current major by the firstshot tool, and `check_project` confirms no outdated majors).
+- `npm test` passes: 11/11 tests green.

@@ -1,0 +1,9 @@
+The Next.js app is set up and verified, with the server now stopped.
+
+Summary of what's in place:
+- `app/page.js` → `/` renders "FirstShot home"
+- `app/posts/[slug]/page.js` → `<h1>Post: {slug}</h1>`
+- `app/api/health/route.js` → `GET /api/health` returns `{"status":"ok"}`
+- `app/api/users/[id]/route.js` → `GET /api/users/<id>` returns `{"id":"<id>"}`
+- `middleware.js` → intercepts `/old/*` and 307-redirects to `/new/*`, preserving the query string (verified `/old/docs/intro?x=1` → `/new/docs/intro?x=1`)
+- No external fonts; `npm run build` succeeds; `npm run start` tested on port 3417 and all routes confirmed, then stopped.

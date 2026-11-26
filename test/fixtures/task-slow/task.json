@@ -1,0 +1,1 @@
+{ "id": "slow", "name": "Slow (test task)", "prompt": "x", "timeoutSec": 1 }

@@ -1,0 +1,5 @@
+`npm run lint` passes (exit code 0) with the expected `no-console` warning — no errors. Setup is complete:
+
+- **package.json** — `"type": "module"`, `lint` script running `eslint src/`, devDependencies `eslint`, `@eslint/js`, `globals`.
+- **eslint.config.js** — flat config extending `js.configs.recommended`, Node globals via `globals.node`, `eqeqeq: "error"`, `no-console: "warn"`.
+- **src/index.js** — small example (`greet` function + `console.log`) that lints clean except for the intentional `no-console` warning.

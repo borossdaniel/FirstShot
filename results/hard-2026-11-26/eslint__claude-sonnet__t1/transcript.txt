@@ -1,0 +1,7 @@
+`src/` only contains `index.js` now, and `npm run lint` passes cleanly with no output.
+
+Setup complete:
+- **package.json** — `"type": "module"`, `lint` script runs `eslint src/`
+- **eslint.config.js** — flat config extending `@eslint/js` recommended rules, Node globals via the `globals` package, plus `eqeqeq: "error"` and `no-console: "warn"`
+- **src/index.js** — tiny example (`add`, `isPositive`, uses `process.env`) that passes lint cleanly
+- Installed `eslint`, `@eslint/js`, `globals` as dev dependencies; verified the rules actually fire (tested against a throwaway file with `==`, `console.log`, and an undefined var — all three were correctly flagged, then removed).

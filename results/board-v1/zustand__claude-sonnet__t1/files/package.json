@@ -1,0 +1,9 @@
+{
+  "name": "zustand-cart-store",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "zustand": "^5.1.0"
+  }
+}

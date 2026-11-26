@@ -1,0 +1,9 @@
+{
+  "name": "firstshot-better-sqlite3",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "db.mjs",
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  }
+}

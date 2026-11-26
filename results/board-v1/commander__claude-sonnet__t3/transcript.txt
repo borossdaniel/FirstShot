@@ -1,0 +1,7 @@
+Both invalid cases (`abc` and `0`) are correctly rejected by Commander with exit code 1. The project is fully set up and verified:
+
+- `package.json` — ES module project with `commander` dependency installed
+- `solution.mjs` — exports `buildProgram()` with `hello` program, `greet <name>` subcommand (`--shout`, `--times <n>` validated via `InvalidArgumentError`), and `--version` → `1.2.3`
+- `cli.mjs` — calls `buildProgram().parse()`
+
+Verified: version flag, plain greet, `--shout`, `--times 3`, combined `--shout --times 2`, and rejection of `--times abc` / `--times 0` all behave correctly.

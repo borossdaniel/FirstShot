@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "uuid",
+  "taskName": "uuid",
+  "package": "uuid",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "uuid@14.0.3: v4, v7 (timestamp and ordering), validation and version detection correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 43.1,
+  "costUsd": 0.271623,
+  "turns": 13,
+  "installedVersion": "14.0.3",
+  "finishedAt": "2026-11-26T17:19:30.765Z"
+}

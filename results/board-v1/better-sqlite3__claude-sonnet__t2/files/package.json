@@ -1,0 +1,9 @@
+{
+  "name": "sqlite-orders-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "better-sqlite3": "^11.3.0"
+  }
+}

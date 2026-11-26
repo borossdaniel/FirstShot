@@ -1,0 +1,6 @@
+Project set up at `firstshot-supabase-L9fPXU/`:
+
+- **package.json** — ES module project with `@supabase/supabase-js` dependency (installed via npm)
+- **solution.mjs** — exports `listOpenTasks(supabase, projectId, limit)` and `addTask(supabase, projectId, title)`, both throwing on any Supabase error
+
+Verified with a mock client replicating Supabase's chainable builder: correct `project_id`/`done` filters, `created_at desc` ordering, limit, column selection (`id, title, created_at`), insert payload (`done: false`), and error-throwing behavior all check out. Also confirmed the real `@supabase/supabase-js` package imports cleanly.

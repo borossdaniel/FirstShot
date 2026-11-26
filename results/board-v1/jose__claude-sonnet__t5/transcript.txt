@@ -1,0 +1,1 @@
+All checks pass. The project is set up with `jose` installed, `solution.mjs` exporting `createToken`/`verifyToken` as specified, and a `test.mjs` verifying valid tokens, wrong signatures, malformed tokens, expired tokens, and wrong issuer/audience all behave correctly.

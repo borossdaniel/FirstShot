@@ -1,0 +1,9 @@
+{
+  "id": "zod",
+  "name": "Zod",
+  "package": "zod",
+  "homepage": "https://zod.dev",
+  "currentMajor": 4,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the Zod library for validation. Create `solution.mjs` that exports:\n\n1. `UserSchema`: a Zod schema for an object with `email` (a valid email address), `age` (an integer, 13 or older) and `tags` (an optional array of strings that defaults to an empty array).\n2. `parseUser(input)`: returns `{ ok: true, user }` when the input is valid (with defaults applied), or `{ ok: false, errors }` when it is not, where `errors` is a plain object mapping each invalid field name to one error message string. Use Zod's own error formatting helpers rather than building the messages by hand.\n\nInstall the dependencies with npm."
+}

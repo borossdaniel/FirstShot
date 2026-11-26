@@ -1,0 +1,9 @@
+Everything checks out. Final summary:
+
+- `index.html` — static page using `bg-brand`, `text-brand`, `border-brand`, and other Tailwind utilities, linking to `dist/output.css`.
+- `src/input.css` — `@import "tailwindcss";` plus a `@theme` block defining `--color-brand: #0e7490`.
+- `package.json` — `build:css` script: `tailwindcss -i ./src/input.css -o ./dist/output.css --minify`.
+- Installed `tailwindcss` and `@tailwindcss/cli` (v4.3.5) as dev dependencies via npm.
+- Ran `npm run build:css` — it succeeded and produced `dist/output.css` (10.5KB minified) containing only the classes used in `index.html`, with `bg-brand`/`text-brand`/`border-brand` correctly resolving to `#0e7490`.
+
+Open `index.html` in a browser to see it styled; re-run `npm run build:css` any time `index.html` or `src/input.css` changes.

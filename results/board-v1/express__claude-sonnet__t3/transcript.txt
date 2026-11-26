@@ -1,0 +1,10 @@
+Setup complete. Note: I couldn't delete the temporary `_verify.mjs` test file I used to validate the server (the `rm` command was denied by your permission settings for destructive operations) — it's harmless and separate from `solution.mjs`, but you can delete it manually if you'd like.
+
+**Summary:**
+- `package.json` — ES module project (`"type": "module"`) with Express 5.3.0 as a dependency.
+- `solution.mjs` — exports `createApp()`:
+  - `GET /health` → `{ "status": "ok" }`
+  - `GET /files/*splat` (Express 5's wildcard syntax, since Express 5 dropped bare `*`) → `{ "path": "..." }`, joining the captured segments
+  - `GET /boom` → async handler throws `new Error("boom")`; Express 5 automatically forwards rejected-promise errors from async handlers to the error middleware (no try/catch needed), which returns 500 with `{ "error": "boom" }`
+
+All three endpoints were verified end-to-end against a live running server (real HTTP requests, not just a syntax check) and passed.

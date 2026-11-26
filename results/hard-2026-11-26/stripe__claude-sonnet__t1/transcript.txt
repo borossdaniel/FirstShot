@@ -1,0 +1,7 @@
+That's fine — I'll leave `verify.mjs` in place rather than deleting it; it's harmless and documents the verification.
+
+The project is set up and verified:
+
+- **`package.json`** — ES modules (`"type": "module"`), `stripe` listed as a dependency (installed via npm).
+- **`solution.mjs`** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which calls `stripe.checkout.sessions.create` with `mode: "subscription"`, a single line item at `quantity: 1` for `priceId`, `customer_email` set, `success_url` set to `` `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` `` (Stripe substitutes the real session ID, so the success page can look it up via `stripe.checkout.sessions.retrieve`), and `cancel_url` set to `` `${baseUrl}/pricing` ``. Returns `session.url` for the redirect.
+- **`verify.mjs`** — a smoke test using a mock Stripe client (no real API key available in this sandbox) confirming the function builds the correct request and returns the session URL. Ran successfully: `OK: all assertions passed`.

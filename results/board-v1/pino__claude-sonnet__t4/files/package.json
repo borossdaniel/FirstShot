@@ -1,0 +1,9 @@
+{
+  "name": "pino-logger-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "pino": "^10.4.0"
+  }
+}

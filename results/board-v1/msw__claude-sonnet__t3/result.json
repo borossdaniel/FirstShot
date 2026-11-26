@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "msw",
+  "taskName": "Mock Service Worker",
+  "package": "msw",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 3,
+  "ok": true,
+  "category": "pass",
+  "detail": "msw@3.0.8: handlers, params, body, network errors and unhandled-request strategy correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 159.3,
+  "costUsd": 0.9008727000000001,
+  "turns": 32,
+  "installedVersion": "3.0.8",
+  "finishedAt": "2026-11-26T17:11:53.441Z"
+}

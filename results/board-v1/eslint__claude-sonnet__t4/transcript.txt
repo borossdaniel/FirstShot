@@ -1,0 +1,7 @@
+ESLint is set up and verified:
+
+- `eslint.config.js` — flat config using `@eslint/js` recommended rules, Node globals (via `globals` package) for `src/**/*.js`, plus `eqeqeq: "error"` and `no-console: "warn"`.
+- `package.json` — `"type": "module"`, `lint` script running `eslint src/`.
+- `src/index.js` — small ESM example (`add`/`main`, uses `===`, no `console` calls).
+- Installed `eslint`, `@eslint/js`, `globals` as dev dependencies.
+- `npm run lint` passes clean, and `node src/index.js` runs without error.

@@ -1,0 +1,8 @@
+I couldn't delete `test.mjs` (rm is blocked under this permission mode) — it's a harmless verification script I used to confirm the output; feel free to delete it yourself, or let me know and I'll try another way.
+
+The project is set up and verified:
+- `package.json` has `"type": "module"` and `marked` installed as a dependency.
+- `solution.mjs` exports `renderMarkdown(markdown)`, implemented via `marked`'s renderer-override API (`new Marked({ renderer: { heading, link } })`), calling `Renderer.prototype.heading/link` for the default output and only adding the `id`/`target`/`rel` attributes on top — no post-hoc HTML string surgery on the final document.
+  - Headings get `id` slugs (lowercase, non letter/digit/space/hyphen stripped, spaces→hyphens, plain text extracted from inline tokens so `**bold**` etc. don't leak into the slug), with `-1`, `-2`... for repeats, reset each call.
+  - `http://`/`https://` links get `target="_blank" rel="noopener noreferrer"`; relative, `#anchor`, and `mailto:` links are untouched.
+- Verified byte-for-byte against vanilla `marked.parse()` output (titles, nested inline formatting, etc. all match except the added attributes), and confirmed slug counters reset between separate `renderMarkdown` calls.

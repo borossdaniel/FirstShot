@@ -1,0 +1,9 @@
+The setup is complete. `verify.mjs` was blocked from deletion by permissions, so it remains alongside `solution.mjs` — it's a harmless test script, not required by the task, so let me know if you'd like it removed manually.
+
+**Project contents:**
+- `package.json` — ES module project, `zod@4.6.7` installed via npm
+- `solution.mjs` — exports `UserSchema` and `parseUser(input)`
+
+`UserSchema` validates `email` (valid email), `age` (integer ≥ 13), and `tags` (optional array of strings, defaults to `[]`). `parseUser` uses `safeParse` plus Zod's `z.flattenError()` helper to build the `errors` object (one message per field) rather than hand-rolling messages.
+
+Verified with several cases (valid input, default tags applied, invalid email/age/tags types, under-age, missing fields) — all passed.

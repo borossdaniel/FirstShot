@@ -1,0 +1,7 @@
+Confirmed: default level is `info` (debug suppressed), and passing `level: 'debug'` enables debug lines.
+
+The project is set up and fully verified in `/private<workspace>`:
+
+- `package.json` — ES module project with `pino` as a dependency (installed via npm)
+- `logger.mjs` — exports `createLogger({ service, destination, level })` and `forRequest(logger, requestId)`
+- `test.mjs` — verification script (ran successfully) confirming: `service` field, no `pid`/`hostname`, string-form `level`, ISO 8601 `time`, redaction of top-level `password`, one-level-deep `*.password`, and `req.headers.authorization`, plus correct `requestId` scoping via child loggers and no writes to stdout/files (only to the passed-in stream).

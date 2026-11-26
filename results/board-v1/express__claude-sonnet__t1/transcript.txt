@@ -1,0 +1,9 @@
+All three routes behave as specified. The project is set up and verified in `/private<workspace>/`:
+
+- `package.json` — `"type": "module"`, Express `^5.3.0` installed via npm
+- `solution.mjs` — exports `createApp()` with:
+  - `GET /health` → `200 {"status":"ok"}`
+  - `GET /files/*splat` → `200 {"path":"a/b/c.txt"}` for `/files/a/b/c.txt`
+  - `GET /boom` → async handler throws; Express 5's built-in promise-rejection handling routes it to the error middleware → `500 {"error":"boom"}`, no try/catch needed
+
+Verified by spinning up the app with `.listen(0)` and hitting all three endpoints via `fetch`.

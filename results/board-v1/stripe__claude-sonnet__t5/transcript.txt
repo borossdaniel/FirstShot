@@ -1,0 +1,7 @@
+Everything is set up and verified:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `stripe` as a dependency, installed via npm.
+- **`solution.mjs`** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which creates a `subscription`-mode Checkout Session (price + quantity 1, `customer_email` prefilled), with `success_url` of `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can retrieve the session via `stripe.checkout.sessions.retrieve(session_id)`), `cancel_url` of `${baseUrl}/pricing`, and returns `session.url`.
+- **`verify.mjs`** — a mocked-client test confirming the function is called with the right shape and returns the correct redirect URL; ran successfully (`node verify.mjs` → "All checks passed.").
+
+No real Stripe API key was needed or used, per the requirement that the client is passed in already configured.

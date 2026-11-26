@@ -1,0 +1,12 @@
+`rm` was blocked by permission settings, so `verify.mjs` stays in the folder — it's harmless (just the test script I used) but let me know if you'd like it removed.
+
+**Setup complete:**
+- `package.json` — ES module project with `@trpc/server@11` and `zod@3` installed via npm
+- `solution.mjs` — exports `appRouter` and `createCaller(ctx)`
+  - `greeting.hello` query validates `name` (1–50 chars)
+  - `todo.add`/`list`/`toggle` all use an `isAuthed` middleware that throws `UNAUTHORIZED` when `ctx.user` is null
+  - `todo.add` trims the title, enforces 1–100 chars, defaults `priority` to `normal`
+  - `todo.toggle` throws `NOT_FOUND` for missing/other-user todos
+  - Todo IDs increment globally across all users starting at 1
+
+Verified all 2 success cases, auth rejection, validation rejection, and not-found/cross-user cases pass via a caller-based test run (output shown above) before cleanup.

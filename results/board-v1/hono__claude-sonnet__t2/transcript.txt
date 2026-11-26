@@ -1,0 +1,6 @@
+Bash is locked down for this action, so I'll leave `verify.mjs` in place rather than work around the restriction — it's just a harmless test helper, not part of the required deliverable.
+
+Setup complete:
+- `package.json` configured as ES modules (`"type": "module"`), with `hono` installed as a dependency.
+- `solution.mjs` exports `app`, implementing all four routes/behaviors (health check, echo with 201, authenticated user lookup via middleware, 404 handler).
+- Verified all cases pass using Hono's built-in `app.request()` (no server started) — health, echo, auth success/failure/wrong-key, and not-found all behave as specified.

@@ -1,0 +1,7 @@
+The project is set up and verified. Summary:
+
+- `package.json` (`"type": "module"`) with `marked` installed via npm.
+- `solution.mjs` exports `renderMarkdown(markdown)`, implemented purely via marked's renderer API:
+  - **Heading IDs**: overrides `renderer.heading` to compute a plain-text slug (recursing through inline tokens, ignoring markup) per the spec's rules, dedups with a `Map` that's created fresh inside each `renderMarkdown` call (so counters reset per call), and renders inline formatting normally via `this.parser.parseInline`.
+  - **External links**: overrides `renderer.link`, delegating to a plain `Renderer` instance's default `link` method (via `.call(this, token)`) to get marked's normal escaped `<a>` markup, then injects `target="_blank" rel="noopener noreferrer"` only when `token.href` matches `^https?://`.
+- Verified with a test script covering duplicate headings, special characters, inline formatting in headings, and relative/anchor/mailto vs. http(s) links — all behaved correctly, and counters reset between separate calls (`test.mjs` left in the folder as a runnable check).

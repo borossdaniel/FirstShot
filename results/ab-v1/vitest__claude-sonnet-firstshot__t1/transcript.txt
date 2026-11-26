@@ -1,0 +1,8 @@
+That confirms exit code 0 on success. `vitest run` (not `vitest`) ensures single-run mode rather than watch mode, and it exits non-zero on failures by default — this is standard vitest behavior, already satisfied by the config.
+
+Setup complete:
+- `math.mjs` exports `sum` and `clamp`
+- `test/math.test.mjs` covers both, with clamp edge cases (boundary values, inverted min/max)
+- `package.json` uses `"type": "module"`, `npm test` runs `vitest run` (single pass, no watch)
+- vitest@5.1.2 installed per firstshot's reported current version; `check_project` confirms no outdated majors
+- `npm test` passes: 9/9 tests, exit code 0

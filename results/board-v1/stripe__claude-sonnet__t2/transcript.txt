@@ -1,0 +1,11 @@
+Confirms the `stripe` package loads correctly as an ESM dependency and that a real `Stripe` client exposes the `checkout.sessions.create` method used by `solution.mjs`.
+
+**Setup complete:**
+- `package.json` — ES module project (`"type": "module"`), `stripe` installed as a dependency.
+- `solution.mjs` — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`:
+  - Creates a `mode: 'subscription'` Checkout Session with `line_items: [{ price: priceId, quantity: 1 }]`.
+  - Pre-fills `customer_email`.
+  - `success_url` is `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` — Stripe substitutes the real session ID, so the success page can read it from the query string and call `stripe.checkout.sessions.retrieve(session_id)` to look up the completed session.
+  - `cancel_url` is `${baseUrl}/pricing`.
+  - Returns `session.url` for redirecting the customer.
+- `test.mjs` — verifies the function with a mocked Stripe client (no real API key needed); ran successfully.

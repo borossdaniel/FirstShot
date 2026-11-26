@@ -1,0 +1,9 @@
+{
+  "id": "tailwind",
+  "name": "Tailwind CSS",
+  "package": "tailwindcss",
+  "homepage": "https://tailwindcss.com",
+  "currentMajor": 4,
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up Tailwind CSS for a plain static site (no framework, no bundler). Create `index.html` and a source stylesheet at `src/input.css`. Add an npm script `build:css` that compiles the CSS once to `dist/output.css`, including only the classes used in `index.html`. Add a custom brand colour named `brand` with value `#0e7490` so classes like `bg-brand` and `text-brand` work. Install the dependencies with npm and make sure `npm run build:css` works."
+}

@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "google-genai",
+  "taskName": "Google Gen AI SDK (Gemini)",
+  "package": "@google/genai",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "@google/genai@1.52.0 installed, current major is 3",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 69.7,
+  "costUsd": 0.3636153,
+  "turns": 16,
+  "installedVersion": "1.52.0",
+  "finishedAt": "2026-11-26T17:02:16.757Z"
+}

@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "vitest",
+  "taskName": "Vitest",
+  "package": "vitest",
+  "agent": "claude",
+  "model": "sonnet+firstshot",
+  "variant": "firstshot",
+  "trial": 5,
+  "ok": true,
+  "category": "pass",
+  "detail": "vitest@5.1.2: runs once, passes, and catches broken code",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 58.8,
+  "costUsd": 0.2976084,
+  "turns": 15,
+  "installedVersion": "5.1.2",
+  "finishedAt": "2026-11-26T17:09:54.709Z"
+}

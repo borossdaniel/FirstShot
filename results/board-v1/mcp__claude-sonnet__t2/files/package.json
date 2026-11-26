@@ -1,0 +1,11 @@
+{
+  "name": "firstshot-mcp-calc",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "server.mjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.8"
+  }
+}

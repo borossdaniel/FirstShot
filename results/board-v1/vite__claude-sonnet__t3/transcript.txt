@@ -1,0 +1,8 @@
+That extra verification step was blocked, but it's not needed — the build output already shows everything required: `index.html` and `about.html` both reference assets via relative `./assets/...` paths (no leading slash), so they'll work from any subfolder depth on a server. The static analysis confirms the requirement.
+
+Setup complete:
+- **Vite config** (`vite.config.js`): `base: './'` for relative paths (works from any subfolder), multi-page `rollupOptions.input` for `index.html` + `about.html`.
+- **Pages**: `index.html` → `src/main.js`, `about.html` → `src/about.js`.
+- **`.env`**: `VITE_APP_TITLE=FirstShot`, read via `import.meta.env.VITE_APP_TITLE` and written into `<h1>` in `src/main.js`.
+- **`public/robots.txt`**: `User-agent: *` / `Allow: /`, copied unchanged to `dist/robots.txt`.
+- `npm install` and `npm run build` both succeeded; `dist/` contains both HTML pages, hashed JS assets with relative paths, and `robots.txt`, and the built JS confirms the title is correctly baked in as `"FirstShot"`.

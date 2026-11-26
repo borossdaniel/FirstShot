@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "tailwind",
+  "taskName": "Tailwind CSS",
+  "package": "tailwindcss",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "tailwindcss@4.3.5: build script, content scanning and brand colour correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 53.3,
+  "costUsd": 0.32715149999999993,
+  "turns": 15,
+  "installedVersion": "4.3.5",
+  "finishedAt": "2026-11-26T16:16:11.810Z"
+}

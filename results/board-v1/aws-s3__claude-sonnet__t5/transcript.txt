@@ -1,0 +1,5 @@
+Project is set up and verified. Summary:
+
+- **package.json**: ES module project (`"type": "module"`), deps `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner` installed via npm.
+- **solution.mjs**: exports `uploadJson`, `listKeys` (handles pagination via `ContinuationToken`), and `getDownloadUrl` (15-minute presigned URL), each taking the S3 client as the first argument — no client creation or credential/env access inside.
+- Verified with a smoke test (left in the folder as `smoke_test.mjs`) using a mocked client for upload/list logic and a real `S3Client` with dummy credentials to confirm `getDownloadUrl` produces a correctly signed URL with `X-Amz-Expires=900`. All checks passed. I couldn't `rm` the test file afterward (blocked in this permission mode) — delete it manually if you don't want it kept around.

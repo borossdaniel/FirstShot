@@ -1,0 +1,16 @@
+{
+  "name": "firstshot-valibot-qppmed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "solution.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "valibot": "^1.5.0"
+  }
+}

@@ -1,0 +1,13 @@
+Good — the test script already cleaned up `test.sqlite` itself on completion, so no leftover file exists; no further action needed there.
+
+The project is set up in this folder:
+
+- `package.json` — ES module project with `better-sqlite3` installed via npm
+- `db.mjs` — exports `openDb`, `insertUsers`, `addOrder`, `getUserByEmail`, `topSpenders`
+- `test.mjs` — verification script (ran successfully, self-cleans its temp db)
+
+Key implementation details:
+- `openDb` enables `foreign_keys = ON` and only runs the migration when `user_version < 1`, so reopening an existing file preserves data.
+- `orders.user_id` has a `REFERENCES users(id)` constraint enforced via foreign keys — inserting an order for a non-existent user throws.
+- `insertUsers` wraps the batch in a `db.transaction(...)`, so a duplicate email rolls back the entire batch and rethrows.
+- All queries use prepared statements with bound `?` parameters.

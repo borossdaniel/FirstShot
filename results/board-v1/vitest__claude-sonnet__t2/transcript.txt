@@ -1,0 +1,6 @@
+Project is set up and verified:
+
+- **`package.json`** — ES module project, `npm test` runs `vitest run` (single run, no watch; exits 0 on pass, 1 on failure — confirmed both ways).
+- **`math.mjs`** — exports `sum(a, b)` and `clamp(n, min, max)`.
+- **`test/math.test.mjs`** — 11 tests covering `sum` (positive, negative, zero, floats) and `clamp` (in-range, below/above range, boundary equals min/max, min===max, negative range).
+- `npm install` completed (45 packages); `npm test` passes all 11 tests.

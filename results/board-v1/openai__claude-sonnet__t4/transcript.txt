@@ -1,0 +1,6 @@
+Noted — deleting `verify.mjs` was blocked by permissions. I'll leave it in place; it's a harmless test file that confirms the solution works, not a problem to leave around.
+
+The project is set up and verified:
+- `package.json` — ES modules, deps `openai` and `zod` installed via npm
+- `solution.mjs` — exports `ask(client, question)` (Responses API, returns plain string via `output_text`) and `classify(client, text)` (Responses API + `zodTextFormat` structured output, returns parsed `{label: "spam"|"ham"}`)
+- `verify.mjs` — a mock-client test confirming both functions call the Responses API correctly with model `gpt-5.2` and return expected shapes (ran successfully, all checks passed)

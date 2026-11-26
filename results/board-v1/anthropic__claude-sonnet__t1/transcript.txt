@@ -1,0 +1,13 @@
+That confirms node_modules and package.json/solution.mjs are in place. The project is set up and verified.
+
+**What's in the folder:**
+- `package.json` — ES module project with `@anthropic-ai/sdk` (v0.70.1) as a dependency, installed via `npm install`
+- `node_modules/` — installed dependencies
+- `solution.mjs` — exports `weatherAnswer(client, question)`
+
+**Verification:** Since no real API key is available in this environment, I verified the tool-use loop against a mock client that mimics the SDK's `messages.create` response shape — asserting correct model/`max_tokens`/tool params on the first call, correct `tool_result` block format (with matching `tool_use_id` and JSON payload `{city, temp_c: 21}`) on the second call, and correct final-text extraction. It passed:
+```
+OK: It is 21C in Paris.
+```
+
+Note: I used the model name `claude-sonnet-5-5` exactly as you specified, even though the current known Sonnet 5 model ID is `claude-sonnet-5` — let me know if that was a typo and you want it corrected.

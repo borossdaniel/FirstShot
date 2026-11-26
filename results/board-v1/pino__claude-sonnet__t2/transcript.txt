@@ -1,0 +1,13 @@
+Project is set up and verified. Summary:
+
+- **`package.json`** — ES modules (`"type": "module"`), `pino` installed as a dependency.
+- **`logger.mjs`** — exports `createLogger({ service, destination, level })` and `forRequest(logger, requestId)`:
+  - writes NDJSON to the caller-supplied `destination` stream (nothing written to stdout/file directly)
+  - `base: { service }` adds `service` and removes `pid`/`hostname`
+  - `formatters.level` emits the level name string instead of the numeric code
+  - `timestamp: pino.stdTimeFunctions.isoTime` gives ISO 8601 `time`
+  - `redact: { paths: ['password', 'user.password', 'req.headers.authorization'], censor: '[REDACTED]' }` handles all three redaction cases, leaving everything else (including sibling header fields) untouched
+  - `forRequest` just returns `logger.child({ requestId })`, so only that child's lines carry `requestId`
+- **`verify.mjs`** — a runnable check exercising every requirement (redaction at all three paths, missing pid/hostname, string level/ISO time, parent vs. child `requestId` isolation, and level-based filtering). Ran it twice; all assertions pass.
+
+Nothing else to do — the implementation is installed, written, and tested successfully.

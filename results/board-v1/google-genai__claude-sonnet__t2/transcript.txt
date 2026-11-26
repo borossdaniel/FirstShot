@@ -1,0 +1,17 @@
+Deletion is blocked under this permission mode, so I'll leave `verify.mjs` in place — it's harmless and actually useful for you to confirm live behavior once you set an API key.
+
+Setup complete in this folder:
+- `package.json` — ES module project with `@google/genai` (v1.52.0) installed via npm.
+- `solution.mjs` — exports `ask(ai, question)` and `extractContact(ai, text)`, both using `gemini-2.5-flash`. `extractContact` uses `responseMimeType: "application/json"` + a `responseSchema` (via the SDK's `Type` enum) requiring string `name`/`email` fields, and returns the parsed JSON object.
+- `verify.mjs` — a small test script I used to confirm imports/syntax are correct.
+
+No `GEMINI_API_KEY`/`GOOGLE_API_KEY` is set in this environment, so I could only verify the module loads and type-checks correctly, not an actual live Gemini response. To test it for real:
+
+```js
+import { GoogleGenAI } from "@google/genai";
+import { ask, extractContact } from "./solution.mjs";
+
+const ai = new GoogleGenAI({}); // reads GEMINI_API_KEY from env
+console.log(await ask(ai, "What is the capital of France?"));
+console.log(await extractContact(ai, "Hi, I'm John Doe, reach me at john@example.com"));
+```

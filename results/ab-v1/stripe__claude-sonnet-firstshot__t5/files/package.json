@@ -1,0 +1,10 @@
+{
+  "name": "firstshot-stripe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "stripe": "^23.2.0"
+  }
+}

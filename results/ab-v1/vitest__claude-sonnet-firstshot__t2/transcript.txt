@@ -1,0 +1,8 @@
+Everything is verified. The earlier `npm test` run already showed all tests passing (`vitest run` exits non-zero on failure by default, so this satisfies the exit-code requirement), and firstshot confirms the dependency is on its current major version.
+
+Summary:
+- `math.mjs` exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` has 9 tests covering both functions, including clamp edge cases (below/above range, boundary equality, min===max)
+- `package.json` uses `"type": "module"` and `"test": "vitest run"` (single run, proper exit code)
+- vitest@5.1.2 installed per firstshot's reported current version
+- `npm test` passes: 1 test file, 9 tests, all green

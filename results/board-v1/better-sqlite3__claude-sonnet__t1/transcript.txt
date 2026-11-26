@@ -1,0 +1,11 @@
+Done. The project is set up with:
+
+- **`package.json`** — ES module project with `better-sqlite3` installed (via `npm install`).
+- **`db.mjs`** — exports `openDb`, `insertUsers`, `addOrder`, `getUserByEmail`, `topSpenders`:
+  - `openDb` creates `users`/`orders` tables with `email UNIQUE NOT NULL`, `name NOT NULL`, `orders.user_id` as a `REFERENCES users(id)` foreign key, enforced via `PRAGMA foreign_keys = ON`. Migration is gated on `PRAGMA user_version < 1`, so reopening an existing file skips it and keeps data.
+  - `insertUsers` wraps all inserts in a `db.transaction`, so a duplicate email rolls back the entire batch and throws.
+  - `addOrder` returns the new row id as a `Number`.
+  - `getUserByEmail` returns the row or `null`.
+  - `topSpenders` sums order totals per user, orders descending, excludes users with no orders, and respects `limit`.
+  - All queries use prepared statements with bound parameters.
+- **`test.mjs`** — exercises every behavior (migration idempotency, transactional rollback, FK rejection of invalid `userId`, null lookup, ordering/limit/exclusion in `topSpenders`, and data persistence across reopen). Ran it: `All tests passed.`

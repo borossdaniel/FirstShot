@@ -1,0 +1,6 @@
+Project is set up and verified. Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `date-fns@4.4.0` installed via npm.
+- `solution.mjs` exports `nextBusinessDays`, `humanGap`, and `weekLabel`, all built on date-fns (`addDays`, `isWeekend`, `parseISO`, `format`, `formatDistanceStrict`, `getISOWeek`, `getISOWeekYear`).
+- Ran it live: `nextBusinessDays('2026-11-26', 5)` correctly skips the weekend, `humanGap` returns strict phrasing ("3 days", "1 month"), and `weekLabel('2026-11-26')` → `"2026-W48"`.
+- `verify.mjs` (the test script) is left in the folder since I couldn't remove it — feel free to delete it.

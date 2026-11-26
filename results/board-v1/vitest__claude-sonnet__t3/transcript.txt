@@ -1,0 +1,1 @@
+All set. Project created with `math.mjs` (`sum`, `clamp`), 12 Vitest tests in `test/math.test.mjs` covering edge cases (boundary values, negative ranges, min=max), and `npm test` runs via `vitest run` (single run, no watch). Verified it exits 0 on pass and 1 on failure.

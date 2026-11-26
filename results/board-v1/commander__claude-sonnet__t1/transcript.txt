@@ -1,0 +1,7 @@
+All checks pass. The project is complete and verified:
+
+- `package.json` — ES module project with `commander` installed
+- `solution.mjs` — exports `buildProgram()` returning a Commander program named `hello`, `--version` → `1.2.3`, `greet <name>` subcommand with `--shout` and `--times <n>` (validated via `InvalidArgumentError`, default `1`)
+- `cli.mjs` — calls `buildProgram().parse()`
+
+Verified: `--version` prints `1.2.3`; `greet World` → `Hello, World!`; `--shout` uppercases; `--times 3`/`--times 2` repeat correctly; `--times abc` and `--times 0` both correctly fail with Commander's invalid-argument error and exit code 1.

@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "ai-sdk",
+  "taskName": "Vercel AI SDK",
+  "package": "ai",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 2,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "ai@5.0.294 installed, current major is 7",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 126.3,
+  "costUsd": 0.6284282999999999,
+  "turns": 25,
+  "installedVersion": "5.0.294",
+  "finishedAt": "2026-11-26T16:04:16.042Z"
+}

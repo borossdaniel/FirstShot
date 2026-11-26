@@ -1,0 +1,6 @@
+All tests passed, including transactional rollback on duplicate email, foreign-key rejection of orders for nonexistent users, and persistence across reopening the database file.
+
+Setup complete in this folder:
+- `package.json` (ESM, `better-sqlite3` dependency, installed via npm)
+- `db.mjs` — exports `openDb`, `insertUsers`, `addOrder`, `getUserByEmail`, `topSpenders`, all using prepared statements with bound parameters; schema migration gated on `user_version`; `foreign_keys = ON` enforces the orders→users constraint
+- `test.mjs` — verification script (ran successfully, cleans up its temp db file after)

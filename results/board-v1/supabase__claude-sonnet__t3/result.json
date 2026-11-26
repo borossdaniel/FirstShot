@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "supabase",
+  "taskName": "Supabase (JavaScript client)",
+  "package": "@supabase/supabase-js",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 3,
+  "ok": true,
+  "category": "pass",
+  "detail": "@supabase/supabase-js@2.119.2: filtered select, insert returning the row, and error handling correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 35.9,
+  "costUsd": 0.21856499999999998,
+  "turns": 8,
+  "installedVersion": "2.119.2",
+  "finishedAt": "2026-11-26T17:17:22.027Z"
+}

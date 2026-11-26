@@ -1,0 +1,8 @@
+Build output is correct:
+
+- Both `dist/index.html` and `dist/about.html` exist, each loading their own bundled JS.
+- Asset references use relative paths (`./assets/...`, `./about.html`, `./index.html`) via `base: './'` — works from any subfolder depth.
+- `main.js` bundle shows the title baked in as `"FirstShot"`, sourced from `.env`'s `VITE_APP_TITLE`.
+- `robots.txt` landed unchanged at `dist/robots.txt` (copied verbatim from `public/`).
+
+Everything is installed and `npm run build` works end-to-end.

@@ -1,0 +1,7 @@
+All tests pass. Project is set up and verified:
+
+- `package.json` (ESM, deps: `@apollo/server`, `graphql`)
+- `solution.mjs` — exports `createServer()`, builds fresh in-memory authors/books each call, implements the schema exactly as specified, with `addBook` throwing `UNAUTHENTICATED` when `context.user` is null and `BAD_USER_INPUT` when `authorId` doesn't exist
+- `test.mjs` — verifies queries (all/by author/by id/missing id), both error paths, successful mutation with incrementing ids (`4`, `5`), author↔book relations, and that each `createServer()` call starts from fresh data
+
+Dependencies installed via `npm install`, and `node test.mjs` confirms everything works end-to-end.

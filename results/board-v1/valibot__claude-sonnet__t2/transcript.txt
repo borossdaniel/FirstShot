@@ -1,0 +1,6 @@
+`rm` is blocked under the current permission mode (don't-ask mode denies destructive shell commands outright). I've left `verify.mjs` in the folder since I can't delete it — it's a harmless ad-hoc test file (not part of the deliverable) that confirmed the implementation works; delete it manually if you'd like it gone.
+
+**Summary:**
+- Initialized an ES-module npm project (`type: module`) and installed `valibot@1.5.0`.
+- `solution.mjs` exports `SignupSchema` (email/password/newsletter with the required Valibot messages and default) and `parseSignup(input)`, which uses `v.safeParse` + `v.flatten(result.issues).nested` to build the `errors` object.
+- Verified against valid input, default newsletter, invalid email, invalid password, both invalid, and missing fields — all passed.

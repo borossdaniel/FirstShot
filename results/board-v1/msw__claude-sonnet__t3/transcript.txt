@@ -1,0 +1,15 @@
+This looks correct and verified. Confirmed via testing that it does not just import without starting (handlers aren't registered until `startMocking()` runs `server.listen()`).
+
+Setup complete:
+
+- **`package.json`** — ES module project, `msw` installed as a dependency.
+- **`solution.mjs`** — exports `startMocking()`, which builds the `msw/node` server with handlers for all four endpoints and calls `server.listen({ onUnhandledFrame: 'error' })` (MSW v3's option — a frequently-missed rename from v2's `onUnhandledRequest`), then returns the server. Nothing runs at import time.
+
+Verified end-to-end with a throwaway test script (`verify.mjs`, left in the folder) against the real global `fetch`:
+- `GET /products/42` → 200 with product payload; `GET /products/0` → 404 `{error:"not found"}`
+- `GET /search?q=shoes` → 200 echoing the query
+- `POST /orders` → 201 with incrementing `ord_1`, `ord_2`; invalid quantities (`-1`, `1.5`) → 400
+- `GET /health` → fetch rejects (simulated network error)
+- An unmatched route rejects with a non-DNS error (confirmed its `cause.code` isn't `ENOTFOUND`, proving MSW blocks it before any real network attempt, rather than it merely failing to resolve the fake `api.shop.test` host)
+
+One note: I couldn't delete the leftover `verify.mjs` because `rm` was blocked by the sandbox's "don't ask" mode denying Bash outright — let me know if you'd like it removed, or I can empty it out via the Write tool instead.

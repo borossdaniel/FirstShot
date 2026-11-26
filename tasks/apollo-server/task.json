@@ -1,0 +1,9 @@
+{
+  "id": "apollo-server",
+  "name": "Apollo Server",
+  "package": "@apollo/server",
+  "homepage": "https://www.apollographql.com/docs/apollo-server",
+  "currentMajor": 5,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with Apollo Server for a GraphQL API. Create `solution.mjs` that exports `createServer()`, which returns a new Apollo Server instance (do not start an HTTP server or listen on a port in that file). Each call must start from fresh in-memory data:\n\n- Authors: `1` Ursula K. Le Guin, `2` Octavia E. Butler.\n- Books: `1` \"A Wizard of Earthsea\" (1968, author 1), `2` \"The Dispossessed\" (1974, author 1), `3` \"Kindred\" (1979, author 2).\n\nSchema:\n\n```graphql\ntype Author { id: ID!  name: String!  books: [Book!]! }\ntype Book { id: ID!  title: String!  year: Int  author: Author! }\ninput AddBookInput { title: String!  authorId: ID!  year: Int }\ntype Query { books(authorId: ID): [Book!]!  book(id: ID!): Book }\ntype Mutation { addBook(input: AddBookInput!): Book! }\n```\n\n`books` lists all books in id order, or only that author's books when `authorId` is given. `book` returns null for an unknown id. `addBook` gives the new book the next id (\"4\", \"5\", ...). The request context has a `user` field that is null for anonymous requests: `addBook` must fail with the standard GraphQL error code for an unauthenticated user when there is no user, and with the standard code for invalid user input when the author does not exist.\n\nInstall the dependencies with npm."
+}

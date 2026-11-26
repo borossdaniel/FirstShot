@@ -1,0 +1,9 @@
+{
+  "id": "date-fns",
+  "name": "date-fns",
+  "package": "date-fns",
+  "homepage": "https://date-fns.org",
+  "currentMajor": 4,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the date-fns library. Create `solution.mjs` that exports:\n\n1. `nextBusinessDays(isoDate, n)`: given a date string like \"2026-11-26\", return an array of the next `n` business days (Monday to Friday) after that date, as \"yyyy-MM-dd\" strings.\n2. `humanGap(fromIso, toIso)`: return the strict, human-readable distance between two dates using date-fns (for example \"3 days\" or \"1 month\"), with no \"about\" or \"almost\" wording.\n3. `weekLabel(isoDate)`: return the ISO week label for a date in the form \"2026-W48\" (ISO week-numbering year, a capital W, and a two-digit ISO week number).\n\nUse date-fns for all date maths and formatting. Install the dependencies with npm."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "express",
+  "name": "Express",
+  "package": "express",
+  "homepage": "https://expressjs.com",
+  "currentMajor": 5,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) using the current version of Express. Create `solution.mjs` that exports `createApp()`, which returns an Express app (do not call `listen` in that file), with:\n\n1. `GET /health` returns JSON `{ \"status\": \"ok\" }`.\n2. `GET /files/<any/nested/path>` returns JSON `{ \"path\": \"<any/nested/path>\" }`, for example `/files/a/b/c.txt` gives `{ \"path\": \"a/b/c.txt\" }`. Use a wildcard route.\n3. `GET /boom` is an async route handler that throws `new Error(\"boom\")`. An error-handling middleware must turn any error into status 500 with JSON `{ \"error\": \"<message>\" }`. Do not add try/catch inside the route.\n\nInstall the dependencies with npm."
+}

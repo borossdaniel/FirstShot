@@ -1,0 +1,9 @@
+Project is set up and complete:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@^1.14.0` installed via npm.
+- **`solution.mjs`** — exports `weatherAnswer(client, question)`, which:
+  1. Calls `client.messages.create` with model `claude-sonnet-5-5`, `max_tokens: 1024`, and the `get_weather` tool (`{ city: string }` input schema).
+  2. Loops while `stop_reason === "tool_use"`: appends the assistant's `tool_use` content, runs `get_weather` locally (returns `{ city, temp_c: 21 }`), and sends it back as a `tool_result` block keyed by `tool_use_id`.
+  3. Once Claude responds with `end_turn` (or any non-tool-use stop reason), returns the concatenated text blocks as a plain string.
+
+No API key was available in this sandbox, so I verified correctness with a mock client (in the scratchpad, not part of the project) that simulates a two-turn tool-use exchange — it confirmed the request payload shape and the tool-result round-trip format are correct, and that the function returns the right final string.

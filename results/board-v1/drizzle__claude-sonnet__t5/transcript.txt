@@ -1,0 +1,7 @@
+Project is set up and verified. In the folder:
+
+- `schema.mjs` — exports `authors` and `books` Drizzle tables (sqlite-core), with the required primary keys, `NOT NULL`/`UNIQUE` on author name, and `books.authorId` referencing `authors.id`.
+- `solution.mjs` — exports `openDb`, `addAuthor`, `addBook`, `booksSince`, using `better-sqlite3` as the driver and Drizzle's query builder (`insert().values().returning()`, `select().innerJoin().where().orderBy()`) — no raw SQL strings except the one-time `CREATE TABLE IF NOT EXISTS` DDL in `openDb`.
+- Dependencies (`drizzle-orm`, `better-sqlite3`) installed via npm; `package.json` has `"type": "module"`.
+
+I wrote a throwaway `verify.mjs` to exercise everything end-to-end: inserting authors/books, checking `booksSince` filtering and ordering by year then title, reopening the same DB file to confirm persistence, and confirming the unique constraint on author name rejects duplicates. All checks passed. I left `verify.mjs` in the folder (a `rm` command was blocked by the sandbox) — it's harmless and not part of the deliverable; delete it if you don't want it around.

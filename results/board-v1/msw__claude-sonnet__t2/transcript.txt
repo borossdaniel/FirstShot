@@ -1,0 +1,9 @@
+Good — `solution.mjs` and `verify.mjs` are confirmed at the project root alongside `package.json` and `node_modules`.
+
+The project is set up and verified:
+
+- **`package.json`** — `"type": "module"`, with `msw@3.0.8` as a dependency.
+- **`solution.mjs`** — exports `startMocking()`, which builds an MSW `setupServer()` with handlers for all four endpoints and calls `server.listen({ onUnhandledFrame: 'error' })` (msw v3's renamed equivalent of v2's `onUnhandledRequest`), so any unmatched request throws instead of hitting the real network. It returns the server without starting it at import time.
+- **`verify.mjs`** — a smoke test exercising all endpoints (success/error paths, order counter incrementing, network-error on `/health`, and confirming unmatched/external requests reject) — left in place as a working usage example. All checks passed.
+
+One thing worth flagging: MSW just shipped a `3.x` major (replacing the long-standing `2.x` line) with a notable breaking change — `onUnhandledRequest` was renamed to `onUnhandledFrame`. I installed `latest` (3.0.8) and adapted to the new API. If you'd rather pin to the older, longer-battle-tested `msw@2`, say so and I'll swap it (API would then use `onUnhandledRequest: 'error'` instead).

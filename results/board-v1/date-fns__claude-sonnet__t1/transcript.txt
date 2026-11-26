@@ -1,0 +1,7 @@
+That's fine — I'll leave `test.mjs` in place since it's harmless and serves as a working example/sanity check.
+
+The project is set up and verified:
+
+- `package.json` — ES modules (`"type": "module"`), `date-fns` installed as a dependency.
+- `solution.mjs` exports `nextBusinessDays`, `humanGap`, `weekLabel`, all implemented with date-fns (`parseISO`, `addDays`, `isSaturday`/`isSunday`, `format`, `formatDistanceStrict`, `getISOWeek`, `getISOWeekYear`).
+- `test.mjs` — a quick sanity check confirming correct output, e.g. business days skip weekends, `humanGap` gives strict phrasing ("3 days", "1 month"), and `weekLabel("2026-11-26")` → `"2026-W48"`.

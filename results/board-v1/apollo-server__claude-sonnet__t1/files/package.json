@@ -1,0 +1,11 @@
+{
+  "name": "apollo-books-api",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "solution.mjs",
+  "dependencies": {
+    "@apollo/server": "^5.5.2",
+    "graphql": "^16.11.0"
+  }
+}

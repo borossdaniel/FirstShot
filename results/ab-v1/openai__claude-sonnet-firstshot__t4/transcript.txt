@@ -1,0 +1,7 @@
+The project is set up and verified. Final state in `/private<workspace>/`:
+
+- `package.json` — ES module project with `openai@^7.65.0` and `zod@^4.6.7` (both current, confirmed via firstshot)
+- `solution.mjs` — exports `ask(client, question)` using `client.responses.create()` with model `gpt-5.2`, returning `response.output_text`; and `classify(client, text)` using `client.responses.parse()` with a `zodTextFormat`-wrapped Zod schema (`{ label: "spam" | "ham" }`), returning `response.output_parsed`
+- `test-mock.mjs` — a mock-client smoke test (no API key/network needed) verifying both functions call the right Responses API methods with the right params and return the right shapes; passed (`ALL MOCK TESTS PASSED`)
+
+No API key was available in this environment, so I verified correctness via syntax check, export check, and the mock-client test rather than a live API call. `npm install` completed with 0 vulnerabilities, and `check_project` confirms both dependencies are on current majors.

@@ -1,0 +1,5 @@
+All checks passed. The project is set up at `/private<workspace>`:
+
+- `package.json` — ES module project with `jose` as a dependency (installed via npm)
+- `solution.mjs` — exports `createToken` and `verifyToken` per spec
+- `test.mjs` — verifies: valid token, wrong secret, garbage token, expired token (`reason: 'expired'`), and wrong audience, all behaving correctly without throwing

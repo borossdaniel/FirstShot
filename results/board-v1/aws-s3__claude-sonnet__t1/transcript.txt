@@ -1,0 +1,5 @@
+All verified: `uploadJson` sets correct content type and body, `listKeys` correctly paginates through `ListObjectsV2` continuation tokens, and `getDownloadUrl` produces a presigned URL with `X-Amz-Expires=900` (15 minutes).
+
+Setup complete in this folder:
+- `package.json` — ES module project with `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner` installed
+- `solution.mjs` — exports `uploadJson`, `listKeys`, `getDownloadUrl`, each taking a pre-configured S3 client as the first argument, no client construction or env/credential reading inside

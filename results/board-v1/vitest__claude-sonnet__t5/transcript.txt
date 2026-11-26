@@ -1,0 +1,8 @@
+Done. Project set up at `/private<workspace>`:
+
+- `package.json` — ES module project (`"type": "module"`), `npm test` → `vitest run` (single run, no watch)
+- `math.mjs` — exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 11 tests covering `sum` (positive/negative/mixed/zero) and `clamp` (in-range, below min, above max, boundary equal to min/max, min===max, negative ranges)
+- Dependencies installed (`vitest` in devDependencies), `node_modules` present
+
+Verified: `npm test` passes (exit 0) with all 11 tests green, and I confirmed it exits non-zero (exit 1) when a test is broken, then restored the correct assertion and re-ran to confirm a clean pass.

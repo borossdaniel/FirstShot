@@ -1,0 +1,8 @@
+Setup is complete and verified:
+
+- **Tailwind CSS v4.3.5** installed via `tailwindcss` + `@tailwindcss/cli` (standalone CLI, no bundler/PostCSS needed).
+- **`src/input.css`** — imports Tailwind and defines the `brand` color (`#0e7490`) via `@theme`, enabling `bg-brand`/`text-brand`.
+- **`index.html`** — a static page using `bg-brand`, `text-brand`, and other utility classes, linking to `dist/output.css`.
+- **`npm run build:css`** — runs `tailwindcss -i ./src/input.css -o ./dist/output.css --minify`, which ran successfully and produced a minified `dist/output.css` (6.1 KB) containing only the utilities actually used in `index.html`, plus the `--color-brand:#0e7490` custom property.
+
+No further action needed — everything installed and the build verified end-to-end.

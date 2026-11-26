@@ -1,0 +1,9 @@
+{
+  "name": "jose-jwt-example",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "jose": "^6.2.18"
+  }
+}

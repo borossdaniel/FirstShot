@@ -1,0 +1,6 @@
+Project is set up in `/private<workspace>`:
+
+- `package.json` — ES module project (`"type": "module"`) with `@supabase/supabase-js` as a dependency.
+- `solution.mjs` — exports `listOpenTasks(supabase, projectId, limit)` and `addTask(supabase, projectId, title)`, both taking the client as the first argument (no client creation, no env vars read), both throwing on Supabase errors.
+
+Verified with a mock Supabase client that the query chains (`select`/`eq`/`order`/`limit` and `insert`/`select`/`single`) are built correctly and that errors propagate as thrown exceptions.

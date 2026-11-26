@@ -1,0 +1,7 @@
+All tests pass. Setup complete:
+
+- `package.json` (ESM, `type: module`) with `zustand` installed via npm
+- `solution.mjs` exporting `createCartStore`, `selectTotalCents`, `selectItemCount`, `onTotalChange` — built on `zustand/vanilla`'s `createStore`, with all updates done immutably (new arrays/objects, never mutated in place)
+- `test.mjs` verifying add/increment/setQty/remove/clear behavior, immutability (array and item references change on update, originals untouched), and that `onTotalChange` only fires on actual total changes and respects unsubscribe
+
+Ran `node test.mjs` — all assertions passed.

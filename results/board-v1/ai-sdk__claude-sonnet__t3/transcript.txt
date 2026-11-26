@@ -1,0 +1,7 @@
+Project is set up and verified working:
+
+- **`package.json`** — ES module project with `ai` and `zod` dependencies installed via npm.
+- **`solution.mjs`** — exports `answerWithWeather(model, question)` (uses `generateText` with a `getWeather` tool and `stopWhen: stepCountIs(5)` so the model can call the tool then continue to a final answer) and `extractContact(model, text)` (uses `generateObject` with a Zod schema for `{ name, email }`).
+- **`test-run.mjs`** — a verification script using the AI SDK's built-in `MockLanguageModelV4` (no real provider/API key) that exercises both functions end-to-end: confirmed the tool gets called, the model continues to produce final text, and structured extraction returns the correct object.
+
+Ran `node test-run.mjs` and both functions behaved correctly: `answerWithWeather` returned `"It is 21C in Paris."` after calling the mock tool, and `extractContact` returned `{ name: 'Jane Doe', email: 'jane@example.com' }`.

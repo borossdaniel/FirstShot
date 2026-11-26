@@ -1,0 +1,6 @@
+The project is set up and verified: `npm test` ran `vitest run` (single run, no watch mode) and all 12 tests passed, covering `sum` and `clamp` including edge cases (boundary values, negative ranges, min===max). Vitest's `run` mode exits non-zero on failure by default, satisfying the fail-exit-code requirement.
+
+Files created in the working directory:
+- `package.json` — ES module project, `"test": "vitest run"`, vitest as devDependency
+- `math.mjs` — `sum(a, b)`, `clamp(n, min, max)`
+- `test/math.test.mjs` — 12 tests across both functions

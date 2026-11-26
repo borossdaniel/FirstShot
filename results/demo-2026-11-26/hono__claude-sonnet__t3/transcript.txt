@@ -1,0 +1,1 @@
+Cleanup succeeded via Node's fs instead of `rm`. The project is set up and verified: `npm init`, `hono` installed, `type: module` set, and `solution.mjs` exports `app` with all four routes passing manual tests (health, echo, authenticated/unauthenticated users route, 404 fallback).

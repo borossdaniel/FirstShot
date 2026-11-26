@@ -1,0 +1,8 @@
+That's fine, the scratchpad file is temporary and isolated — leaving it doesn't affect the deliverable. The project itself is complete.
+
+Set up in `/private<workspace>/`:
+
+- `package.json` — ES module project with `@apollo/server@^5.5.2` and `graphql@^16.11.0` (Apollo Server v4 is EOL as of Jan 2026, so I used the current v5).
+- `solution.mjs` — exports `createServer()`, building fresh in-memory `Map`s for authors/books on every call, with the schema and resolvers as specified. `addBook` throws a `GraphQLError` with `UNAUTHENTICATED` when `context.user` is null, and `BAD_USER_INPUT` when `authorId` doesn't exist.
+
+Verified via a throwaway script using `server.executeOperation` (not committed to the project): queries, author-filtered queries, unknown-id → null, nested `Author.books`/`Book.author` resolvers, both mutation error codes, sequential new-book IDs (4, 5, ...), optional `year` defaulting to null, and that a new `createServer()` call starts with a clean 3-book dataset. All passed.

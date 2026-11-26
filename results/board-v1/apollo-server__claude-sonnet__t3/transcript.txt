@@ -1,0 +1,11 @@
+Setup complete and verified:
+
+- **`package.json`** — ES module project with `@apollo/server@5.5.2` and `graphql@16.15.0` installed via npm.
+- **`solution.mjs`** — exports `createServer()`, returning a fresh `ApolloServer` instance each call (no HTTP listener started). In-memory data is held in a closure per call, so each server starts clean with the specified authors/books.
+  - `books(authorId)` sorts by numeric id, filters when `authorId` is given.
+  - `book(id)` returns `null` for unknown ids.
+  - `addBook` throws `GraphQLError` with `UNAUTHENTICATED` when `context.user` is missing, and `BAD_USER_INPUT` when the author doesn't exist; otherwise assigns the next sequential id as a string (`"4"`, `"5"`, ...).
+  - `user` comes from the caller-supplied `contextValue` on `executeOperation` (or whatever integration is used) — `createServer()` itself doesn't hardcode a context, matching Apollo Server's actual per-request context model.
+- **`verify.mjs`** — an 11-assertion smoke test exercising queries, filtering, missing-id lookup, both error codes, sequential id assignment, nullable `year`, and that a new `createServer()` call gets fresh data. All passed.
+
+One note: `npm audit` flags one high-severity transitive issue in `@graphql-tools/utils` pinned inside Apollo Server's own dependency tree — not fixable from this project without forcing a breaking change upstream, so left as-is.

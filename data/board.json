@@ -1,0 +1,219 @@
+{
+ "ai": {
+  "runs": 8,
+  "ok": 7,
+  "old": 1,
+  "oldVersions": [
+   "5.0.294"
+  ]
+ },
+ "@anthropic-ai/sdk": {
+  "runs": 6,
+  "ok": 5,
+  "old": 1,
+  "oldVersions": [
+   "0.70.1"
+  ]
+ },
+ "@apollo/server": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "@aws-sdk/client-s3": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "better-sqlite3": {
+  "runs": 5,
+  "ok": 0,
+  "old": 5,
+  "oldVersions": [
+   "11.10.0"
+  ]
+ },
+ "cheerio": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "commander": {
+  "runs": 6,
+  "ok": 2,
+  "old": 4,
+  "oldVersions": [
+   "12.1.0"
+  ]
+ },
+ "date-fns": {
+  "runs": 8,
+  "ok": 8,
+  "old": 0,
+  "oldVersions": []
+ },
+ "drizzle-orm": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "eslint": {
+  "runs": 6,
+  "ok": 6,
+  "old": 0,
+  "oldVersions": []
+ },
+ "express": {
+  "runs": 8,
+  "ok": 8,
+  "old": 0,
+  "oldVersions": []
+ },
+ "fastify": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "@google/genai": {
+  "runs": 5,
+  "ok": 3,
+  "old": 2,
+  "oldVersions": [
+   "1.52.0"
+  ]
+ },
+ "hono": {
+  "runs": 8,
+  "ok": 8,
+  "old": 0,
+  "oldVersions": []
+ },
+ "jose": {
+  "runs": 5,
+  "ok": 4,
+  "old": 1,
+  "oldVersions": [
+   "5.10.0"
+  ]
+ },
+ "marked": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "@modelcontextprotocol/sdk": {
+  "runs": 6,
+  "ok": 6,
+  "old": 0,
+  "oldVersions": []
+ },
+ "msw": {
+  "runs": 5,
+  "ok": 3,
+  "old": 1,
+  "oldVersions": [
+   "2.15.0"
+  ]
+ },
+ "next": {
+  "runs": 5,
+  "ok": 0,
+  "old": 4,
+  "oldVersions": [
+   "15.5.29"
+  ]
+ },
+ "openai": {
+  "runs": 6,
+  "ok": 4,
+  "old": 2,
+  "oldVersions": [
+   "6.49.0",
+   "4.104.0"
+  ]
+ },
+ "pino": {
+  "runs": 5,
+  "ok": 4,
+  "old": 1,
+  "oldVersions": [
+   "9.14.0"
+  ]
+ },
+ "stripe": {
+  "runs": 6,
+  "ok": 5,
+  "old": 1,
+  "oldVersions": [
+   "18.5.0"
+  ]
+ },
+ "@supabase/supabase-js": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "tailwindcss": {
+  "runs": 6,
+  "ok": 5,
+  "old": 1,
+  "oldVersions": [
+   "3.4.19"
+  ]
+ },
+ "@trpc/server": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "uuid": {
+  "runs": 5,
+  "ok": 4,
+  "old": 1,
+  "oldVersions": [
+   "11.1.1"
+  ]
+ },
+ "valibot": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ },
+ "vite": {
+  "runs": 5,
+  "ok": 0,
+  "old": 5,
+  "oldVersions": [
+   "6.4.6"
+  ]
+ },
+ "vitest": {
+  "runs": 6,
+  "ok": 1,
+  "old": 5,
+  "oldVersions": [
+   "2.1.9"
+  ]
+ },
+ "zod": {
+  "runs": 8,
+  "ok": 8,
+  "old": 0,
+  "oldVersions": []
+ },
+ "zustand": {
+  "runs": 5,
+  "ok": 5,
+  "old": 0,
+  "oldVersions": []
+ }
+}

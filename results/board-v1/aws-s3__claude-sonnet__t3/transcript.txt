@@ -1,0 +1,10 @@
+Project is set up in `/private<workspace>`:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner` installed via npm.
+- **`solution.mjs`** — exports `uploadJson`, `listKeys`, `getDownloadUrl`, each taking a pre-configured S3 client as the first argument (no client creation or credential/env access inside).
+- **`verify.mjs`** — a smoke test (using a mock S3 client plus a real `S3Client` with fake credentials for presigning) confirming all three functions behave correctly, run successfully with `node verify.mjs` → "All checks passed."
+
+Implementation notes:
+- `uploadJson` sends a `PutObjectCommand` with `ContentType: "application/json"` and `JSON.stringify(data)` as the body.
+- `listKeys` loops `ListObjectsV2Command` using `ContinuationToken`/`NextContinuationToken` to return *all* matching keys regardless of count (handles pagination beyond S3's 1000-key page limit).
+- `getDownloadUrl` uses `getSignedUrl` from the presigner package with `expiresIn: 900` seconds (15 minutes).

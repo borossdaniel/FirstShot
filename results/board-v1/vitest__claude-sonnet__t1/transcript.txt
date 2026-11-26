@@ -1,0 +1,6 @@
+`npm test` runs Vitest once (no watch) and all 12 tests pass. `vitest run` exits non-zero on any failure by default, satisfying the CI-friendly requirement.
+
+Project set up in this folder:
+- `package.json` — ES module project, `"test": "vitest run"`, Vitest as devDependency (installed)
+- `math.mjs` — exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 12 tests covering `sum` (positive/negative/zero/float) and `clamp` (in-range, below min, above max, boundary equal to min/max, negative range, min===max)

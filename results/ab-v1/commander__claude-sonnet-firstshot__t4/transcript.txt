@@ -1,0 +1,7 @@
+Everything checks out. Summary of what's in place:
+
+- `package.json` — ES module project, `commander@^15.1.0` installed (verified current major via firstshot).
+- `solution.mjs` — exports `buildProgram()`, builds a Commander program named `hello` with `--version 1.2.3`, and a `greet <name>` subcommand with `--shout` and `--times <n>` (validated via a parser that throws `InvalidArgumentError` for non-integers or non-positive values, default `1`).
+- `cli.mjs` — imports `buildProgram` and calls `.parse()` on `process.argv`.
+
+Verified: `--version` prints `1.2.3`; `greet World` prints `Hello, World!`; `greet World --shout --times 3` prints the uppercased greeting three times; `--times abc` and `--times 0` both correctly fail with Commander's invalid-argument error.

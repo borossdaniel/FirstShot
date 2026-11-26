@@ -1,0 +1,11 @@
+That live-serving test was blocked by the sandbox. The static evidence already confirms it: `base: './'` makes every asset path in the built HTML relative (`./assets/...`, `./about.html`), so the site will work when uploaded to any subfolder — no absolute `/` paths remain anywhere in the output.
+
+Setup complete and verified:
+
+- **`package.json`** — `npm run build` → `vite build`, with `vite` as the only dependency.
+- **`vite.config.js`** — `base: './'` for subfolder-safe relative paths; multi-page build inputs (`index.html`, `about.html`).
+- **`index.html`** / **`about.html`** — load `src/main.js` / `src/about.js` respectively; both appear in `dist/`.
+- **`.env`** — `VITE_APP_TITLE=FirstShot`, inlined into the built JS as confirmed (`document.querySelector("h1").textContent="FirstShot"`).
+- **`public/robots.txt`** — copied unchanged to `dist/robots.txt` (`Allow: /`).
+
+`npm install` and `npm run build` both ran clean; `dist/` contains `index.html`, `about.html`, `robots.txt`, and the hashed JS bundles, all referenced via relative paths.

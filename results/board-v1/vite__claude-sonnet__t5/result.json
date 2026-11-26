@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "vite",
+  "taskName": "Vite",
+  "package": "vite",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 5,
+  "ok": false,
+  "category": "outdated_major",
+  "detail": "vite@6.4.6 installed, current major is 8",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 47,
+  "costUsd": 0.29288729999999996,
+  "turns": 13,
+  "installedVersion": "6.4.6",
+  "finishedAt": "2026-11-26T17:22:31.331Z"
+}

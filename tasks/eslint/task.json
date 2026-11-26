@@ -1,0 +1,9 @@
+{
+  "id": "eslint",
+  "name": "ESLint",
+  "package": "eslint",
+  "homepage": "https://eslint.org",
+  "currentMajor": 10,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up ESLint for a small Node.js project written as ES modules in `src/`. Use ESLint's recommended JavaScript rules, plus: `eqeqeq` as an error, and `no-console` as a warning. Node.js globals like `process` must be known so they are not reported as undefined. Add an npm script `lint` that lints `src/`. Create `src/index.js` with a tiny example that passes the linter. Install the dependencies with npm and make sure `npm run lint` passes."
+}

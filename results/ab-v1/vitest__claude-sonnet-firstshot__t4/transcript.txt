@@ -1,0 +1,7 @@
+Everything is set up and verified in `/private<workspace>`:
+
+- **`math.mjs`** — exports `sum(a, b)` and `clamp(n, min, max)` (ES module)
+- **`test/math.test.mjs`** — 11 tests covering both functions, including clamp edge cases (below/above/at-boundary, equal min/max, negative ranges)
+- **`package.json`** — `"type": "module"`, `"test": "vitest run"` (single run, no watch), Vitest 5.1.2 as devDependency
+- Verified `npm test` passes (11/11) and confirmed it correctly exits non-zero when a test fails (temporarily broke `sum`, saw exit code 1, restored it, re-confirmed all green)
+- `check_project` confirms no outdated dependency majors

@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "trpc",
+  "taskName": "tRPC",
+  "package": "@trpc/server",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 5,
+  "ok": true,
+  "category": "pass",
+  "detail": "@trpc/server@11.31.4: procedures, Zod validation, auth middleware and error codes correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 48.1,
+  "costUsd": 0.271953,
+  "turns": 9,
+  "installedVersion": "11.31.4",
+  "finishedAt": "2026-11-26T17:18:59.564Z"
+}

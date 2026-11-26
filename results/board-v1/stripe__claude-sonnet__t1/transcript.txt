@@ -1,0 +1,5 @@
+Everything checks out. Summary:
+
+- `package.json` — ES module project (`"type": "module"`) with `stripe` installed as a dependency.
+- `solution.mjs` — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which creates a `mode: 'subscription'` Checkout Session with the given price at quantity 1, pre-fills `customer_email`, sets `success_url` to `<baseUrl>/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can read `session_id` from the query string and fetch the completed session), and `cancel_url` to `<baseUrl>/pricing`. It returns `session.url` for redirecting the customer.
+- Verified with a mocked Stripe client (no real API key used, per the constraint that the function only consumes an already-configured client) — all assertions on the session params and return value passed.

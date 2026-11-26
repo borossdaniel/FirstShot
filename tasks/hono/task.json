@@ -1,0 +1,9 @@
+{
+  "id": "hono",
+  "name": "Hono",
+  "package": "hono",
+  "homepage": "https://hono.dev",
+  "currentMajor": 4,
+  "timeoutSec": 600,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) with the Hono web framework. Create `solution.mjs` that exports `app`, a Hono app (do not start a server in that file), with:\n\n1. `GET /health` returns JSON `{ \"status\": \"ok\" }`.\n2. `POST /echo` returns the JSON request body back unchanged, with status 201.\n3. `GET /users/:id` returns JSON `{ \"id\": \"<id>\" }`. If the `x-api-key` header is not exactly `secret`, it returns status 401 with JSON `{ \"error\": \"unauthorized\" }` instead. Use Hono middleware for the key check.\n4. Any unknown route returns status 404 with JSON `{ \"error\": \"not found\" }`.\n\nInstall the dependencies with npm."
+}

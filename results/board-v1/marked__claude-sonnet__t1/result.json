@@ -1,0 +1,20 @@
+{
+  "firstshot": "0.1.0",
+  "task": "marked",
+  "taskName": "Marked",
+  "package": "marked",
+  "agent": "claude",
+  "model": "sonnet",
+  "trial": 1,
+  "ok": true,
+  "category": "pass",
+  "detail": "marked@18.3.0: heading ids, external link attributes and normal rendering correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 172.8,
+  "costUsd": 0.8183246999999999,
+  "turns": 21,
+  "installedVersion": "18.3.0",
+  "finishedAt": "2026-11-26T17:06:59.627Z"
+}

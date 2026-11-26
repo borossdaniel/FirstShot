@@ -1,0 +1,10 @@
+{
+  "name": "date-fns-playground",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "solution.mjs",
+  "dependencies": {
+    "date-fns": "^4.4.0"
+  }
+}

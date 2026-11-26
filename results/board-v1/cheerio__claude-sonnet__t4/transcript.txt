@@ -1,0 +1,5 @@
+Project is set up and verified:
+
+- `package.json` — ES module project with `cheerio` dependency
+- `solution.mjs` — exports `parseProducts(html, pageUrl)`, selecting `.product` elements, extracting title (whitespace-collapsed, entity-decoded), price (strips `<del>` old price, parses `$1,299.00` → `1299`), absolute `url` (resolved via `new URL(href, pageUrl)`), and `inStock` (`false` when `sold-out` class present)
+- `test.mjs` — exercises all the edge cases (nested whitespace/entities, crossed-out price, relative and absolute URLs, sold-out item, and a non-`.product` element that must be ignored) — all assertions pass with `node test.mjs`

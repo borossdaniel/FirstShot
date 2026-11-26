@@ -1,0 +1,9 @@
+Done. In the project folder:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@^1.14.0` (current major, verified via firstshot).
+- **`solution.mjs`** — exports `weatherAnswer(client, question)`:
+  - Calls `claude-sonnet-5-5` with `max_tokens: 1024` and a single `get_weather` tool (`{ city: string }`).
+  - Loops while `stop_reason === 'tool_use'`: runs `get_weather` locally (returns `{ city, temp_c: 21 }`), appends the assistant's `tool_use` message and a `user` message with a `tool_result` block (`tool_use_id` matched), and resubmits.
+  - Once Claude stops for any other reason, concatenates its `text` content blocks and returns that string.
+
+Since there's no `ANTHROPIC_API_KEY` in this environment, I verified correctness with a mock client that simulates a tool-use turn followed by a final-answer turn — it confirmed the request shape (model, max_tokens, tool schema), the tool-result wiring (correct `tool_use_id` and JSON payload), and the final string extraction. `node --check` also passed. The function itself never touches env vars or constructs a client, per the spec — the caller supplies an already-configured one.

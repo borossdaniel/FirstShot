@@ -1,0 +1,1 @@
+Project is set up and verified: `package.json` (ES modules, cheerio dependency), `solution.mjs` exporting `parseProducts(html, pageUrl)`, and `test.mjs` confirming correct handling of entity decoding, whitespace collapsing, `<del>`-stripped pricing, relative/absolute URL resolution, and `sold-out` stock status. `npm install` ran successfully and `node test.mjs` passes.
