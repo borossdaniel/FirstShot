@@ -185,7 +185,7 @@ test('live facts: runtimes, actions and models come back formatted, and stale va
     const dir = mkdtempSync(join(tmpdir(), 'oneshot-proj-'));
     const { mkdirSync } = await import('node:fs');
     mkdirSync(join(dir, '.github', 'workflows'), { recursive: true });
-    writeFileSync(join(dir, '.github', 'workflows', 'ci.yml'), 'steps:\n  - uses: actions/checkout@v4\n  - uses: actions/setup-node@v7\n    with:\n      node-version: 20\n');
+    writeFileSync(join(dir, '.github', 'workflows', 'ci.yml'), 'steps:\n  - uses: actions/checkout@v4\n  - uses: actions/cache@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c\n  - uses: actions/setup-python@main\n  - uses: actions/setup-node@v7\n    with:\n      node-version: 20\n');
     writeFileSync(join(dir, 'Dockerfile'), 'FROM python:3.8-slim\n');
     writeFileSync(join(dir, 'ai.mjs'), 'const a = "claude-opus-4-8"; const b = "claude-sonnet-5-5";\n');
     const found = (await scanProjectFacts(dir)).map((p) => p.found).sort();

@@ -103,8 +103,17 @@ export function modelStatus(id) {
   const r = retirements().index.get(id);
   if (!r) return null;
   const days = daysUntil(r.retires);
-  if (days <= 0) return { ...r, state: 'retired', days, level: 'error', message: `${id} was retired on ${r.retires}. Requests to it fail. Use ${r.replacement}.` };
-  return { ...r, state: 'retiring', days, level: days <= 60 ? 'error' : 'warning', message: `${id} retires on ${r.retires} (in ${days} day${days === 1 ? '' : 's'}). After that, requests fail. Use ${r.replacement}.` };
+  // The provider's official replacement can itself be old by now; name the newest model too.
+  let use = r.replacement;
+  try {
+    const newest = newerFor(models(), String(r.replacement).split(' ')[0]);
+    const current = new Set(Object.values(models().providers || {}).flatMap((p) => p.newest.concat(p.alsoCurrent || [])));
+    if (newest && !current.has(String(r.replacement).split(' ')[0]) && newest !== r.replacement) use = `${r.replacement} (newest: ${newest})`;
+  } catch {
+    /* keep the official replacement */
+  }
+  if (days <= 0) return { ...r, replacement: use, state: 'retired', days, level: 'error', message: `${id} was retired on ${r.retires}. Requests to it fail. Use ${use}.` };
+  return { ...r, replacement: use, state: 'retiring', days, level: days <= 60 ? 'error' : 'warning', message: `${id} retires on ${r.retires} (in ${days} day${days === 1 ? '' : 's'}). After that, requests fail. Use ${use}.` };
 }
 
 /** Node.js and Python: current LTS / latest, plus matching Docker image tags. */
@@ -121,7 +130,7 @@ export function runtimes() {
         ltsMajor: lts ? Number(lts.cycle) : null,
         ltsVersion: lts?.latest ?? null,
         currentMajor: nodeLatest ? Number(nodeLatest.cycle) : null,
-        supportedMajors: node.filter(supported).map((x) => Number(x.cycle)),
+        supportedMajors: node.filter(supported).map((x) => Number(x.cycle)).filter((n) => n >= 4),
         docker: lts ? `node:${lts.cycle}-alpine (or node:${lts.cycle}-slim)` : null,
         githubActions: lts ? `node-version: ${lts.cycle}` : null,
       },
@@ -233,6 +242,16 @@ function listFiles(dir, test, max = 400) {
   return out;
 }
 
+/** The newest model from the same provider (and the same family, like haiku or sonnet, when there is one). */
+function newerFor(m, id) {
+  const prov = /^claude-/.test(id) ? m.providers?.anthropic : m.providers?.openai;
+  const list = prov?.newest || Object.values(m.providers || {}).map((p) => p.newest[0]);
+  const fam = id.match(/^claude-(opus|sonnet|haiku|fable|mythos)/)?.[1];
+  if (fam) return list.find((x) => x.includes(`-${fam}-`)) || list[0];
+  const line = id.match(/^gpt-[\d.]+-([a-z]+)/)?.[1]; // gpt-6.1-sol -> sol
+  return (line && list.find((x) => x.endsWith(`-${line}`))) || list[0];
+}
+
 /** Find outdated model names, GitHub Action versions and runtime images in a project. */
 export async function scanProjectFacts(dir) {
   dir = resolve(dir);
@@ -261,7 +280,8 @@ export async function scanProjectFacts(dir) {
         if (st) {
           problems.push({ kind: st.state === 'retired' ? 'model-retired' : 'model-retiring', level: st.level, file: rel, line: i + 1, found: id, fix: st.replacement, message: st.message, retires: st.retires });
         } else if (!allCurrent.has(id) && oldModel.test(id)) {
-          problems.push({ kind: 'model', level: 'warning', file: rel, line: i + 1, found: id, fix: `a current model (${Object.values(m.providers).map((p) => p.newest[0]).join(', ')})`, message: `${id} is an older model. Newer: ${Object.values(m.providers).map((p) => p.newest[0]).join(', ')}.` });
+          const better = newerFor(m, id);
+          problems.push({ kind: 'model', level: 'warning', file: rel, line: i + 1, found: id, fix: better, message: `${id} is an older model. Newer: ${better}.` });
         }
       }
     });
@@ -276,12 +296,16 @@ export async function scanProjectFacts(dir) {
       for (const mt of y.matchAll(/uses:\s*['"]?([\w.-]+\/[\w.-]+)@([^\s'"#]+)/g)) {
         const [, a, ref] = mt;
         const cur = acts[a];
-        const mj = Number((ref.match(/^v?(\d+)/) || [])[1]);
+        // Only version tags (v4, v4.1.2) are compared; commit SHAs and branch names are left alone.
+        const mj = /^v?\d+(\.\d+){0,2}$/.test(ref) ? Number(ref.match(/^v?(\d+)/)[1]) : null;
         if (cur && mj && mj < cur) problems.push({ kind: 'github-action', level: 'warning', file: relOf(f), line: lineAt(y, mt.index), found: `${a}@${ref}`, fix: `${a}@v${cur}`, message: `${a}@${ref} is outdated; current is v${cur}.` });
       }
       const nvm = y.match(/node-version:\s*['"]?(\d+)/);
       const nv = nvm?.[1];
-      if (rt?.node?.ltsMajor && nv && Number(nv) < rt.node.ltsMajor) problems.push({ kind: 'runtime', level: 'warning', file: relOf(f), line: lineAt(y, nvm?.index ?? 0), found: `node-version ${nv}`, fix: `node-version: ${rt.node.ltsMajor}`, message: `Node.js ${nv} is behind the current LTS (${rt.node.ltsMajor}).` });
+      if (rt?.node?.ltsMajor && nv && Number(nv) < rt.node.ltsMajor) {
+        const eol = rt.node.supportedMajors?.length && !rt.node.supportedMajors.includes(Number(nv));
+        problems.push({ kind: 'runtime', level: eol ? 'error' : 'warning', file: relOf(f), line: lineAt(y, nvm?.index ?? 0), found: `node-version ${nv}`, fix: `node-version: ${rt.node.ltsMajor}`, message: eol ? `Node.js ${nv} is end-of-life: no more security fixes. Use node-version: ${rt.node.ltsMajor}.` : `Node.js ${nv} is behind the current LTS (${rt.node.ltsMajor}).` });
+      }
     }
     for (const f of dockerfiles) {
       const d = readFileSync(f, 'utf8');

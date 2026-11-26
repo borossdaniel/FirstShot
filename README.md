@@ -20,11 +20,13 @@ AI providers retire models on a schedule. After the date, every request to that 
 $ npx oneshot-agent check
 3 problems to fix (these break your app or your team's rules):
   ✗ src/chat.ts:2: claude-sonnet-4-5 retires on 2026-11-30 (in 4 days). After that, requests fail. Use claude-sonnet-5-5.
-  ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol.
-  ✗ Dockerfile: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
+  ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol (newest: gpt-6.2-sol).
+  ✗ Dockerfile:1: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
 1 outdated value:
-  ! .github/workflows/ci.yml: actions/checkout@v4 is outdated; current is v7.
+  ! .github/workflows/ci.yml:6: actions/checkout@v4 is outdated; current is v7.
 ```
+
+**Try it without installing anything:** paste a public GitHub repo at [oneshotagent.dev](https://oneshotagent.dev/#check).
 
 ### On every pull request (GitHub Action)
 
@@ -154,7 +156,9 @@ It needs Node 20 or newer and a logged-in agent CLI (`claude`, `codex` or `gemin
 | `no_solution` | The file we asked for was never written |
 | `agent_timeout` / `agent_error` | The agent run itself died. It counts against the run, not the library |
 
-## Tasks (13)
+## Tasks (37)
+
+31 library tasks and 6 live-fact tasks (newest Claude and OpenAI model, GitHub Actions for Node and Python, Node and Python Dockerfiles). Some of them:
 
 | Task | What it tests | Typical trap |
 |---|---|---|
@@ -211,12 +215,28 @@ Then run `npx oneshot-agent run ./my-lib --agent claude --trials 5` and add the 
 
 ## Status
 
-- **Version:** 0.1, an MVP.
-- **Agents:** the Claude Code adapter has been tested. The Codex and Gemini adapters are written but not yet run.
-- **Tasks:** 13 (5 starter, 8 harder).
-- **Next:** more tasks, Python support, a GitHub Action that re-runs on every docs change, and a hosted leaderboard.
+- **Version:** 0.4. Live facts, retirement guard, GitHub Action, Claude Code plugin, MCP server, team rules.
+- **Agents:** the benchmark runs Claude Code (Sonnet). The MCP tools work in any MCP app; Codex and Gemini benchmark runs are next.
+- **Tasks:** 37 (31 libraries, 6 live facts).
 
 MIT licensed.
+
+## FAQ
+
+**Does it track me or send my code anywhere?**
+No. OneShot only downloads public facts: package versions (npm, PyPI, deps.dev), runtime dates (endoflife.date), Action versions (GitHub) and model lists (Anthropic and OpenAI SDKs), plus our hosted copy of those at `oneshotagent.dev/facts.json`. Your code never leaves your machine. No account, no telemetry. Set `ONESHOT_FACTS_URL=off` to skip the hosted copy. The repo check on the website downloads a public repo to a temporary folder, checks it and deletes it.
+
+**Does it only work with Claude?**
+No. The MCP tools work in Cursor, Windsurf, Codex, Claude Desktop and any other MCP app. The check before "done" (Stop hook) is Claude Code only. The CLI and the GitHub Action work with any agent, or none. The benchmark numbers are from Claude Code with Sonnet.
+
+**Why not just tell my agent to use the newest versions?**
+It helps, but the agent then has to look everything up itself: in our runs that was 64% slower and 72% more expensive, and it still wrote old model names. OneShot answers in one call.
+
+**Will it change my code?**
+No. It tells your agent what is current; the agent writes the code. The Action only annotates pull requests. It fails when something will break (a retired model, an end-of-life runtime); `strict: true` also fails on older versions.
+
+**How fresh are the facts?**
+Refreshed every 6 hours from the official sources. Retirement dates come from the providers' deprecation pages. Wrong or missing? Open an issue.
 
 ## Limits
 
