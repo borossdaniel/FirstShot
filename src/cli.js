@@ -109,8 +109,26 @@ async function cmdCheck(args) {
     const warnings = facts.length - errors + rep.outdated.length;
     if (json) console.log(JSON.stringify(rep, null, 2));
     else if (args.includes('--format=github')) {
-      for (const f of facts) console.log(`::${f.level === 'error' ? 'error' : 'warning'} file=${f.file}${f.line ? `,line=${f.line}` : ''},title=OneShot::${(f.message || `${f.found} → ${f.fix}`).replace(/\n/g, ' ')}`);
-      for (const o of rep.outdated) console.log(`::warning file=${o.system === 'pypi' ? 'requirements.txt' : 'package.json'},title=OneShot::${o.name} "${o.range}" is ${o.behind} major${o.behind > 1 ? 's' : ''} behind (current ${o.latest})`);
+      // GitHub wants paths from the repository root, so prefix the scanned folder.
+      const { existsSync, readFileSync } = await import('node:fs');
+      const { join, relative, resolve } = await import('node:path');
+      const base = relative(process.cwd(), resolve(dir)).split('\\').join('/');
+      const at = (file) => (base && !base.startsWith('..') ? `${base}/${file}` : file);
+      const lineOf = (file, needle) => {
+        try {
+          const i = readFileSync(join(dir, file), 'utf8').split('\n').findIndex((l) => l.includes(needle));
+          return i >= 0 ? i + 1 : null;
+        } catch {
+          return null;
+        }
+      };
+      const clean = (t) => String(t).replace(/\r?\n/g, ' ').replace(/%/g, '%25');
+      for (const f of facts) console.log(`::${f.level === 'error' ? 'error' : 'warning'} file=${at(f.file)}${f.line ? `,line=${f.line}` : ''},title=OneShot::${clean(f.message || `${f.found} → ${f.fix}`)}`);
+      for (const o of rep.outdated) {
+        const file = o.system === 'pypi' ? (existsSync(join(dir, 'pyproject.toml')) && !existsSync(join(dir, 'requirements.txt')) ? 'pyproject.toml' : 'requirements.txt') : 'package.json';
+        const line = lineOf(file, o.system === 'pypi' ? o.name : `"${o.name}"`);
+        console.log(`::warning file=${at(file)}${line ? `,line=${line}` : ''},title=OneShot::${clean(`${o.name} "${o.range}" is ${o.behind} major${o.behind > 1 ? 's' : ''} behind (current ${o.latest})`)}`);
+      }
       console.log(formatProjectReport(rep));
       if (process.env.GITHUB_STEP_SUMMARY) {
         const { appendFileSync } = await import('node:fs');

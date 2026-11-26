@@ -254,3 +254,20 @@ test('team rules (.oneshot.json): approved models, blocked models and packages, 
   assert.match(text, /Only use these AI models: claude-sonnet-5-5, gpt-6\.2-\*/);
   assert.match(text, /Use @acme\/ui/);
 });
+
+test('check --format=github: paths are from the repo root with the right line, for --path=. and a subfolder', async () => {
+  const bin = new URL('../bin/oneshot.js', import.meta.url).pathname;
+  const { spawnSync } = await import('node:child_process');
+  const { mkdirSync } = await import('node:fs');
+  const env = { ...process.env, ONESHOT_TODAY: '2026-11-26', ONESHOT_REGISTRY: registry.url, ONESHOT_DEPSDEV: registry.url };
+  const repo = mkdtempSync(join(tmpdir(), 'oneshot-repo-'));
+  mkdirSync(join(repo, 'app'));
+  writeFileSync(join(repo, 'app', 'ai.mjs'), '// models\nexport const model = "claude-3-5-sonnet-20241022";\n');
+  writeFileSync(join(repo, 'app', 'Dockerfile'), '# build\nFROM node:16-alpine\n');
+  const root = spawnSync(process.execPath, [bin, 'check', '--format=github', '--path=.'], { cwd: join(repo, 'app'), encoding: 'utf8', env });
+  assert.match(root.stdout, /::error file=ai\.mjs,line=2,/);
+  assert.match(root.stdout, /::error file=Dockerfile,line=2,/);
+  const sub = spawnSync(process.execPath, [bin, 'check', '--format=github', '--path=app'], { cwd: repo, encoding: 'utf8', env });
+  assert.match(sub.stdout, /::error file=app\/ai\.mjs,line=2,/);
+  assert.match(sub.stdout, /::error file=app\/Dockerfile,line=2,/);
+});
