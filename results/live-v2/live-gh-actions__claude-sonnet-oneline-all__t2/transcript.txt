@@ -1,0 +1,8 @@
+The YAML is well-formed and matches the standard GitHub Actions schema. Everything is set up and verified:
+
+- **`package.json`** — `test` script runs `node --test` (Node's built-in test runner, no dependencies needed).
+- **`package-lock.json`** — generated so `npm ci` works in CI.
+- **`test/basic.test.js`** — trivial sanity test.
+- **`.github/workflows/ci.yml`** — triggers on every push and pull request; checks out code with `actions/checkout@v7.0.1` (latest release, confirmed via GitHub API), sets up Node with `actions/setup-node@v7.1.0` (latest release) using `node-version: lts/*` (resolves to the current Active LTS, Node 26 as confirmed via endoflife.date) with `cache: npm`, then runs `npm ci` and `npm test`.
+
+Verified locally: `npm ci` and `npm test` both succeed (1 test passing).

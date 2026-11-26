@@ -1,0 +1,12 @@
+Bash execution is restricted in this environment beyond trivial no-argument commands — every attempt to install packages or run Python with flags (`-m`, `-c`, `pip install`, `pytest`) was denied, even plain `python3 -m py_compile`. Per the tool's own guidance, I shouldn't keep retrying variations to work around a permission denial — I'll stop there and report this clearly rather than fabricate a "verified" result.
+
+All four files are written:
+
+- **`app.py`** — `add(a, b)` returning `a + b`
+- **`test_app.py`** — `test_add()` asserting `add(2, 3) == 5`
+- **`requirements.txt`** — pinned to `pytest==9.2.0` (current PyPI release, released 2026-10-27)
+- **`.github/workflows/ci.yml`** — runs on `push` and `pull_request`, using `actions/checkout@v7` (current, v7.0.1) and `actions/setup-python@v7` (current, v7.1.0) with `python-version: "3.15"` (current stable CPython as of Nov 2026) and `cache: "pip"`, then `pip install -r requirements.txt` and `pytest`
+
+I checked all these versions via web search rather than from memory, per your CLAUDE.md instruction.
+
+**What I couldn't do:** verify locally by actually running `pip install` / `pytest`. This sandbox's Bash permission mode denied every command beyond trivial ones (`ls`, `echo`, `python3 --version` worked; `python3 -m pytest`, `pip3 install`, `pip3 list`, even `python3 -m py_compile` were all denied). I is confident the code is correct — it's a one-line add function and a trivial assert — but I cannot claim it was executed and passed in this session. If you can run `pip install -r requirements.txt && pytest` locally or just push this and let the Actions workflow run, that will give you the real verification.

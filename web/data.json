@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-26T19:06:01.011Z",
+ "updatedAt": "2026-11-26T20:00:17.429Z",
  "agent": "Claude Code · Sonnet",
  "totals": {
   "libraries": 31,
@@ -1060,102 +1060,198 @@
     "id": "live-claude-model",
     "name": "Newest Claude model",
     "none": {
-     "runs": 5,
+     "runs": 10,
      "correct": 0,
-     "medianSec": 50.2,
-     "medianCost": 0.27
+     "medianSec": 46.3,
+     "medianCost": 0.26
     },
     "line": {
-     "runs": 5,
-     "correct": 3,
-     "medianSec": 71,
-     "medianCost": 0.46
+     "runs": 10,
+     "correct": 6,
+     "medianSec": 59.6,
+     "medianCost": 0.39
     },
     "oneshot": {
-     "runs": 5,
-     "correct": 5,
-     "medianSec": 45.4,
-     "medianCost": 0.27
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 46.7,
+     "medianCost": 0.28
+    }
+   },
+   {
+    "id": "live-openai-model",
+    "name": "Newest OpenAI model",
+    "none": {
+     "runs": 10,
+     "correct": 8,
+     "medianSec": 90.4,
+     "medianCost": 0.53
+    },
+    "line": {
+     "runs": 10,
+     "correct": 9,
+     "medianSec": 69.6,
+     "medianCost": 0.42
+    },
+    "oneshot": {
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 53.9,
+     "medianCost": 0.31
     }
    },
    {
     "id": "live-gh-actions",
     "name": "GitHub Actions CI",
     "none": {
-     "runs": 5,
+     "runs": 10,
      "correct": 0,
-     "medianSec": 35.4,
+     "medianSec": 34.3,
      "medianCost": 0.24
     },
     "line": {
-     "runs": 5,
-     "correct": 5,
-     "medianSec": 56.2,
-     "medianCost": 0.42
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 55.4,
+     "medianCost": 0.39
     },
     "oneshot": {
-     "runs": 5,
-     "correct": 5,
-     "medianSec": 29.5,
-     "medianCost": 0.2
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 33.8,
+     "medianCost": 0.25
+    }
+   },
+   {
+    "id": "live-py-ci",
+    "name": "Python CI",
+    "none": {
+     "runs": 10,
+     "correct": 0,
+     "medianSec": 73.7,
+     "medianCost": 0.35
+    },
+    "line": {
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 106.3,
+     "medianCost": 0.61
+    },
+    "oneshot": {
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 65.8,
+     "medianCost": 0.36
     }
    },
    {
     "id": "live-dockerfile",
     "name": "Node.js Dockerfile",
     "none": {
-     "runs": 5,
-     "correct": 2,
-     "medianSec": 48.5,
+     "runs": 10,
+     "correct": 4,
+     "medianSec": 49.3,
      "medianCost": 0.31
     },
     "line": {
-     "runs": 5,
-     "correct": 5,
-     "medianSec": 69.6,
-     "medianCost": 0.44
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 57.6,
+     "medianCost": 0.4
     },
     "oneshot": {
-     "runs": 5,
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 45.7,
+     "medianCost": 0.32
+    }
+   },
+   {
+    "id": "live-py-dockerfile",
+    "name": "Python Dockerfile",
+    "none": {
+     "runs": 10,
      "correct": 5,
-     "medianSec": 39.8,
-     "medianCost": 0.29
+     "medianSec": 115.3,
+     "medianCost": 0.48
+    },
+    "line": {
+     "runs": 10,
+     "correct": 9,
+     "medianSec": 104,
+     "medianCost": 0.51
+    },
+    "oneshot": {
+     "runs": 10,
+     "correct": 10,
+     "medianSec": 59.6,
+     "medianCost": 0.33
     }
    }
   ],
   "none": {
-   "runs": 15,
-   "correct": 2,
-   "medianSec": 41.6,
-   "medianCost": 0.25
+   "runs": 60,
+   "correct": 17,
+   "medianSec": 60.7,
+   "medianCost": 0.33
   },
   "line": {
-   "runs": 15,
-   "correct": 13,
-   "medianSec": 68.3,
-   "medianCost": 0.43
+   "runs": 60,
+   "correct": 54,
+   "medianSec": 67.5,
+   "medianCost": 0.44
   },
   "oneshot": {
-   "runs": 15,
-   "correct": 15,
-   "medianSec": 40.9,
-   "medianCost": 0.27
+   "runs": 60,
+   "correct": 60,
+   "medianSec": 46.8,
+   "medianCost": 0.29
   },
   "examples": [
    {
     "task": "Newest Claude model",
     "wrote": "claude-opus-4-8",
-    "count": 5
+    "count": 10
    },
    {
     "task": "GitHub Actions CI",
     "wrote": "actions/checkout@v4",
-    "count": 5
+    "count": 10
+   },
+   {
+    "task": "Python CI",
+    "wrote": "actions/checkout@v4",
+    "count": 10
    },
    {
     "task": "Node.js Dockerfile",
     "wrote": "node:24-alpine",
+    "count": 5
+   },
+   {
+    "task": "Python Dockerfile",
+    "wrote": "python:3.13-slim",
     "count": 3
+   },
+   {
+    "task": "Python Dockerfile",
+    "wrote": "python:3.14-slim",
+    "count": 2
+   },
+   {
+    "task": "Node.js Dockerfile",
+    "wrote": "node:24-slim",
+    "count": 1
+   },
+   {
+    "task": "Newest OpenAI model",
+    "wrote": "gpt-5.2",
+    "count": 1
+   },
+   {
+    "task": "Newest OpenAI model",
+    "wrote": "gpt-5.6-sol",
+    "count": 1
    }
   ]
  },
@@ -1169,7 +1265,10 @@
    "vitest",
    "live-claude-model",
    "live-dockerfile",
-   "live-gh-actions"
+   "live-gh-actions",
+   "live-openai-model",
+   "live-py-ci",
+   "live-py-dockerfile"
   ],
   "without": {
    "runs": 30,
@@ -1179,10 +1278,10 @@
    "medianCost": 0.31
   },
   "with": {
-   "runs": 45,
-   "passed": 44,
+   "runs": 105,
+   "passed": 104,
    "oldInstalls": 0,
-   "medianSec": 45.7,
+   "medianSec": 46.5,
    "medianCost": 0.29
   },
   "perLibrary": [
@@ -1298,11 +1397,11 @@
      "medianCost": null
     },
     "with": {
-     "runs": 5,
-     "passed": 5,
+     "runs": 15,
+     "passed": 15,
      "oldInstalls": 0,
-     "medianSec": 45.4,
-     "medianCost": 0.27
+     "medianSec": 46.7,
+     "medianCost": 0.28
     }
    },
    {
@@ -1315,11 +1414,11 @@
      "medianCost": null
     },
     "with": {
-     "runs": 5,
-     "passed": 5,
+     "runs": 15,
+     "passed": 15,
      "oldInstalls": 0,
-     "medianSec": 39.8,
-     "medianCost": 0.29
+     "medianSec": 42.6,
+     "medianCost": 0.3
     }
    },
    {
@@ -1332,11 +1431,62 @@
      "medianCost": null
     },
     "with": {
-     "runs": 5,
-     "passed": 5,
+     "runs": 15,
+     "passed": 15,
      "oldInstalls": 0,
-     "medianSec": 29.5,
-     "medianCost": 0.2
+     "medianSec": 32.7,
+     "medianCost": 0.24
+    }
+   },
+   {
+    "id": "live-openai-model",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 10,
+     "passed": 10,
+     "oldInstalls": 0,
+     "medianSec": 53.9,
+     "medianCost": 0.31
+    }
+   },
+   {
+    "id": "live-py-ci",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 10,
+     "passed": 10,
+     "oldInstalls": 0,
+     "medianSec": 65.8,
+     "medianCost": 0.36
+    }
+   },
+   {
+    "id": "live-py-dockerfile",
+    "without": {
+     "runs": 0,
+     "passed": 0,
+     "oldInstalls": 0,
+     "medianSec": null,
+     "medianCost": null
+    },
+    "with": {
+     "runs": 10,
+     "passed": 10,
+     "oldInstalls": 0,
+     "medianSec": 59.6,
+     "medianCost": 0.33
     }
    }
   ]

@@ -1,0 +1,7 @@
+Everything's confirmed. Final state:
+
+- **`server.js`** — plain `node:http` server returning "ok" on port 3000 (verified: `node -e` GET returned `STATUS:200 BODY:ok`).
+- **`package.json`** — no dependencies, `start` script.
+- **`Dockerfile`** — `node:26-alpine` (current Node LTS per oneshot facts), copies app files, `chown`s to the built-in `node` user, runs as `USER node`, exposes 3000.
+
+No dependencies needed installing. Image wasn't built, as instructed, but the server was run and curl-verified locally.

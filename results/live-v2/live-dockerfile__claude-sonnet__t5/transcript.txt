@@ -1,0 +1,8 @@
+Verified the server responds "ok" on port 3000. Docker itself isn't available/permitted in this environment to actually build the image, but per the task that's not required — I validated the Node code directly instead.
+
+**Files created:**
+- `server.js` — plain `node:http` server, listens on port 3000, responds "ok"
+- `package.json` — minimal manifest with `start` script, `engines.node >=26`
+- `Dockerfile` — `node:26-alpine` (current Active LTS, confirmed via nodejs.org's release index), installs prod deps only, runs as the built-in non-root `node` user, exposes 3000
+
+Tested `node server.js` directly and confirmed `curl http://localhost:3000/` returns `200 OK` with body `ok`.

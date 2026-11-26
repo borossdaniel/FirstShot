@@ -1,0 +1,10 @@
+{
+  "name": "anthropic-summarizer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Minimal Node.js project using the Anthropic SDK to summarize text.",
+  "main": "ai.mjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0"
+  }
+}

@@ -1,0 +1,14 @@
+I've created both files, but I need to flag a limitation: the Bash tool (and the `run` skill, which relies on it) is fully denied in this environment's "don't ask mode" — no permission prompt, just a hard block. I can't execute Python or build/run Docker to verify at runtime. Since this is an unattended run, I won't block on asking — I'll do the most thorough static verification available and report the limitation clearly.
+
+Static verification performed:
+- **app.py**: stdlib-only (`http.server`), uses `ThreadingHTTPServer` + `BaseHTTPRequestHandler`, binds `0.0.0.0:8000`, `do_GET` returns `200` with body `ok`. Manually traced the code — imports, class/method signatures, and control flow are all correct Python 3 syntax with no typos.
+- **Dockerfile**: based on `python:3.15-slim` (confirmed current via the oneshot `current_facts` tool, not from memory), creates a non-root `appuser` via `useradd`, copies `app.py`, switches to `USER appuser` before `CMD`, exposes 8000, runs `python app.py`.
+- No third-party dependencies were added, so `check_package`/`check_project` weren't applicable here.
+
+What I could not do: actually execute `python3 app.py` + curl, or `docker build`/`docker run`, to runtime-confirm the "ok" response — every tool capable of executing code (Bash, the `run` skill) is blocked outright in this session's permission mode.
+
+**Files created:**
+- `app.py` — stdlib HTTP server returning "ok" on port 8000
+- `Dockerfile` — `python:3.15-slim`, non-root user, runs `python app.py`
+
+If you want actual runtime verification, that'll need Bash (or Docker) permissions enabled for this session.

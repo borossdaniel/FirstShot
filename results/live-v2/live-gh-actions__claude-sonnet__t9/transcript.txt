@@ -1,0 +1,8 @@
+Done. Created:
+
+- `package.json` — `npm test` runs `node --test`
+- `package-lock.json` — generated so `npm ci` works
+- `index.js` / `index.test.js` — trivial source + passing test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node LTS with npm caching, runs `npm ci` then `npm test`
+
+Verified locally: `npm ci && npm test` passes (1 test, 0 failures). Nothing committed, as requested.

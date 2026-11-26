@@ -1,0 +1,6 @@
+Done. The project is set up in this folder:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `openai@^7.65.0` installed via npm.
+- **`ai.mjs`** — exports `async function summarize(text)`. It creates the `OpenAI` client inside the function (reading `OPENAI_API_KEY` from the environment), sends `text` to the current flagship model **`gpt-6.2-astra`** (OpenAI's newest and most capable model as of Nov 2026) via the Responses API with a system instruction to produce exactly one sentence, and returns the trimmed summary string.
+
+Verified: the module imports cleanly, `summarize` is a proper async function, and it correctly resolves/validates `OPENAI_API_KEY` (missing-key case throws the expected `OpenAIError`). A live network call to actually test a real summary isn't possible here since no API key is configured and outbound network calls are sandboxed in this environment — but the plumbing is confirmed correct.

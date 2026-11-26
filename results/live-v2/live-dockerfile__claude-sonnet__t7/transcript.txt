@@ -1,0 +1,7 @@
+Everything's in place and verified:
+
+- **`server.js`** — plain `node:http` server, responds "ok" on port 3000 (tested: `curl` returned `200 ok`).
+- **`package.json`** — minimal, with a `start` script and `engines.node >= 24`.
+- **`Dockerfile`** — `node:24-slim` (current Node.js LTS), installs prod deps only, creates/uses a non-root `app` user, exposes 3000.
+
+Docker itself isn't available in this environment (the `docker` command was blocked), so per your instructions I verified the app directly with `node server.js` instead of building the image — confirmed it starts cleanly and serves "ok".

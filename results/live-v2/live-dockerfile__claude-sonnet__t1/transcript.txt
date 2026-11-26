@@ -1,0 +1,7 @@
+Done. The folder now has:
+
+- **`server.js`** — plain `node:http` server responding `"ok"` on port 3000 (verified: started it, `curl`'d it, got `HTTP/1.1 200 OK` with body `ok`).
+- **`package.json`** + **`package-lock.json`** — minimal, `engines.node >= 26`, `npm start` runs the server.
+- **`Dockerfile`** — `node:26-alpine` (Node.js 26 is the current Active LTS as of Nov 2026), `npm ci --omit=dev` using the lockfile, copies only `server.js`, creates and switches to a non-root `app` user, exposes 3000, runs `node server.js`.
+
+Docker itself wasn't available/permitted to invoke in this sandbox to do an actual `docker build`, but that wasn't required — the server was verified directly and the Dockerfile follows standard production practices (slim base, lockfile-based install, non-root user, minimal layers).

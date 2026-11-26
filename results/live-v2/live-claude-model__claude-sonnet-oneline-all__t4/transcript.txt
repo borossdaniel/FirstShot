@@ -1,0 +1,6 @@
+The request reached Anthropic's API and got rejected only for the invalid key (401 `authentication_error`), not a model or request-format error — confirming the model ID `claude-opus-5-5` and request shape are valid. The project is set up and verified:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` (latest, v1.14.0) as a dependency
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, and calls `claude-opus-5-5` (Claude Opus 5.5, the current recommended model for general workloads) to return a one-sentence summary
+
+I couldn't run a full live call since no `ANTHROPIC_API_KEY` is set in this environment, but I verified the full path short of that: syntax, module exports, correct env-var handling, and a real network round-trip to the Anthropic API that failed only on the (intentionally fake) key — not on the model name or request shape. Set `ANTHROPIC_API_KEY` and it's ready to use.

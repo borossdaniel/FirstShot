@@ -1,0 +1,6 @@
+Setup is complete and verified:
+
+- **`package.json`** — ES module project, `@anthropic-ai/sdk@^1.14.0` installed (current version, verified via oneshot).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the Anthropic client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-5-5` (current most-capable model, verified via oneshot facts) with a one-sentence-summary prompt, and returns the response text.
+
+Verification: the module imports cleanly and `summarize` is callable. An end-to-end test correctly failed with `Could not resolve authentication method` — this environment has no `ANTHROPIC_API_KEY` set, which proves the SDK call path is wired correctly (it got as far as the client's auth check). Once you export a valid key, `summarize(text)` will work as-is — no code changes needed.

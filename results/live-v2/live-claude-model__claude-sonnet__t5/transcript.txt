@@ -1,0 +1,7 @@
+This confirms the full request pipeline works correctly — the function builds the client from the env var, calls the Anthropic Messages API with model `claude-opus-4-8`, and the request reaches Anthropic's servers (rejected only due to the invalid test key, with no error about an unknown model). The only thing that can't be verified without a real `ANTHROPIC_API_KEY` is the actual summary content.
+
+Setup is complete in this folder:
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` as a dependency (installed via `npm install`)
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates an `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from the environment) and calls `claude-opus-4-8` (the newest, most capable Claude model) to return a one-sentence summary
+
+To use it, run with a real key set: `ANTHROPIC_API_KEY=sk-ant-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

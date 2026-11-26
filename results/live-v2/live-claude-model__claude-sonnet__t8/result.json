@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.2.0",
+  "task": "live-claude-model",
+  "taskName": "Newest Claude model",
+  "package": "@anthropic-ai/sdk",
+  "agent": "claude",
+  "model": "sonnet",
+  "variant": null,
+  "trial": 8,
+  "ok": false,
+  "category": "outdated_fact",
+  "detail": "asked for \"claude-opus-4-8\"; current models are claude-fable-5-2, claude-opus-5-5, claude-sonnet-5-5, claude-haiku-5-5",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 55.5,
+  "costUsd": 0.3066117,
+  "turns": 13,
+  "installedVersion": "1.14.0",
+  "finishedAt": "2026-11-26T18:52:45.534Z"
+}

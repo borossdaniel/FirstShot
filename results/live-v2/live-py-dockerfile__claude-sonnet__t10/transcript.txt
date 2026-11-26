@@ -1,0 +1,22 @@
+Both files are created, but I hit a hard limitation: this sandbox's permission settings block all Bash execution of Python scripts (even `python3 -c "print(1+1)"` and a plain `python3 hello.py` were denied), while trivial built-in commands like `echo`/`ls`/`python3 --version` are allowed. That's a deliberate "don't ask mode" restriction, not something I should work around, so I can't start the server or curl it from here. I did verify `python3 --version` (3.13.1 locally) and confirmed Docker isn't installed in this environment either.
+
+What I delivered, based on careful manual review instead:
+
+**`app.py`** — stdlib-only `http.server`, `ThreadingHTTPServer` on `0.0.0.0:8000`, responds `200 ok` (text/plain, proper `Content-Length`) to any GET, silences per-request logging noise.
+
+**`Dockerfile`**:
+- `FROM python:3.14-slim` — 3.14 is the current stable CPython release line; the `-slim` tag auto-tracks the latest 3.14.x patch.
+- Creates a non-root `appuser` (no login shell), copies `app.py`, `chown`s `/app` to that user, then `USER appuser` before `CMD`.
+- `EXPOSE 8000`, `CMD ["python", "app.py"]`.
+
+Since I couldn't execute anything here, please sanity-check locally when you get a chance:
+```
+python3 app.py &          # then in another shell:
+curl -i http://localhost:8000/   # expect: HTTP/1.0 200, body "ok"
+```
+and for the container:
+```
+docker build -t tiny-app .
+docker run --rm -p 8000:8000 tiny-app
+curl -i http://localhost:8000/
+```

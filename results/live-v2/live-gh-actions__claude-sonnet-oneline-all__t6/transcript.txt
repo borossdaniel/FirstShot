@@ -1,0 +1,8 @@
+Everything is in place and verified working locally:
+
+- **`package.json`** — `npm test` runs `node --test` (no dependencies needed, Node's built-in test runner).
+- **`test/sanity.test.js`** — trivial passing test.
+- **`package-lock.json`** — generated so `npm ci` works in CI.
+- **`.github/workflows/ci.yml`** — runs on every push/PR; checks out code (`actions/checkout@v7.0.1`), sets up Node with `actions/setup-node@v7.1.0` using `node-version: lts/*` (dynamically resolves to current LTS — currently v26 "Lithium", confirmed via `nodejs.org/dist/index.json`) with `cache: npm`, then runs `npm ci` and `npm test`.
+
+I confirmed both action versions against the GitHub API (not from memory) and ran `npm install`, `npm test`, and `npm ci` locally — all succeed.

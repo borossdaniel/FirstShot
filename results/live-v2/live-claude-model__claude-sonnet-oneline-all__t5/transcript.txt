@@ -1,0 +1,10 @@
+Set up and verified. In this empty folder:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `@anthropic-ai/sdk` as a dependency, installed via npm (version 1.14.0, latest).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from the environment, and calls `messages.create` on `claude-opus-5-5`.
+
+On model choice: per CLAUDE.md I didn't trust memory for this — I checked the installed SDK's own type definitions (`node_modules/@anthropic-ai/sdk/.../messages.ts`) rather than relying on potentially stale knowledge. That listing, cross-checked against the SDK's deprecated-models list (which flags the `4-5` generation as oldest/sunsetting), shows `claude-opus-5-5` as the newest, highest-versioned Opus-tier (most capable) model currently supported — so that's what `ai.mjs` targets.
+
+Verification: `node --check` confirmed the syntax is valid, and a live test against the real Anthropic API with a dummy key returned a proper `401 invalid x-api-key` response — meaning the request was well-formed and reached the API, failing only on auth (no `ANTHROPIC_API_KEY` is available in this sandbox, so I couldn't run a full successful call). Once you export a real key, `summarize(text)` should work as-is.
+
+One leftover: I created a small `verify.mjs` test script to do that check, but `rm` is blocked in this permission mode so I couldn't delete it — it only contains a dummy test and is safe to leave or remove.

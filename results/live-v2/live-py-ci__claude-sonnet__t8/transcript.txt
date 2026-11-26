@@ -1,0 +1,27 @@
+I've created all four files, but I'm unable to verify by actually running them: this sandbox's "don't ask" permission mode auto-denies `pip install`, `pytest`, and `python3 -c "import ..."` commands (read-only commands like `ls`, `pwd`, `which`, `mkdir` go through fine). I tried a few variations but repeatedly hit the same denial, so I stopped rather than attempt to work around it.
+
+Here's what's in place:
+
+**app.py**
+```python
+def add(a, b):
+    return a + b
+```
+
+**test_app.py**
+```python
+from app import add
+
+
+def test_add():
+    assert add(2, 3) == 5
+```
+
+**requirements.txt**
+```
+pytest
+```
+
+**.github/workflows/ci.yml** — triggers on push and pull_request, checks out code, sets up Python 3.13 (matching this machine's `python3 --version`) with `cache: pip`, installs `requirements.txt`, runs `pytest`.
+
+The code is simple enough that I'm confident it's correct by inspection (standard `add`/`assert` pattern, matching import name), but per your instruction to verify it runs before stopping — I couldn't do that step here because the environment itself blocked the execution commands. If you can run `pip install -r requirements.txt && pytest -q` locally or just push it, the GitHub Actions workflow will confirm it on its own.

@@ -1,0 +1,7 @@
+Project is set up and verified:
+
+- **`package.json`** — ES modules (`"type": "module"`), `openai` SDK installed (v7.65.0).
+- **`ai.mjs`** — exports `async function summarize(text)`. Creates the `OpenAI` client inside the function, reading `OPENAI_API_KEY` from the environment, and calls `client.responses.create` with model `gpt-6.2-astra` — OpenAI's current flagship/most-capable model, confirmed against the official API docs (`developers.openai.com/api/docs/models`, redirected from `platform.openai.com/docs/models`).
+- Verified by importing the module and calling `summarize()`: it loads correctly, exports the function, and surfaces the expected `OpenAIError: Missing credentials...` since no `OPENAI_API_KEY` is set in this environment. A live end-to-end call (with a real or dummy key) couldn't be tested further — there's no real key available, and a test with a placeholder key was blocked by the sandbox's "don't ask" permission mode for that network call.
+
+To use it, set `OPENAI_API_KEY` in the environment and call `summarize("your text")`.

@@ -1,0 +1,6 @@
+Setup complete:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `openai@7.65.0` (current major, verified via oneshot).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `OpenAI` client inside the function reading `OPENAI_API_KEY` from env, calls `client.responses.create()` with model `gpt-6.2-astra` (OpenAI's newest/most capable model per oneshot's current facts), and returns the one-sentence summary as a trimmed string.
+- Dependencies installed via `npm install`; `node_modules` present, `check_project` confirms no outdated majors.
+- Verified: the module imports cleanly and `summarize` is a real function; calling it correctly reaches the OpenAI SDK and fails only on the expected "missing `OPENAI_API_KEY`" error, since no key is set in this sandbox. A full live round-trip can't be confirmed without a real key — set `OPENAI_API_KEY` and it's ready to use.

@@ -1,0 +1,5 @@
+Setup is complete and verified as far as possible without a live API key:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@1.14.0` (current major, confirmed via `check_project`).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, and calls `claude-opus-5-5` (the current most-capable model per `current_facts`) to produce a one-sentence summary.
+- Verified: dependencies installed cleanly, `summarize` imports correctly as an async function, and a real call attempt fails only on the expected "no API key" auth error — confirming the SDK wiring and request path work. There's no `ANTHROPIC_API_KEY` in this environment, so I couldn't verify an actual successful summary response; once you set that env var, it should work end-to-end.

@@ -2,15 +2,17 @@
 
 **Your AI coding agent writes last year's versions from memory. OneShot gives it today's, so it gets it right in one shot.**
 
-Agents write model names, GitHub Actions versions, Docker images and runtime versions from memory, and those go stale fast. We measured it with Claude Code (Sonnet), 15 runs per setup, each run checked by a real test:
+Agents write model names, GitHub Actions versions, Docker images and runtime versions from memory, and those go stale fast. We measured it with Claude Code (Sonnet) on 6 everyday tasks (newest Claude and OpenAI model, Node and Python CI, Node and Python Dockerfiles), 10 runs per task per setup, each run checked by a real test:
 
 | Setup | Wrote current values | Median time per run | Median cost per run |
 |---|---|---|---|
-| Nothing | 2 of 15 | 42 s | $0.25 |
-| "Always use the newest versions" in CLAUDE.md | 13 of 15 | 68 s | $0.43 |
-| **OneShot** | **15 of 15** | **41 s** | **$0.27** |
+| Nothing | 17 of 60 | 61 s | $0.33 |
+| "Always use the newest versions" in CLAUDE.md | 54 of 60 | 68 s | $0.44 |
+| **OneShot** | **60 of 60** | **47 s** | **$0.29** |
 
-Without help, agents wrote `claude-opus-4-8`, `actions/checkout@v4` and `node:24`. Told to "use the newest", they searched the web: right most of the time, but 64% slower and 72% more expensive. With OneShot they asked once and were right every time. All runs and transcripts are in `results/live-v1/`.
+Without help, agents wrote `claude-opus-4-8` (10 of 10 runs), `actions/checkout@v4` (20 of 20), `node:24-alpine` and `python:3.13-slim`. Told to "use the newest", they searched the web: right most of the time, but 44% slower and 52% more expensive per run than OneShot, and the Claude model was still wrong 4 of 10 times. With OneShot they asked once and were right every time, faster and cheaper than with no help at all. All 180 runs and transcripts are in `results/live-v2/`.
+
+**Try it without installing anything:** paste a public GitHub repo at [oneshotagent.dev](https://oneshotagent.dev/#check), or see the Action on a [demo repo](https://github.com/borossdaniel/oneshot-demo).
 
 ## Catch retired models before they break your app
 
@@ -25,8 +27,6 @@ $ npx oneshot-agent check
 1 outdated value:
   ! .github/workflows/ci.yml:6: actions/checkout@v4 is outdated; current is v7.
 ```
-
-**Try it without installing anything:** paste a public GitHub repo at [oneshotagent.dev](https://oneshotagent.dev/#check).
 
 ### On every pull request (GitHub Action)
 
@@ -230,7 +230,7 @@ No. OneShot only downloads public facts: package versions (npm, PyPI, deps.dev),
 No. The MCP tools work in Cursor, Windsurf, Codex, Claude Desktop and any other MCP app. The check before "done" (Stop hook) is Claude Code only. The CLI and the GitHub Action work with any agent, or none. The benchmark numbers are from Claude Code with Sonnet.
 
 **Why not just tell my agent to use the newest versions?**
-It helps, but the agent then has to look everything up itself: in our runs that was 64% slower and 72% more expensive, and it still wrote old model names. OneShot answers in one call.
+It helps, but the agent then has to look everything up itself: in our runs it was right 54 of 60 times, but 44% slower and 52% more expensive per run than OneShot (60 of 60). OneShot answers in one call.
 
 **Will it change my code?**
 No. It tells your agent what is current; the agent writes the code. The Action only annotates pull requests. It fails when something will break (a retired model, an end-of-life runtime); `strict: true` also fails on older versions.
@@ -245,4 +245,4 @@ Refreshed every 6 hours from the official sources. Retirement dates come from th
 - Hand-written notes exist for the libraries on the board. Other packages get the current version plus release-date and deprecation warnings.
 - 0.x packages and calendar-versioned packages (certifi 2026.x) are not flagged as outdated.
 - If you pin an old major on purpose, the check only warns.
-- The board uses one agent (Claude Code with Sonnet), 5 runs per library. Small samples, published in full.
+- The package board uses one agent (Claude Code with Sonnet), 5 runs per library; the live-facts test 10 runs per task. Small samples, published in full.

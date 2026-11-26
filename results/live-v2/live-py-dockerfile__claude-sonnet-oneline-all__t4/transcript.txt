@@ -1,0 +1,6 @@
+Confirmed `python:3.15.2-slim-trixie` is a valid, current tag. Both files are in place:
+
+- **app.py** — stdlib `http.server` (`ThreadingHTTPServer`), binds `0.0.0.0:8000`, returns `ok` for any GET request.
+- **Dockerfile** — `python:3.15.2-slim-trixie` (current Python 3.15.2, verified live on Docker Hub), creates a non-root `appuser`, copies the app, runs as that user, exposes 8000.
+
+One limitation: this environment's permission policy blocks all `python3` execution (even `python3 -c "print(1)"` and `py_compile`), so I could not actually run the server or build the image to verify end-to-end — I confirmed correctness by careful code review instead. `app.py` is a standard, minimal use of `http.server` with no unusual constructs, so it should run as-is; let me know if you'd like me to attempt the build/run verification through another path.

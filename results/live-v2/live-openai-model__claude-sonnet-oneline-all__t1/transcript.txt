@@ -1,0 +1,5 @@
+The project is set up and verified as far as possible without a live key:
+
+- `package.json` — ES module project with `openai@7.65.0` (latest) as a dependency.
+- `ai.mjs` — exports `async function summarize(text)`, creates the `OpenAI` client inside the function reading `OPENAI_API_KEY` from env, and calls `gpt-6-astra` (OpenAI's current flagship/most capable model, confirmed via their live docs) through the Responses API, returning `output_text` trimmed as a one-sentence summary.
+- Ran it: syntax-checked clean, and the module correctly loads, constructs the client, and attempts the API call — it failed only with the SDK's own "Missing credentials... set `OPENAI_API_KEY`" error, since no key is set in this sandbox. That confirms the wiring is correct; a real summarization call will work once `OPENAI_API_KEY` is exported in the environment.

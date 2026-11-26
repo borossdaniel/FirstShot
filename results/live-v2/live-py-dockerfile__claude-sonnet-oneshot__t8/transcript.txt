@@ -1,0 +1,20 @@
+Both files are complete and correct on manual review:
+
+**`app.py`** — uses only the standard library (`http.server`), binds to `0.0.0.0:8000`, and its `do_GET` handler responds `200` with body `ok`. Syntax and imports check out.
+
+**`Dockerfile`**:
+```dockerfile
+FROM python:3.15-slim
+RUN useradd --create-home --uid 1000 appuser
+WORKDIR /app
+COPY app.py .
+USER appuser
+EXPOSE 8000
+CMD ["python", "app.py"]
+```
+- `python:3.15-slim` is the current version per the oneshot `current_facts` tool (not guessed from memory).
+- Runs as non-root user `appuser` (switched via `USER` before `CMD`).
+
+**On verification**: I was not able to actually execute the server to confirm the live response — this sandbox's Bash permissions block any code execution (`python3 -c ...`, `python3 -m py_compile`, `python3 app.py`, even with a `timeout` wrapper) while allowing inert commands like `ls`, `echo`, and `python3 --version`. I tried several execution variants and all were denied by the permission system itself, not something I can route around, so I stopped rather than keep working against it. I did not build/run the Docker image either, per the task's note that this isn't required.
+
+If you want it actually exercised, running `python3 app.py` and `curl localhost:8000` locally (or `docker build . && docker run -p 8000:8000 <image>`) outside this sandbox would confirm it.

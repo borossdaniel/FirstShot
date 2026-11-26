@@ -1,0 +1,9 @@
+I've created both files, but I'm unable to execute the runtime verification step: this environment denies all `Bash` and `Skill` execution (even via a subagent), permission-blocked at the system level, not something I should work around.
+
+**What's done:**
+- `app.py` — stdlib `http.server`, `ThreadingHTTPServer` on port `0.0.0.0:8000`, returns `200 ok` on every GET.
+- `Dockerfile` — verified against Docker Hub that `python:3.15.2-slim` is the current official slim tag (confirmed, not from memory), creates a non-root `appuser` (uid 1000), copies only `app.py`, runs as that user, exposes 8000, `CMD ["python", "app.py"]`.
+
+**What I couldn't do:** actually start the server and `curl` it, or build/run the image — both would require Bash, which is hard-denied here ("don't ask mode"). A subagent hit the identical denial. I reviewed the code manually and the logic is standard/correct, but I can't claim it was empirically tested in this session.
+
+If you want it actually exercised, you'd need to grant Bash permission (or run `python3 app.py` / `docker build .` yourself) — let me know and I can retry.

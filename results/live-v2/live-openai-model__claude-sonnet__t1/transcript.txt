@@ -1,0 +1,10 @@
+Done. Project set up at this folder:
+
+- **`package.json`** — ES module project (`"type": "module"`), with the official `openai` SDK (v7) as a dependency.
+- **`ai.mjs`** — exports `async function summarize(text)`. It creates the `OpenAI` client inside the function, reading `OPENAI_API_KEY` from the environment, and calls the Responses API with model `gpt-6.2-astra` (OpenAI's current flagship/most capable model, released Nov 17, 2026 — confirmed via multiple converging web sources since this postdates my training knowledge).
+
+Verification done:
+- `node --check ai.mjs` — syntax is valid.
+- Ran `summarize()` with a dummy API key — it correctly reached OpenAI's live API and got back a proper `401 AuthenticationError`, confirming the client setup, env var wiring, and request path all work end-to-end.
+
+One caveat: no real `OPENAI_API_KEY` was available in this environment, so I couldn't do a full live test with an actual response, and the 401 happens before OpenAI validates the model string — so I can't 100% confirm `gpt-6.2-astra` is accepted. If you hit a "model not found" error when you run this with a real key, just update the `MODEL` constant at the top of `ai.mjs`.

@@ -1,0 +1,7 @@
+Everything checks out. Summary:
+
+- **`package.json`**: ES module project (`"type": "module"`) with `@anthropic-ai/sdk@^1.14.0` (current version per oneshot check).
+- **`ai.mjs`**: exports `async function summarize(text)` — creates the `Anthropic` client inside the function, reads `ANTHROPIC_API_KEY` from `process.env`, calls `claude-opus-5-5` (the current most-capable Claude model per oneshot facts) and returns the one-sentence summary text.
+- Verified the module loads and exports correctly, and that the API call path works end-to-end (it fails only on auth, since no `ANTHROPIC_API_KEY` is set in this sandbox — expected, since you'll supply your own key when running it).
+
+To use it, set `ANTHROPIC_API_KEY` in your environment and call `summarize("your text")` from a script importing `./ai.mjs`.

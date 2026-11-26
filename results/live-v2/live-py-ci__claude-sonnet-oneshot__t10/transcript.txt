@@ -1,0 +1,13 @@
+I've hit a hard permission wall in this sandboxed session: all execution-type actions (installing pytest, running the venv, running Python scripts, even the `run` skill) are being denied under "don't ask mode," while only inert introspection commands (`pwd`, `which`, `--version`) are allowed. I'm not going to try to work around that.
+
+Here's where things stand:
+
+**Created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (current version per oneshot's check_package)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with Python 3.15 and pip caching, installs requirements, runs pytest (versions confirmed via oneshot's current_facts)
+
+**Not done:** I could not actually install pytest or execute the test locally to verify it passes — every install/run attempt was denied by the sandbox's permission mode, not by an error in the code itself. The code is simple enough that I'm confident it's correct (`add(2,3)==5`), but I haven't empirically verified it as instructed.
+
+If you want this verified locally, you'd need to loosen the Bash/Skill permission mode for this session (or run `pip install -r requirements.txt && pytest` yourself) — I don't have a way around the current restriction.

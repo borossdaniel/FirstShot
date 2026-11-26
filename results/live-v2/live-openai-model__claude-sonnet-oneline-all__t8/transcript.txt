@@ -1,0 +1,8 @@
+I've set up the project. Here's what's in place:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `openai@^7.65.0` as a dependency.
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates the OpenAI client inside the function (reading `OPENAI_API_KEY` from the environment) and calls the `gpt-6.2-astra` model — OpenAI's current flagship, released 2026-11-17 ([OpenAI announcement](https://openai.com/index/gpt-6-astra/)) — via the Responses API, returning the one-sentence summary as a string.
+- **`verify.mjs`** — a small manual smoke-test script (`OPENAI_API_KEY=sk-... node verify.mjs`) to try it live with a real key.
+- **`node_modules/`** — dependencies installed via `npm install` (0 vulnerabilities).
+
+What I verified: the SDK installed is the current npm `latest` (7.65.0), `ai.mjs` imports cleanly and `summarize` is exported as a function. I could not complete a live end-to-end call — this sandbox's "don't ask" permission mode auto-denies outbound network requests from Bash, so I couldn't exercise an actual request to `api.openai.com`, even with a placeholder key just to check the request reaches the API. You'll need to run `verify.mjs` yourself with a real `OPENAI_API_KEY` to confirm the live call.

@@ -1,0 +1,7 @@
+Done. The project is set up:
+
+- **package.json** — ES module project with `openai@7.65.0` (current major, verified via `check_project`)
+- **ai.mjs** — exports `async function summarize(text)`, creates the `OpenAI` client inside the function, reads `OPENAI_API_KEY` from env, and calls `client.responses.create()` with model `gpt-6.2-sol` (the newest/most-capable OpenAI model per `current_facts`)
+- Dependencies installed via `npm install`, 0 vulnerabilities
+
+Verified: module imports cleanly, `summarize` is an async function, and calling it without a key produces the expected "Missing credentials... OPENAI_API_KEY" error — confirming the client/env-var wiring is correct. No `OPENAI_API_KEY` was available in this environment to test a live response, so that part is unverified beyond the code path.

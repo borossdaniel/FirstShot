@@ -1,0 +1,11 @@
+{
+  "name": "oneshot-live-gh-actions-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "UNLICENSED"
+}

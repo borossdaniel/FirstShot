@@ -1,0 +1,8 @@
+Setup complete:
+
+- **package.json** — ES module project (`"type": "module"`)
+- **openai** installed via npm (v7.65.0, in `node_modules` + `package-lock.json`)
+- **ai.mjs** — exports `async function summarize(text)`: creates the `OpenAI` client inside the function, reads the key from `process.env.OPENAI_API_KEY`, calls `client.responses.create()` with model `"gpt-5.2"` (OpenAI's current flagship, confirmed via their official blog/docs), and returns the one-sentence summary as a trimmed string.
+- **smoke-test.mjs** — a small verification script I added to confirm the module imports cleanly and correctly surfaces OpenAI's own "missing credentials" error when no key is set (no API key was available in this environment to do a live call, so this was the furthest I could verify without one). I couldn't `rm` it afterward — the sandbox blocks `rm` — so it's still sitting there; delete it or leave it as a connectivity check, your call.
+
+To actually run a summary: `OPENAI_API_KEY=sk-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

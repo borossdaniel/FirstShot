@@ -1,0 +1,13 @@
+Both files are in place, but I need to flag something before calling this done.
+
+**Created:**
+- `app.py` — stdlib-only `http.server` server (`ThreadingHTTPServer` + `BaseHTTPRequestHandler`), responds `200 ok` to any GET on port 8000.
+- `Dockerfile` — `FROM python:3.15-slim` (verified via Docker Hub as the current stable tag, matching python.org's listed current release 3.15.2), creates and runs as non-root user `appuser` (uid 10001), copies the app, exposes 8000, runs `python app.py`.
+
+**Verification I could not complete:** this sandbox's Bash permissions are in "don't ask" mode and denied every command that actually *executes* code — `python3 app.py`, `python3 -m py_compile app.py`, even `python3 -c "print(...)"` were all denied — while purely informational commands (`ls`, `pwd`, `python3 --version`) went through. I tried several reasonable, non-destructive phrasings (foreground, backgrounded, timeout-bounded, syntax-only compile check) and all were blocked the same way, so per the tool's own guidance I stopped rather than hunting for a workaround.
+
+I can't build/run Docker here either (no `docker` invocation attempted, since the same execution restriction would apply and you said building isn't required).
+
+I did verify by inspection instead: the code only uses stdlib `http.server`, follows the standard request-handler pattern, binds `0.0.0.0:8000`, and returns a 2-line "ok" body with correct headers — this is a well-worn pattern with no syntax or logic issues. The Dockerfile follows the standard non-root pattern (`useradd` before `USER`, `python` is symlinked to `python3` in the official slim image).
+
+If you want actual execution verification, you'd need to either grant Bash execution permission in this session or run `python3 app.py` / `curl localhost:8000` yourself.

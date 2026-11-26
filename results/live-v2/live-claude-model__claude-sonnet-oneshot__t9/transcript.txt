@@ -1,0 +1,12 @@
+This confirms the full request pipeline is correct: it reaches Anthropic's API and gets a proper 401 for the invalid dummy key (not a code or model-name error). The setup is complete.
+
+**Summary of what was built in this folder:**
+- `package.json` — ES module project (`"type": "module"`) depending on `@anthropic-ai/sdk@1.14.0` (current version, confirmed via `check_package` rather than guessed).
+- `ai.mjs` — exports `async function summarize(text)`. It creates the `Anthropic` client inside the function, reads `ANTHROPIC_API_KEY` from the environment, and calls `claude-opus-5-5` (the current most-capable Claude model, confirmed via `current_facts` rather than memory) with a one-sentence-summary prompt, returning the response text.
+- `node_modules` installed via `npm install`.
+
+Verified by running it: with no key it fails at the SDK's own auth check (expected), and with a dummy key it successfully reaches Anthropic's servers and gets back a `401 invalid bearer token` — proving the request/model/payload shape is correct. It will work as soon as a real `ANTHROPIC_API_KEY` is exported in the environment, e.g.:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"
+```

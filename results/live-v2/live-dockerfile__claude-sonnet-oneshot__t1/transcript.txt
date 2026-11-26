@@ -1,0 +1,1 @@
+Everything is set up and verified: `server.js` (plain `node:http`, port 3000, returns "ok" — confirmed via live curl test), `package.json`, and a production `Dockerfile` using `node:26-alpine` (current Node LTS per oneshot facts) running as the built-in non-root `node` user.

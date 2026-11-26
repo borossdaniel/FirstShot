@@ -1,0 +1,9 @@
+No dependencies to check (stdlib only), which matches the design. Here's the final state:
+
+**`app.py`** — stdlib `http.server`, binds `0.0.0.0:8000`, responds `200 ok` to any GET.
+
+**`Dockerfile`** — `python:3.15-slim` (current per oneshot facts), creates a non-root `appuser`, copies `app.py`, runs as that user, exposes 8000.
+
+One limitation to flag: this sandbox's Bash permission policy blocks *all* Python script execution here (even `python3 -c "print(1)"`) — only `python3 --version` is allowed — so I could not actually run `app.py` or build/run the Docker image to verify end-to-end. The code is correct stdlib `http.server` usage I'm confident in, but "verified before you stop" wasn't achievable in this environment; flagging rather than claiming false verification.
+
+Also, `rm` was denied, so two scratch files I created while trying to verify (`verify.py`, `noop.py`) are still sitting in the folder — harmless, but you may want to delete them.

@@ -1,0 +1,8 @@
+Everything's in place and verified locally:
+
+- `package.json` — `test` script runs Node's built-in test runner (`node --test`), no external deps needed.
+- `test/basic.test.js` — trivial sanity test.
+- `package-lock.json` — generated so `npm ci` works.
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code (`actions/checkout@v7`), sets up current Node LTS via `actions/setup-node@v7` with `node-version: lts/*` (auto-tracks whatever LTS is current, per your "always newest" rule) and npm caching, then runs `npm ci` and `npm test`.
+
+Ran `npm install`, `npm ci`, and `npm test` locally — all succeeded, test passed. Nothing committed, as requested.

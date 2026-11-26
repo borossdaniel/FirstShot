@@ -1,0 +1,10 @@
+{
+  "name": "openai-summarize",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "ai.mjs",
+  "dependencies": {
+    "openai": "^7.65.0"
+  }
+}

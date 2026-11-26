@@ -1,0 +1,8 @@
+`npm ci` and `npm test` both pass locally (local Node is v24, but the CI workflow is pinned to Node 26 per current LTS facts). Everything's set up:
+
+- `package.json` with a `test` script running Node's built-in test runner
+- `test/trivial.test.js` — a trivial passing test
+- `package-lock.json` (needed for `npm ci`)
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7`), sets up Node 26 with npm caching (`actions/setup-node@v7`), then `npm ci` and `npm test`
+
+No commits were made, as requested.

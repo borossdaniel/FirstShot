@@ -1,0 +1,11 @@
+I've created all four files, but I hit a hard constraint I need to flag rather than work around.
+
+**Files created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (confirmed current via the oneshot `check_package` tool)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` and `cache: pip`, then installs requirements and runs `pytest` (versions confirmed current via oneshot `current_facts`)
+
+**Verification blocked:** This sandbox is running Bash in a locked-down "don't ask" permission mode that auto-denies `pip install`, `pip3`, `python3 -m ...`, `python3 -c ...`, and even `python3 app.py` — only inert commands like `ls`, `pwd`, `cat`, `which`, and `python3 --version` are allowed through. I tried several reasonable variations (pip install, pip3 install --user, python3 -m pytest, python3 -m pip, python3 -c, running app.py directly) and all were denied by the permission system itself, not by any error in the code. `which pytest` confirms pytest isn't installed in this environment, and I have no permitted way to install or invoke it here.
+
+I didn't try to bypass this since it's a deliberate sandbox restriction, not a bug. The code is simple enough that I'm confident in it by inspection, but I could not literally execute `pip install -r requirements.txt && pytest` as instructed. If you want this verified, you'd need to either grant Bash execution/install permissions in this environment, or run it yourself locally / let the GitHub Actions workflow verify it on push.

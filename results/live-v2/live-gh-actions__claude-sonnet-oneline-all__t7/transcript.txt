@@ -1,0 +1,8 @@
+Good, the file exists (the earlier `find` glob just didn't match the dotdir pattern I excluded). Everything is in place:
+
+- **`package.json`** — `npm test` runs `node test.js`
+- **`test.js`** — trivial assertion-based test
+- **`package-lock.json`** — generated so `npm ci` works
+- **`.github/workflows/ci.yml`** — runs on every push/PR, checks out with `actions/checkout@v7.0.1`, sets up Node via `actions/setup-node@v7.1.0` with `node-version: lts/*` (currently resolves to Node 26 "Lithium", the current Active LTS) and npm caching, then runs `npm ci && npm test`
+
+Verified locally: `npm ci` and `npm test` both pass. Nothing committed, per your instructions.

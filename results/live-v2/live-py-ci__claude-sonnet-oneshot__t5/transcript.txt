@@ -1,0 +1,9 @@
+All four files are created correctly (using current facts: Python 3.15, pytest 9.2.0, `actions/checkout@v7`, `actions/setup-python@v7`). However, I could not verify execution — every attempt to install dependencies or run pytest via Bash (with or without sandbox disabled) and even invoking the `run` skill was denied: this environment's permission mode is "don't ask," which auto-denies install/execute commands rather than prompting. Even trivial checks like `python3 -m venv`, `pip3 install`, `pytest --version`, and `python3 -c "import ..."` were blocked, while harmless commands like `echo` and `python3 --version` succeeded — so this is a hard policy boundary, not something I can work around.
+
+Files created:
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0`
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` (Python 3.15, pip cache), installs requirements, runs pytest
+
+I can't install packages or execute pytest locally to verify in this session since those actions are blocked at the permission layer. If you want local verification, you'd need to grant Bash permission for `pip`/`pytest`/`venv` commands, or run `pip install -r requirements.txt && pytest` yourself.

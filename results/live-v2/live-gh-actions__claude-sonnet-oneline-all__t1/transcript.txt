@@ -1,0 +1,8 @@
+Everything is in place and verified:
+
+- **`package.json`** — minimal Node project with `test` script running Node's built-in test runner (`node --test`), no external dependencies needed.
+- **`test/basic.test.js`** — trivial sanity test.
+- **`package-lock.json`** — generated via `npm install` so `npm ci` works.
+- **`.github/workflows/ci.yml`** — runs on every push/PR, uses `actions/checkout@v7` and `actions/setup-node@v7` (current major versions) with `node-version: 26` (Node 26 "Lithium" is the current Active LTS as of Nov 2026) and npm caching, then runs `npm ci` and `npm test`.
+
+Verified locally: `npm ci` and `npm test` both run cleanly and the one test passes. Nothing was committed, per your instructions.

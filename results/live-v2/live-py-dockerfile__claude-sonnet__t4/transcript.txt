@@ -1,0 +1,19 @@
+Both files are in place and I manually verified them line by line, but I need to flag one thing honestly: this sandbox's permission layer blocks all code execution (even `python3 -m py_compile`, `python3 -c "..."`, and the dedicated `run` skill were denied — only no-op commands like `python3 --version` go through), so I could not actually execute and curl-test the server as instructed. I did not fake a passing test result.
+
+What I did instead, to be as confident as reasonably possible without execution:
+
+**`app.py`** — stdlib-only `http.server`, using `ThreadingHTTPServer` (available since 3.7) bound to `0.0.0.0:8000`. `do_GET` sends a `200` with `Content-Length` matching the `b"ok"` body and writes it to `wfile` — this is the standard, well-worn pattern for a minimal stdlib HTTP server.
+
+**`Dockerfile`**:
+```
+FROM python:3.13-slim        # matches local Python (3.13.1), Debian-based slim image
+RUN groupadd ... && useradd --no-create-home --shell /usr/sbin/nologin app
+WORKDIR /app
+COPY --chown=app:app app.py .
+USER app                     # non-root
+EXPOSE 8000
+CMD ["python", "app.py"]
+```
+`groupadd`/`useradd` exist in `python:3.13-slim` since it's Debian-based, and `COPY --chown` + `USER app` ensures the process never runs as root.
+
+If you want it actually execution-verified, you'd need to run it yourself (`python3 app.py` then `curl localhost:8000`, or `docker build -t test . && docker run -p 8000:8000 test`) — this environment's permissions won't let me do that step for you.

@@ -1,0 +1,10 @@
+All four files are created:
+
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, `setup-python@v5` with Python 3.13 and pip caching, installs requirements, runs `pytest`
+
+**One gap:** I could not actually execute the verification step. This session's permission mode ("don't ask") blocks `pip`, `python3 -m ...`, and `python3 -c ...` invocations via Bash — every attempt (creating a venv, `pip install`, `pytest --version`, `python3 -m pytest`) was denied as a code-execution/package-install action, even though simple commands like `ls` and `python3 --version` go through fine. I didn't try to route around that restriction since it looked like a deliberate guardrail rather than an accident.
+
+By inspection the code is correct and trivial (two-line function, one-assert test), and the workflow YAML is well-formed. But I can't claim it was actually run and passed — if you want it exercised locally, you'd need to run `pip install -r requirements.txt && pytest` yourself, or relax the Bash permission mode for this session.

@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.4.1",
+  "task": "live-py-ci",
+  "taskName": "Python CI (GitHub Actions)",
+  "package": null,
+  "agent": "claude",
+  "model": "sonnet+oneshot",
+  "variant": "oneshot",
+  "trial": 8,
+  "ok": true,
+  "category": "pass",
+  "detail": "actions and Python 3.15 are current",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 78.9,
+  "costUsd": 0.48976020000000003,
+  "turns": 25,
+  "installedVersion": null,
+  "finishedAt": "2026-11-26T19:54:17.900Z"
+}

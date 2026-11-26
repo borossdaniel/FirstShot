@@ -1,0 +1,13 @@
+Both files are in place:
+
+- **`app.py`** — stdlib-only `ThreadingHTTPServer` that returns `200 "ok"` on any path, bound to `0.0.0.0:8000`.
+- **`Dockerfile`** — `python:3.15-slim` (3.15 is the current stable release, Oct 2026), copies `app.py`, creates and switches to a non-root `appuser`, exposes 8000, runs `python3 app.py`.
+
+**I could not actually run or test the server** — this sandbox's "don't ask" permission mode auto-denies any command that executes code (`python3 app.py`, `python3 -c ...`, even `python3 -m py_compile`) or mutates files (`rm`), while only pure inspection commands (`ls`, `which python3`, `python3 --version`) are allowed through. I tried several legitimate approaches (foreground run, background run, compile-check, a trivial `print()` probe) and all were blocked by the permission layer itself, not a code problem — so I verified correctness by careful code review instead of execution. I also could not delete a leftover `_probe.py` I created while testing this (emptied its contents, but it's still sitting in the folder) — you'll want to delete that file manually.
+
+If you want this actually execution-verified, you'd need to run it yourself:
+```
+python3 app.py &
+curl http://localhost:8000/
+```
+or build/run the Docker image (`docker build -t app . && docker run -p 8000:8000 app`).

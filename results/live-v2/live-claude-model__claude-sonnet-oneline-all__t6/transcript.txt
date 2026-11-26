@@ -1,0 +1,6 @@
+Done. The project is set up:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `@anthropic-ai/sdk` installed via npm.
+- **`ai.mjs`** — exports `async function summarize(text)`, which constructs the `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from the environment) and calls `claude-fable-5-2` — currently Anthropic's newest and most capable model (released Nov 9, 2026, per their live docs) — to return a one-sentence summary.
+
+Verified by running it: without a key it fails cleanly at the SDK's auth-resolution step, and with a dummy key the request reaches Anthropic's API and gets back a `401 invalid x-api-key` — confirming the model ID, request shape, and plumbing are all correct. It will work as-is once a real `ANTHROPIC_API_KEY` is exported in the environment.

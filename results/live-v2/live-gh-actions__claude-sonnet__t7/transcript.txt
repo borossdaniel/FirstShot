@@ -1,0 +1,8 @@
+All files are in place and verified:
+
+- `package.json` — `test` script running `node test.js`
+- `test.js` — trivial assertion test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node LTS with npm caching, runs `npm ci` then `npm test`
+
+Ran `npm ci && npm test` locally and confirmed it passes (`All tests passed`). No commits were made, per your instructions.

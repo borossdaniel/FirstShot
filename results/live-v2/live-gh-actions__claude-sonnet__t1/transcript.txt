@@ -1,0 +1,8 @@
+Done. Created and verified locally (`npm ci` + `npm test` both pass):
+
+- **`package.json`** — `test` script runs `node --test` (Node's built-in test runner, no extra deps needed)
+- **`package-lock.json`** — generated via `npm install`, required for `npm ci` in CI
+- **`test/basic.test.js`** — trivial sanity test
+- **`.github/workflows/ci.yml`** — runs on every push and pull request; checks out code, sets up Node LTS (`lts/*`) with npm caching, then runs `npm ci` and `npm test`
+
+No files were committed, per your instruction.

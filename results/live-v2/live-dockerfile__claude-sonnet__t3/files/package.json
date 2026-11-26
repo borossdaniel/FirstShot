@@ -1,0 +1,12 @@
+{
+  "name": "tiny-http-server",
+  "version": "1.0.0",
+  "description": "Tiny Node.js web server using node:http",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

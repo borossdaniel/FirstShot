@@ -1,0 +1,9 @@
+All four files are written. I attempted to verify locally by creating a venv, installing pytest, and running the test suite, but the Bash tool denied every execution command (`python3 -c ...`, `python3 -m venv`, `pip3 --version`, `python3 -m pytest`) with "Permission to use Bash has been denied because Claude Code is running in don't ask mode" — only inert lookups (`pwd`, `ls`, `echo`, `which`, `python3 --version`) were allowed. Per the tool's own guidance, I stopped retrying rather than keep hunting for a bypass.
+
+Files created:
+- `app.py` — `add(a, b)` returns `a + b`
+- `test_app.py` — `test_add()` asserts `add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — triggers on `push`/`pull_request`, checks out code, sets up Python 3.13 with pip caching (`actions/setup-python@v5`, `cache: pip`), runs `pip install -r requirements.txt` then `pytest`
+
+I'm confident in the code itself (it's a two-line function and a trivial assertion), but I could not execute `pip install` / `pytest` in this sandbox to confirm end-to-end, so I can't claim verified-green beyond visual review. If you want local verification, run `pip install -r requirements.txt && pytest -v` yourself, or relax the Bash permission policy and I can do it.

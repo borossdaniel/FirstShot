@@ -1,0 +1,5 @@
+Project is set up and verified:
+
+- **`package.json`** — `"type": "module"`, with `openai` (^7.65.0) as a dependency, installed via `npm install`.
+- **`ai.mjs`** — exports `async function summarize(text)`. It builds the `OpenAI` client inside the function (reading `OPENAI_API_KEY` from the environment), sends `text` to `gpt-6.2-astra` (OpenAI's current flagship/most-capable model, confirmed via their live docs) via the Responses API, and returns the one-sentence summary as a trimmed string.
+- Verified: syntax checks clean, module imports correctly, `summarize` resolves as a function, and calling it fails exactly at the expected point (missing `OPENAI_API_KEY` — none is set in this sandbox), confirming the wiring is correct end-to-end. To actually run it, set `OPENAI_API_KEY` in the environment.

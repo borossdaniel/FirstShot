@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.4.1",
+  "task": "live-claude-model",
+  "taskName": "Newest Claude model",
+  "package": "@anthropic-ai/sdk",
+  "agent": "claude",
+  "model": "sonnet+oneshot",
+  "variant": "oneshot",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "uses claude-opus-5-5",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 41.5,
+  "costUsd": 0.2586672,
+  "turns": 12,
+  "installedVersion": "1.14.0",
+  "finishedAt": "2026-11-26T19:41:02.705Z"
+}

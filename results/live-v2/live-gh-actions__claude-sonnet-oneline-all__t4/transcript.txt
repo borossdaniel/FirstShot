@@ -1,0 +1,8 @@
+The YAML is well-formed and the structure is correct. Everything is done and verified:
+
+- **`package.json`** — has a `test` script using Node's built-in test runner (`node --test`), no external dependencies needed.
+- **`index.test.js`** — trivial sanity test.
+- **`package-lock.json`** — generated so `npm ci` works.
+- **`.github/workflows/ci.yml`** — triggers on every push and pull request, checks out code (`actions/checkout@v7`), sets up Node via `actions/setup-node@v7` with `node-version: lts/*` (always resolves to the current LTS — Node 26 as of now) and npm caching enabled, then runs `npm ci` and `npm test`.
+
+I verified locally that `npm ci` and `npm test` both succeed. Nothing was committed, per your instruction.

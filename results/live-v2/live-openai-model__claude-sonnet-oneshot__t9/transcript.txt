@@ -1,0 +1,6 @@
+Everything checks out.
+
+**Done.** In the project folder:
+- `package.json` — ES module project with `openai@7.65.0` (current version, confirmed via oneshot) as the sole dependency.
+- `ai.mjs` — exports `async function summarize(text)`, which creates the OpenAI client inside the function (reading `OPENAI_API_KEY` from env) and calls `client.responses.create()` with `gpt-6.2-sol` (OpenAI's current flagship model, confirmed via oneshot facts) to produce a one-sentence summary.
+- `npm install` ran cleanly, the module imports correctly, and `summarize()` was exercised end-to-end — it failed only on the missing `OPENAI_API_KEY` (not present in this sandbox), confirming the client wiring and env-var lookup work as intended. With a real key set in the environment, it will return the live summary string.

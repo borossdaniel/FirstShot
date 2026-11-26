@@ -1,0 +1,13 @@
+All files are created and dependencies are confirmed current, but I need to flag one thing before calling this done.
+
+**Files created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (verified current via oneshot check_package)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with Python 3.15 and pip caching, installs requirements, runs pytest (versions verified via oneshot current_facts)
+
+`oneshot check_project` confirms the dependency is on its current major version.
+
+**Verification blocked:** this session's Bash permission mode ("don't ask mode") is denying every pip/venv/pytest invocation (`pip3 --version`, `python3 -m venv`, `python3 -m pytest`, `pytest --version` all denied), while harmless commands like `echo` and `python3 --version` go through. I can't work around that without bypassing the permission system, which I shouldn't do. So I wrote the code and reviewed it carefully (it's simple and correct), but I could not actually execute `pytest` to confirm it passes in this environment.
+
+If you'd like me to verify execution, you'll need to grant Bash permission for pip/pytest commands (or run `pip install -r requirements.txt && pytest -q` yourself).

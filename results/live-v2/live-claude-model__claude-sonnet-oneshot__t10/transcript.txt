@@ -1,0 +1,6 @@
+Setup is complete and verified:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@1.14.0` (current version, confirmed via oneshot).
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates the Anthropic client inside the function, reads the key from `process.env.ANTHROPIC_API_KEY`, and calls `claude-opus-5-5` (Anthropic's current most-capable model) asking for a one-sentence summary.
+- Dependencies installed via `npm install`.
+- Verified the module loads and the function executes correctly through to the API call — it only fails with an authentication error since no `ANTHROPIC_API_KEY` is set in this environment, which confirms the integration is correctly wired (set that env var to run it for real).

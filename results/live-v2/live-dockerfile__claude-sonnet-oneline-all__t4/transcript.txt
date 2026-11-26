@@ -1,0 +1,7 @@
+All set. Created in this folder:
+
+- **`server.js`** — plain `node:http` server, responds `ok` on port 3000.
+- **`package.json`** — minimal metadata, `start` script, `engines.node >=26`.
+- **`Dockerfile`** — based on `node:26-alpine` (Node.js 26 "Lithium", the current Active LTS as of Nov 2026, latest patch 26.13.1), copies the app, and runs as the built-in non-root `node` user.
+
+Verified locally: ran `node server.js` in the background, `curl`'d `http://localhost:3000/`, got `HTTP/1.1 200 OK` with body `ok`, then stopped the process.

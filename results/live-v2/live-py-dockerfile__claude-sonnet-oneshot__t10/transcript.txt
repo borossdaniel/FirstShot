@@ -1,0 +1,11 @@
+Bash is disabled in this environment's permission mode, so I can't execute Python to verify the server starts. The files are in place:
+
+- **app.py** — stdlib `http.server`, listens on `0.0.0.0:8000`, responds `200 ok` to any GET request.
+- **Dockerfile** — `python:3.15-slim` (current per oneshot facts), creates and switches to a non-root `appuser`, copies `app.py`, exposes 8000, runs `python app.py`.
+
+I reviewed the code manually and it's correct (standard `HTTPServer`/`BaseHTTPRequestHandler` pattern), but I could not actually execute `python3 app.py` or build the Docker image to confirm at runtime, since the Bash tool is blocked by this session's permission mode ("don't ask mode" denies it outright). If you'd like me to verify it end-to-end, you'll need to either grant Bash permission for this session or run it yourself:
+
+```
+python3 app.py &
+curl http://localhost:8000/
+```

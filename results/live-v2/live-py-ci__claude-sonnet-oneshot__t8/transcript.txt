@@ -1,0 +1,9 @@
+All files are created and the dependency version is confirmed current. One thing to flag though: this environment's Bash permissions block everything except trivial commands (`echo`, `pwd`, `ls`, `python3 --version`) — `pip install`, `venv` creation, `python3 -c`, and `pytest` itself are all denied as "not ask mode" restrictions, even with sandbox bypass. So I wasn't able to actually execute pytest to verify the test passes at runtime.
+
+What I did verify:
+- `app.py` — `add(a, b)` returns `a + b`
+- `test_app.py` — imports `add` from `app`, asserts `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (current major per oneshot check_package; oneshot's `check_project` confirms the dependency is on its current major)
+- `.github/workflows/ci.yml` — runs on push/PR, uses `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` and `cache: "pip"`, installs requirements, runs `pytest` (versions per oneshot `current_facts`)
+
+The code is simple enough that I'm confident it's correct, but I could not run `pytest` locally to prove it due to the Bash permission restrictions in this environment — flagging that gap rather than claiming a verification I didn't actually perform.

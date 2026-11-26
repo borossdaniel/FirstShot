@@ -1,0 +1,11 @@
+I was able to create all four files, but I hit a hard permission wall when trying to verify them: this environment is running in "don't ask" mode, and specific commands — `pip`/`pip3` (any form), `python3 -m pip`, `python3 -m pytest`, and even `python3 -c "..."` — are being denied outright by the permission policy (not a sandbox issue; plain commands like `ls`, `echo`, `which`, `python3 --version` go through fine). There's no one available to approve an exception, and I won't try to work around a permission denial.
+
+What I did verify:
+- `app.py` — `add(a, b): return a + b`
+- `test_app.py` — imports `add` from `app`, asserts `add(2, 3) == 5` (correct, standard pytest convention)
+- `requirements.txt` — just `pytest`
+- `.github/workflows/ci.yml` — triggers on `push`/`pull_request`, uses `actions/checkout@v4` and `actions/setup-python@v5` with `python-version: "3.13"` and `cache: pip`, then `pip install -r requirements.txt` and `pytest`
+
+I confirmed pytest isn't already installed on this machine (searched site-packages, found nothing), so I truly needed `pip install` to run the test — and that's exactly the command category being blocked. I could not execute `pytest` locally to confirm it passes at runtime, though the code is straightforward enough that I'm confident it's correct by inspection.
+
+If you want me to actually run the install-and-test step, you'll need to either run it yourself (`pip install -r requirements.txt && pytest`) or adjust the permission settings to allow `pip`/`python -m pytest` in this session.

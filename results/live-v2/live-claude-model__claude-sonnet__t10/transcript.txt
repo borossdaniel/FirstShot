@@ -1,0 +1,8 @@
+`rm` is blocked under this permission mode (destructive ops require confirmation), so I'll leave `test.mjs` in place rather than force it — it's harmless and the user can delete it or keep it as a usage example.
+
+Setup is complete in this folder:
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` (0.70.1) installed via npm
+- **`ai.mjs`** — exports `async function summarize(text)`; creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-4-8` (newest/most capable model), and returns the one-sentence summary as a string
+- **`test.mjs`** — small verification script (left in place, not requested but useful)
+
+Verified by running `node test.mjs`: the code correctly loads the SDK, builds the client, and sends the request — it fails only at the auth step with "Could not resolve authentication method," since no `ANTHROPIC_API_KEY` is set in this sandbox. Once you export your real key (`export ANTHROPIC_API_KEY=sk-ant-...`) and run `node test.mjs`, it will return the actual summary.

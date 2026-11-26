@@ -1,0 +1,6 @@
+Both `npm ci` and `npm test` succeed. Files created (nothing committed, per request):
+
+- `package.json` — trivial project with `test` script
+- `test.js` — sanity-check test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code, sets up Node LTS with npm caching, runs `npm ci` then `npm test`

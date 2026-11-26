@@ -1,0 +1,6 @@
+The server works correctly (`200 ok` response confirmed), and the Dockerfile builds on it. Since the task explicitly says the image doesn't need to be built, I'll leave it there.
+
+Summary of files created in the folder:
+- **server.js** — plain `node:http` server returning "ok" on port 3000 (tested live, returns `200 ok`)
+- **package.json** — minimal manifest with a `start` script
+- **Dockerfile** — `node:26-alpine` (current Active LTS, confirmed via nodejs.org and Docker Hub), runs as the built-in non-root `node` user, exposes 3000

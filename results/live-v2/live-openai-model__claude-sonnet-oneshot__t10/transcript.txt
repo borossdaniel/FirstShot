@@ -1,0 +1,8 @@
+Project is set up and verified structurally. Summary:
+
+- **`package.json`**: ES module project with `openai@7.65.0` (current major, per `check_package`).
+- **`ai.mjs`**: exports `async function summarize(text)`, creates the `OpenAI` client inside the function reading `OPENAI_API_KEY` from env, calls `client.responses.create()` with model `gpt-6.2-sol` (newest/most capable per `current_facts`), and returns `response.output_text.trim()` as a one-sentence summary.
+- Ran `npm install` — 1 package added, 0 vulnerabilities. Confirmed via `node` that `ai.mjs` imports cleanly and `summarize` is exported as a function.
+- `check_project` confirms the dependency is on its current major version.
+
+Note: there's no `OPENAI_API_KEY` available in this sandbox, so I couldn't exercise a real end-to-end API call — only load/import correctness was verified. If you want a live smoke test, run `OPENAI_API_KEY=sk-... node -e "import('./ai.mjs').then(m=>m.summarize('...').then(console.log))"`.

@@ -1,0 +1,6 @@
+Project is set up and verified as far as possible without a live key:
+
+- **`package.json`** — ES module project, `@anthropic-ai/sdk@^1.14.0` (latest, confirmed via web search/npm).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from the environment, and calls model **`claude-fable-5-2`** (Claude Fable 5.2 — currently Anthropic's newest, most capable model per the live docs, above Opus 5.5 for demanding reasoning/long-horizon work).
+- Dependencies installed via `npm install`, 0 vulnerabilities.
+- Smoke-tested: module imports cleanly, `summarize` is a function, and invoking it fails only on the SDK's auth check (no `ANTHROPIC_API_KEY` is set in this environment) — confirming the request wiring is correct up to the actual API call. I could not do a full live round-trip since no key is available here; once you export `ANTHROPIC_API_KEY`, it should work as-is.

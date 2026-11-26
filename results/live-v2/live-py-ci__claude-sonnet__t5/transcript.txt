@@ -1,0 +1,7 @@
+Confirmed: install/execute commands (`pip install`, `pytest`, `python3 -c`) are blocked in this sandbox's "don't ask" permission mode — only inspection commands (`ls`, `which`, `--version`, `echo`) are allowed through. I shouldn't try to route around that via another tool.
+
+**What I did:** created `app.py`, `test_app.py`, `requirements.txt`, and `.github/workflows/ci.yml` — all per spec, and confirmed `python3` is present but `pytest` is not yet installed locally.
+
+**What I couldn't do:** actually run `pip install -r requirements.txt` and `pytest` to verify locally, since this sandbox's permission settings deny package installs and code execution via Bash, even though you asked me to finish autonomously. I don't want to try to bypass that restriction silently.
+
+The CI workflow itself will install and run pytest correctly on GitHub's runners (that's a separate, unrestricted environment) — I'm just not able to pre-verify it in this sandboxed session. If you want local verification, you'd need to either grant Bash permission for `pip`/`pytest` commands in this session, or I can hand this off to you to run `pip install -r requirements.txt && pytest -v` yourself.

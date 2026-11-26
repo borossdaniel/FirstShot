@@ -1,0 +1,9 @@
+All files are created and dependency versions check out as current. I need to flag one thing though: I could not actually run `pip install` / `pytest` to verify execution — this environment's permission settings deny package-manager and arbitrary code-execution commands (`pip`, `python3 -m`, `python3 -c`, `uv`) even though plain commands like `ls`/`python3 --version` work. I tried several variants rather than guessing a workaround, since you asked me not to bypass denials.
+
+What's in place:
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (current major, per the oneshot package check)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` and pip caching, installs requirements, runs pytest (versions confirmed current via oneshot's facts tool)
+
+The code itself is trivial and correct by inspection, and the workflow will exercise it for real on the next push. If you want local verification done now, you'd need to either grant Bash permission for `pip`/`python -m` commands or run `pip install -r requirements.txt && pytest` yourself.

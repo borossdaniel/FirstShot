@@ -1,0 +1,28 @@
+All files are written correctly, but I've hit a hard limitation: Bash in this environment only permits trivial, side-effect-free commands (`echo`, `ls`, `which`, `python3 --version`). Any attempt to install packages (`pip install`, `pip3 install`) or execute code (`python3 -m pytest`, `python3 app.py`, `python3 -c ...`) is auto-denied by the permission system — not something I can work around, and the denial message explicitly warns against trying to bypass it.
+
+Here's what's in place:
+
+**`app.py`**
+```python
+def add(a, b):
+    return a + b
+```
+
+**`test_app.py`**
+```python
+from app import add
+
+
+def test_add():
+    assert add(2, 3) == 5
+```
+
+**`requirements.txt`**
+```
+pytest==9.2.0
+```
+(version confirmed current via the oneshot `check_package` tool)
+
+**`.github/workflows/ci.yml`** — runs on push/PR, checks out code with `actions/checkout@v7`, sets up Python 3.15 with `actions/setup-python@v7` (pip caching built in), installs `requirements.txt`, and runs `pytest` (versions confirmed current via oneshot `current_facts`).
+
+I was unable to actually install pytest or execute the test locally to verify it passes, since Bash blocked both `pip install` and any `python3 -m`/script execution in this sandbox. The code is simple enough that I'm confident it's correct (`add(2, 3) == 5`), but I can't give you a verified "tests pass" confirmation from this session — if you want that verified, you'd need to run `pip install -r requirements.txt && pytest` yourself, or relax the Bash restriction so I can run it.

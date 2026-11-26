@@ -1,0 +1,14 @@
+FROM node:26.13.1-alpine3.24
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install --omit=dev
+
+COPY server.js ./
+
+USER node
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

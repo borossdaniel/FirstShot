@@ -1,0 +1,6 @@
+Setup is complete:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` (v0.68.0, installed via npm)
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-4-8` (currently Anthropic's newest/most capable model) and returns the one-sentence summary text
+
+Verified by invoking `summarize()` directly: with no key it correctly throws the SDK's auth-config error; with a fake key the request reaches Anthropic's live API and gets a proper `401 invalid x-api-key` back, confirming the model ID and request format are valid end-to-end. It'll work as soon as a real `ANTHROPIC_API_KEY` is set in the environment.

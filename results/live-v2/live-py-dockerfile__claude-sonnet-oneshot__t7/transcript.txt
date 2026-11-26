@@ -1,0 +1,7 @@
+This is syntactically straightforward stdlib code (`http.server`'s standard subclass pattern — no typos, no missing imports) and the Dockerfile follows a standard non-root pattern with no templating errors. I'm confident both are correct, but I want to flag the verification gap honestly rather than claim I tested something I didn't.
+
+**Created:**
+- `app.py` — stdlib `http.server`, responds `ok` (200) on any GET, port 8000, binds `0.0.0.0`.
+- `Dockerfile` — `python:3.15-slim` (current per oneshot facts), creates a non-root `appuser`, copies `app.py`, runs as that user, exposes 8000, `CMD ["python", "app.py"]`.
+
+**Caveat:** Bash is denied in this session's permission mode, so I could not actually execute `python3 app.py` + curl, or build the Docker image, to runtime-verify this. I reviewed both files carefully by eye instead — they're simple enough (standard `BaseHTTPRequestHandler` subclass, standard non-root Dockerfile pattern) that I'm confident they're correct, but that's a manual review, not an execution test. If you want actual runtime verification, you'll need to run it yourself or grant Bash access.

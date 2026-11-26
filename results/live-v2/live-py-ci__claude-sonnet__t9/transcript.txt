@@ -1,0 +1,11 @@
+All four files are in place, but I hit a hard limit verifying them locally.
+
+**Created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Python 3.13 with pip caching, installs requirements, runs pytest
+
+**Could not verify locally:** this session's Bash permissions are in "don't ask" mode with a deny rule that blocks all Python code execution — `python3 --version` and shell basics (`ls`, `pwd`, `echo`) work, but `python3 -c ...`, `python3 app.py`, `pip install ...`, and `python3 -m pytest` are all denied outright, not prompted. Per the tool's own guidance, I didn't try to work around that (e.g. disabling the sandbox), since that would defeat the intent of the restriction rather than respect it.
+
+The code itself is simple enough that I'm confident it's correct (`add` is a one-line return, the test is a straightforward equality assertion, and the workflow YAML follows the standard `actions/checkout` + `actions/setup-python` + pip-cache pattern), but I want to flag explicitly: I have not executed `pytest` in this environment, so "verified it runs" is not something I can claim. If you want it actually run, either grant Bash execution permission for this session, or run `pip install -r requirements.txt && pytest` yourself — the CI workflow will also run it automatically on the first push/PR.

@@ -1,0 +1,8 @@
+Done. Verified the server works (returns HTTP 200 "ok" on port 3000) and stopped the test process.
+
+**Files created:**
+- `server.js` — plain `node:http` server, responds "ok" on port 3000
+- `package.json` — minimal manifest with `engines.node >= 26` and a `start` script
+- `Dockerfile` — `node:26.13.1-alpine3.24` (current Node.js Active LTS as of Nov 2026, verified via web search), installs deps, runs as the built-in non-root `node` user, exposes 3000
+
+Docker image build itself wasn't run per the task instructions, but the server logic was verified by actually starting it and curling it.

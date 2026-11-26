@@ -1,0 +1,24 @@
+I've created the two files, but verification is blocked: this environment's Bash permission policy is in "don't ask" mode and silently denies any command that actually *executes* code — `python3 app.py`, `python3 -m py_compile`, `python3 -c "..."`, and even `docker --version` were all denied, while inert commands (`ls`, `echo`, `python3 --version`) went through. Per the tool's explicit guidance, I'm not going to keep hunting for workarounds around an intentional denial — I'll stop and report instead of guessing why it's blocked.
+
+What's in place in `/private<workspace>/`:
+
+**app.py** — stdlib-only `http.server`/`ThreadingHTTPServer`, binds `0.0.0.0:8000`, returns `200 ok` (plain text) on any GET, suppresses access logging.
+
+**Dockerfile**:
+```
+FROM python:3.13-slim
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+WORKDIR /app
+COPY app.py .
+USER appuser
+EXPOSE 8000
+CMD ["python3", "app.py"]
+```
+3.13-slim matches the local `python3 --version` (3.13.1), runs as non-root (`appuser`), minimal layers, no extra deps needed since it's pure stdlib.
+
+I inspected the code manually (no syntax issues, correct stdlib API usage) but could not actually run it or `docker build`/`docker run` it to confirm end-to-end, since the permission layer here denies all code-execution commands outright. If you want it verified, run locally:
+```
+python3 app.py &
+curl localhost:8000   # expect: ok
+```
+or build/run the Dockerfile with Docker.
