@@ -205,8 +205,16 @@ export function formatProjectReport(rep) {
   if (!rep.outdated.length && !facts.length) return `All ${rep.checked.length} dependencies are on their current major version.`;
   const lines = [];
   if (facts.length) {
-    lines.push(`${facts.length} outdated value${facts.length === 1 ? '' : 's'} written from memory:`);
-    for (const f of facts) lines.push(`  - ${f.file}: ${f.found} → ${f.fix}`);
+    const errors = facts.filter((f) => f.level === 'error');
+    const warnings = facts.filter((f) => f.level !== 'error');
+    if (errors.length) {
+      lines.push(`${errors.length} problem${errors.length === 1 ? '' : 's'} that will break (or already break) your app:`);
+      for (const f of errors) lines.push(`  ✗ ${f.file}${f.line ? `:${f.line}` : ''}: ${f.message || `${f.found} → ${f.fix}`}`);
+    }
+    if (warnings.length) {
+      lines.push(`${warnings.length} outdated value${warnings.length === 1 ? '' : 's'}:`);
+      for (const f of warnings) lines.push(`  ! ${f.file}${f.line ? `:${f.line}` : ''}: ${f.message || `${f.found} → ${f.fix}`}`);
+    }
   }
   if (!rep.outdated.length) return lines.join('\n');
   lines.push(`${rep.outdated.length} dependenc${rep.outdated.length === 1 ? 'y is' : 'ies are'} on an outdated major version:`);

@@ -1,0 +1,30 @@
+name: OneShot check
+description: Catch retired AI models, end-of-life runtimes and outdated GitHub Actions in your code before they break your app.
+author: OneShot
+branding:
+  icon: target
+  color: orange
+inputs:
+  path:
+    description: Folder to check
+    default: "."
+  strict:
+    description: Also fail on warnings (outdated but not breaking), not only on errors
+    default: "false"
+  version:
+    description: Version of oneshot-agent to run
+    default: "0"
+runs:
+  using: composite
+  steps:
+    - name: OneShot check
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        ONESHOT_PATH: ${{ inputs.path }}
+        ONESHOT_STRICT: ${{ inputs.strict }}
+        ONESHOT_VERSION: ${{ inputs.version }}
+      run: |
+        FLAGS="--format=github --path=$ONESHOT_PATH"
+        if [ "$ONESHOT_STRICT" = "true" ]; then FLAGS="$FLAGS --strict"; fi
+        npx -y "oneshot-agent@$ONESHOT_VERSION" check $FLAGS

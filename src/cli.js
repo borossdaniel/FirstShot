@@ -92,10 +92,23 @@ async function cmdCheck(args) {
   const json = args.includes('--json');
   const names = args.filter((a) => !a.startsWith('--'));
   if (!names.length) {
-    const rep = await checkProject(process.cwd());
+    const dir = args.find((a) => a.startsWith('--path='))?.slice(7) || process.cwd();
+    const rep = await checkProject(dir);
+    const facts = rep.facts || [];
+    const errors = facts.filter((f) => f.level === 'error').length;
+    const warnings = facts.length - errors + rep.outdated.length;
     if (json) console.log(JSON.stringify(rep, null, 2));
-    else console.log(formatProjectReport(rep));
-    return rep.outdated.length || (rep.facts || []).length ? 1 : 0;
+    else if (args.includes('--format=github')) {
+      for (const f of facts) console.log(`::${f.level === 'error' ? 'error' : 'warning'} file=${f.file}${f.line ? `,line=${f.line}` : ''},title=OneShot::${(f.message || `${f.found} → ${f.fix}`).replace(/\n/g, ' ')}`);
+      for (const o of rep.outdated) console.log(`::warning file=${o.system === 'pypi' ? 'requirements.txt' : 'package.json'},title=OneShot::${o.name} "${o.range}" is ${o.behind} major${o.behind > 1 ? 's' : ''} behind (current ${o.latest})`);
+      console.log(formatProjectReport(rep));
+      if (process.env.GITHUB_STEP_SUMMARY) {
+        const { appendFileSync } = await import('node:fs');
+        appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## OneShot\n\n\`\`\`\n${formatProjectReport(rep)}\n\`\`\`\n`);
+      }
+    } else console.log(formatProjectReport(rep));
+    // Errors (retired or soon-retired models, end-of-life runtimes) fail the run; --strict also fails on warnings.
+    return errors || (args.includes('--strict') && warnings) ? 1 : 0;
   }
   const system = args.includes('--pypi') || args.includes('--python') ? 'pypi' : 'npm';
   const out = await Promise.all(names.map((n) => adviseOne(...parseTarget(n, system).reverse())));
