@@ -1,13 +1,42 @@
 {
   "checkedAt": "2026-11-26",
-  "source": "Anthropic model list",
+  "source": "Model lists in the official Anthropic and OpenAI SDKs (latest on npm)",
   "providers": {
     "anthropic": {
-      "newest": ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5", "claude-fable-5-2"],
+      "newest": [
+        "claude-opus-5-5",
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5",
+        "claude-fable-5-2"
+      ],
       "alsoCurrent": [],
       "notes": "Most capable: claude-opus-5-5 (or claude-fable-5-2). Balanced: claude-sonnet-5-5. Fast and cheap: claude-haiku-5-5.",
-      "outdatedExamples": ["claude-opus-4-8", "claude-sonnet-4-5", "claude-3-5-sonnet-20241022"],
+      "outdatedExamples": [
+        "claude-opus-4-8",
+        "claude-sonnet-4-5",
+        "claude-3-5-sonnet-20241022"
+      ],
       "outdatedPattern": "^claude-(?:instant|2|3|(?:opus|sonnet|haiku)-4|(?:opus|sonnet|haiku|fable)-5(?:-[0-4])?$)"
+    },
+    "openai": {
+      "newest": [
+        "gpt-6.2-sol",
+        "gpt-6.2-astra"
+      ],
+      "alsoCurrent": [
+        "gpt-6.2-astra-healthcare",
+        "gpt-6.2-astra-law",
+        "gpt-6.2-sol-healthcare"
+      ],
+      "notes": "Newest generation is gpt-6.2 (gpt-6.2-sol, gpt-6.2-astra; -healthcare and -law variants for those domains).",
+      "outdatedExamples": [
+        "gpt-4o",
+        "gpt-4.1",
+        "gpt-5",
+        "gpt-5.5",
+        "gpt-6.1-sol"
+      ],
+      "outdatedPattern": "^(?:gpt-(?:3\\.5|4o?|4\\.1|5(?:\\.\\d)?)(?:[.-]|$)|gpt-6(?:\\.1)?-|o[134](?:-|$))"
     }
   }
 }

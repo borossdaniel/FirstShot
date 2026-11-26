@@ -3,10 +3,24 @@
   "sources": {
     "claudeModels": "Anthropic model list (Claude 5 family)",
     "githubActions": "GitHub releases/latest for each action",
-    "nodeLts": "nodejs.org/dist/index.json"
+    "nodeLts": "nodejs.org/dist/index.json",
+    "openaiModels": "OpenAI SDK 7.65 model list (resources/shared.d.ts)",
+    "python": "endoflife.date"
   },
-  "claudeModels": ["claude-fable-5-2", "claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"],
-  "githubActions": { "actions/checkout": 7, "actions/setup-node": 7, "actions/cache": 6 },
+  "claudeModels": [
+    "claude-fable-5-2",
+    "claude-opus-5-5",
+    "claude-sonnet-5-5",
+    "claude-haiku-5-5"
+  ],
+  "githubActions": {
+    "actions/checkout": 7,
+    "actions/setup-node": 7,
+    "actions/cache": 6,
+    "actions/setup-python": 7
+  },
   "nodeLtsMajor": 26,
-  "nodeLtsCodename": "lithium"
+  "nodeLtsCodename": "lithium",
+  "openaiNewestPrefix": "gpt-6.2",
+  "pythonLatest": "3.15"
 }

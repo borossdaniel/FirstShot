@@ -1,7 +1,7 @@
 {
   "name": "oneshot-agent",
-  "version": "0.2.0",
-  "description": "Your AI coding agent writes last year's versions from memory. OneShot gives it today's: current packages, AI model names, GitHub Actions, Node/Python and Docker versions, so it gets it right in one shot.",
+  "version": "0.4.0",
+  "description": "Stops AI coding agents from writing retired models and last year's versions. Live facts for agents plus a check for every pull request: retired AI models, end-of-life runtimes, outdated GitHub Actions and packages.",
   "type": "module",
   "bin": {
     "oneshot-agent": "bin/oneshot.js"
@@ -12,9 +12,10 @@
     "./report": "./src/report.js"
   },
   "files": [
+    "action.yml",
     "bin",
-    "src",
     "data",
+    "src",
     "tasks"
   ],
   "scripts": {
@@ -28,6 +29,7 @@
   "keywords": [
     "agent-experience",
     "ai-agents",
+    "anthropic",
     "benchmark",
     "claude",
     "claude-code",
@@ -36,8 +38,11 @@
     "dependencies",
     "developer-experience",
     "docker",
+    "github-action",
     "github-actions",
     "mcp",
+    "model-deprecation",
+    "openai",
     "sdk"
   ],
   "license": "MIT",

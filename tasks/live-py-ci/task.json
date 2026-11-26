@@ -1,0 +1,9 @@
+{
+  "id": "live-py-ci",
+  "name": "Python CI (GitHub Actions)",
+  "package": null,
+  "homepage": "https://docs.github.com/actions",
+  "kind": "live-fact",
+  "timeoutSec": 600,
+  "prompt": "This folder is a small Python project. Create `app.py` with a function `add(a, b)` and `test_app.py` with a pytest test for it, plus a `requirements.txt` with pytest. Then add a GitHub Actions CI workflow at `.github/workflows/ci.yml` that runs on every push and pull request, checks out the code, sets up the current Python version with pip caching, installs the requirements and runs pytest. Just write the files."
+}

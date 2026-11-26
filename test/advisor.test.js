@@ -8,6 +8,7 @@ import { startMockServer } from '../src/check-helpers.js';
 import { declaredMajor, checkProject, adviseOne } from '../src/advisor.js';
 import { init, stopHook } from '../src/install.js';
 
+process.env.ONESHOT_FACTS_URL = 'off'; // tests use only bundled data and fake servers
 // A fake npm registry so tests never touch the network.
 const LATEST = { commander: '15.1.0', zod: '4.6.7', vitest: '5.1.2', '@scope/lib': '2.0.0', tiny: '0.4.1' };
 let registry;
@@ -199,4 +200,57 @@ test('MCP server lists the current_facts tool', async () => {
   const { readFileSync } = await import('node:fs');
   const src = readFileSync(new URL('../src/mcp.js', import.meta.url), 'utf8');
   assert.match(src, /name: 'current_facts'/);
+});
+
+test('retirement guard: retired and soon-retired models are errors, with file and line', async () => {
+  process.env.ONESHOT_TODAY = '2026-11-26';
+  try {
+    const { modelStatus, scanProjectFacts } = await import('../src/livefacts.js');
+    assert.equal(modelStatus('claude-sonnet-4-5').state, 'retiring');
+    assert.equal(modelStatus('claude-sonnet-4-5').days, 4);
+    assert.equal(modelStatus('claude-sonnet-4-5').level, 'error');
+    assert.equal(modelStatus('claude-3-5-sonnet-20241022').state, 'retired');
+    assert.equal(modelStatus('gpt-5.1').level, 'warning', 'retiring in more than 60 days is a warning');
+    assert.equal(modelStatus('claude-opus-5-5'), null);
+
+    const dir = mkdtempSync(join(tmpdir(), 'oneshot-ret-'));
+    writeFileSync(join(dir, 'chat.ts'), 'const a = 1;\nconst m = "claude-sonnet-4-5";\n');
+    writeFileSync(join(dir, '.env.example'), 'OPENAI_MODEL=gpt-5\nOTHER=claude-opus-5-5\n');
+    writeFileSync(join(dir, 'notes.py'), 'model = "o1-mini"  # old reasoning model\n');
+    const found = (await scanProjectFacts(dir)).map((p) => `${p.file}:${p.line}:${p.found}:${p.level}`).sort();
+    assert.deepEqual(found, ['.env.example:1:gpt-5:error', 'chat.ts:2:claude-sonnet-4-5:error', 'notes.py:1:o1-mini:error']);
+  } finally {
+    delete process.env.ONESHOT_TODAY;
+  }
+});
+
+test('check --format=github prints annotations and fails only on errors (unless --strict)', async () => {
+  const bin = new URL('../bin/oneshot.js', import.meta.url).pathname;
+  const { spawnSync } = await import('node:child_process');
+  const env = { ...process.env, ONESHOT_TODAY: '2026-11-26', ONESHOT_REGISTRY: registry.url, ONESHOT_DEPSDEV: registry.url };
+  const bad = mkdtempSync(join(tmpdir(), 'oneshot-gh-'));
+  writeFileSync(join(bad, 'ai.mjs'), 'export const model = "claude-3-5-sonnet-20241022";\n');
+  const r = spawnSync(process.execPath, [bin, 'check', '--format=github', `--path=${bad}`], { encoding: 'utf8', env });
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /::error file=ai\.mjs,line=1,title=OneShot::claude-3-5-sonnet-20241022 was retired/);
+  const warn = mkdtempSync(join(tmpdir(), 'oneshot-gh-'));
+  writeFileSync(join(warn, 'ai.mjs'), 'export const model = "claude-sonnet-4-6";\n');
+  assert.equal(spawnSync(process.execPath, [bin, 'check', `--path=${warn}`], { encoding: 'utf8', env }).status, 0, 'a merely older model only warns');
+  assert.equal(spawnSync(process.execPath, [bin, 'check', '--strict', `--path=${warn}`], { encoding: 'utf8', env }).status, 1, '--strict fails on warnings');
+});
+
+test('team rules (.oneshot.json): approved models, blocked models and packages, minimum versions', async () => {
+  const { scanProjectFacts, currentFacts, formatFacts } = await import('../src/livefacts.js');
+  const { packageProblems, loadRules } = await import('../src/rules.js');
+  const dir = mkdtempSync(join(tmpdir(), 'oneshot-rules-'));
+  writeFileSync(join(dir, '.oneshot.json'), JSON.stringify({ models: { allowed: ['claude-sonnet-5-5', 'gpt-6.2-*'], blocked: ['gpt-4o*'] }, packages: { blocked: { moment: 'use date-fns' }, minMajor: { react: 19 } }, notes: ['Use @acme/ui'] }));
+  writeFileSync(join(dir, 'ai.mjs'), 'a = "gpt-4o-mini"; b = "gpt-6.2-sol"; c = "claude-opus-5-5"; d = "claude-sonnet-5-5";\n');
+  const found = (await scanProjectFacts(dir)).filter((p) => p.kind === 'team-rule').map((p) => p.found).sort();
+  assert.deepEqual(found, ['claude-opus-5-5', 'gpt-4o-mini'], 'the rules file itself is not scanned; approved models pass');
+  const rules = await loadRules(dir);
+  const pk = packageProblems(rules, { moment: '^2.30.0', react: '^18.3.0', zod: '^4.0.0' }, declaredMajor).map((p) => p.found).sort();
+  assert.deepEqual(pk, ['moment', 'react@^18.3.0']);
+  const text = formatFacts(await currentFacts('models', dir));
+  assert.match(text, /Only use these AI models: claude-sonnet-5-5, gpt-6\.2-\*/);
+  assert.match(text, /Use @acme\/ui/);
 });

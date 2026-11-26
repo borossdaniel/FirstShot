@@ -1,0 +1,12 @@
+{
+  "name": "oneshot",
+  "description": "OneShot: live facts so coding agents stop writing retired models and last year's versions",
+  "owner": { "name": "OneShot" },
+  "plugins": [
+    {
+      "name": "oneshot",
+      "source": "./plugin",
+      "description": "Gives Claude today's AI model names, GitHub Actions versions, Node/Python and Docker versions, and checks the project for retired models before it says done."
+    }
+  ]
+}

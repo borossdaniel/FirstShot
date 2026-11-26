@@ -12,6 +12,68 @@ Agents write model names, GitHub Actions versions, Docker images and runtime ver
 
 Without help, agents wrote `claude-opus-4-8`, `actions/checkout@v4` and `node:24`. Told to "use the newest", they searched the web: right most of the time, but 64% slower and 72% more expensive. With OneShot they asked once and were right every time. All runs and transcripts are in `results/live-v1/`.
 
+## Catch retired models before they break your app
+
+AI providers retire models on a schedule. After the date, every request to that model fails (the Claude API returns `404 not_found_error`). Agents keep writing those names into code. OneShot reads the official schedules from Anthropic and OpenAI and checks your code, `.env` files and config:
+
+```
+$ npx oneshot-agent check
+3 problems to fix (these break your app or your team's rules):
+  ✗ src/chat.ts:2: claude-sonnet-4-5 retires on 2026-11-30 (in 4 days). After that, requests fail. Use claude-sonnet-5-5.
+  ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol.
+  ✗ Dockerfile: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
+1 outdated value:
+  ! .github/workflows/ci.yml: actions/checkout@v4 is outdated; current is v7.
+```
+
+### On every pull request (GitHub Action)
+
+```yaml
+# .github/workflows/oneshot.yml
+name: OneShot
+on:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1"   # weekly, so a retirement date never surprises you
+jobs:
+  oneshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: borossdaniel/OneShot@v1
+```
+
+Problems show up as annotations on the exact lines in the pull request. It fails on things that break (retired or soon-retired models, end-of-life runtimes) and only warns about things that are merely outdated. Add `with: { strict: "true" }` to fail on those too.
+
+## Install
+
+**Claude Code plugin** (tools + the "check before done" hook + instructions, one install):
+```
+/plugin marketplace add borossdaniel/OneShot
+/plugin install oneshot@oneshot
+```
+
+**Cursor:** [Add OneShot to Cursor](https://cursor.com/en/install-mcp?name=oneshot&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm9uZXNob3QtYWdlbnRAMCIsIm1jcCJdfQ==) (one click), or add to your MCP settings:
+```json
+{ "mcpServers": { "oneshot": { "command": "npx", "args": ["-y", "oneshot-agent@0", "mcp"] } } }
+```
+
+**Any agent with MCP:** `npx -y oneshot-agent mcp` · **CLI only:** `npx oneshot-agent facts` / `npx oneshot-agent check`
+
+## Team rules
+
+Put a `.oneshot.json` in your repo (or point `ONESHOT_RULES_URL` at one shared file for the whole company). Every agent gets your rules with its facts, and `check` / the GitHub Action enforce them:
+
+```json
+{
+  "models":   { "allowed": ["claude-sonnet-5-5", "gpt-6.2-*"], "blocked": ["gpt-4o*"] },
+  "packages": { "blocked": { "moment": "use date-fns" }, "minMajor": { "react": 19 } },
+  "notes":    ["Use @acme/ui for buttons and forms"]
+}
+```
+
+`npx oneshot-agent init --rules` creates an example.
+
 ## Use it in your project
 
 ```bash
@@ -24,7 +86,7 @@ Not on npm yet? Run it from GitHub: `npx github:borossdaniel/OneShot facts`
 |---|---|
 | `oneshot-agent facts` | Today's newest AI model names, GitHub Actions versions, Node.js/Python LTS and matching Docker images |
 | `oneshot-agent check <pkg>` | Current version of any npm or PyPI package, the install command, and known agent mistakes |
-| `oneshot-agent check` | Scans the project: outdated dependencies, old model names in code, old Actions in workflows, old base images in Dockerfiles. Exits 1, so it works in CI |
+| `oneshot-agent check` | Scans the project: retired or retiring AI models, end-of-life runtimes, old GitHub Actions, outdated dependencies. Fails (exit 1) on things that break; `--strict` also fails on warnings; `--format=github` for pull request annotations |
 | `oneshot-agent mcp` | MCP server with `current_facts`, `check_package` and `check_project`, for Claude Code, Cursor and others |
 | `oneshot-agent hook` | Claude Code Stop hook: if anything is outdated, the agent fixes it before it can say "done" |
 
