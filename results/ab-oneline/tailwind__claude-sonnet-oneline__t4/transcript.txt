@@ -1,0 +1,7 @@
+Everything is set up and verified:
+
+- Installed `tailwindcss@latest` and `@tailwindcss/cli@latest` (resolved to v4.3.5) via npm.
+- `src/input.css` imports Tailwind and defines `--color-brand: #0e7490` in a `@theme` block (Tailwind v4's config-free way to add custom colors), which auto-generates `bg-brand`/`text-brand` utilities.
+- `index.html` is a plain static page using `bg-brand`, `text-brand`, and other Tailwind utilities, linking to `dist/output.css`.
+- `npm run build:css` runs `tailwindcss -i src/input.css -o dist/output.css --minify`, scanning `index.html` automatically (Tailwind v4 has no config/content-list needed) and producing a minified `dist/output.css` containing only the classes actually used.
+- Verified the build ran successfully and confirmed `dist/output.css` contains `.bg-brand{background-color:var(--color-brand)}` and `.text-brand{color:var(--color-brand)}` resolving to `#0e7490`.

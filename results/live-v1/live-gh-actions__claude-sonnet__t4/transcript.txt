@@ -1,0 +1,8 @@
+Done. Created and verified:
+
+- `package.json` — with a `test` script (`node --test`, no extra dependencies)
+- `test.js` — trivial sanity test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code, sets up Node LTS with npm caching, then runs `npm ci` and `npm test`
+
+Verified locally: `npm ci && npm test` passes. Nothing was committed, per your instructions (no git repo here anyway).

@@ -1,0 +1,6 @@
+Project set up and verified:
+
+- `package.json` — ES module project with `@anthropic-ai/sdk` (v0.68.0, installed via npm) as the only dependency.
+- `ai.mjs` — exports `async function summarize(text)`. It creates the `Anthropic` client inside the function, reads `ANTHROPIC_API_KEY` from the environment, calls `claude-opus-4-8` (Anthropic's newest/most capable model), and returns the trimmed one-sentence summary text.
+
+Verification performed: syntax check passed, the module imports cleanly, and calling `summarize()` correctly reaches the SDK's auth layer (it raised the expected "Could not resolve authentication method" error since no `ANTHROPIC_API_KEY` is set in this environment). I don't have access to a real API key here, so I couldn't exercise an actual live completion — set `ANTHROPIC_API_KEY` in your environment and it should work end-to-end as-is.

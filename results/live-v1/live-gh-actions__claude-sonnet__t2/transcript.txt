@@ -1,0 +1,9 @@
+Verified: `npm ci` and `npm test` both succeed.
+
+Created:
+- `package.json` — `test` script runs Node's built-in test runner (`node --test`), no external deps.
+- `package-lock.json` — generated so `npm ci` works.
+- `test/basic.test.js` — trivial sanity test.
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code, sets up Node LTS with npm caching, runs `npm ci` then `npm test`.
+
+Nothing was committed, as requested.

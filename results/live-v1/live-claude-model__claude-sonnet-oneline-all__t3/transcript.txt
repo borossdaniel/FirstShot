@@ -1,0 +1,6 @@
+Done. The project is set up:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` as its only dependency (installed via npm, `node_modules`/`package-lock.json` present).
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates the `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from env) and calls `claude-opus-4-8` (currently the newest, most capable Claude model) to return a one-sentence summary.
+
+Verified it imports correctly and the function executes through to the live API call — it only failed on the expected "no API key" error since this environment has no `ANTHROPIC_API_KEY` set. Once you export that env var, `summarize(text)` will work as-is.

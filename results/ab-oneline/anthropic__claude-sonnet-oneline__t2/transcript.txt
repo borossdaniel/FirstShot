@@ -1,0 +1,7 @@
+Setup is complete:
+
+- **package.json**: ES module project with `@anthropic-ai/sdk@^1.14.0` (latest) installed via npm.
+- **solution.mjs**: exports `weatherAnswer(client, question)` — sends the question to `claude-sonnet-5-5` (max_tokens 1024) with a `get_weather` tool (`{ city: string }`), loops on `stop_reason === "tool_use"` by running the tool locally (`{ city, temp_c: 21 }`) and sending back a properly-formatted `tool_result`, and returns the concatenated text once Claude's `stop_reason` is no longer `tool_use`.
+- **test-mock.mjs**: a mock-client test (no API key needed/available in this sandbox) that verifies the request shape (model, max_tokens, tool schema) and the full tool-use round-trip — it passed.
+
+No `ANTHROPIC_API_KEY` is present in this environment, so I couldn't do a live end-to-end call; the mock test is the strongest verification possible here. If you want, run `node -e "import('./solution.mjs').then(...)"` with a real configured client to confirm against the live API.

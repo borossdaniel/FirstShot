@@ -1,0 +1,12 @@
+The `rm` command was blocked by permission settings, so `verify.mjs` remains in place rather than being deleted. That's harmless — it's a working test script, not clutter.
+
+Everything is set up and verified:
+
+- **package.json** — ES modules project (`"type": "module"`), with `stripe@^23.2.0` installed (latest, per CLAUDE.md).
+- **solution.mjs** — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`:
+  - Creates a `mode: 'subscription'` Checkout Session with `line_items: [{ price: priceId, quantity: 1 }]`.
+  - Pre-fills `customer_email`.
+  - `success_url` is `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}` — Stripe substitutes the real session ID into the URL, so the success page can read `session_id` from its query string and call `stripe.checkout.sessions.retrieve(...)` to look up the completed session.
+  - `cancel_url` is `${baseUrl}/pricing`.
+  - Returns `session.url` for redirecting the customer.
+- **verify.mjs** — a quick test using a mock Stripe client (no real API key needed) confirming the function calls `stripe.checkout.sessions.create` with the correct arguments and returns the session URL. Ran successfully: `All checks passed.`

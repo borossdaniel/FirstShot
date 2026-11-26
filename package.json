@@ -1,10 +1,10 @@
 {
-  "name": "firstshot",
-  "version": "0.1.0",
-  "description": "Can an AI coding agent get your library working on the first try? Run real agents on real quickstart tasks, check the result with real code, publish a score.",
+  "name": "oneshot-agent",
+  "version": "0.2.0",
+  "description": "Your AI coding agent writes last year's versions from memory. OneShot gives it today's: current packages, AI model names, GitHub Actions, Node/Python and Docker versions, so it gets it right in one shot.",
   "type": "module",
   "bin": {
-    "firstshot": "bin/firstshot.js"
+    "oneshot-agent": "bin/oneshot.js"
   },
   "exports": {
     ".": "./src/runner.js",
@@ -14,24 +14,36 @@
   "files": [
     "bin",
     "src",
+    "data",
     "tasks"
   ],
   "scripts": {
     "test": "node --test test/*.test.js",
-    "verify-tasks": "node bin/firstshot.js verify-tasks",
-    "demo": "node bin/firstshot.js run tasks --agent claude --model sonnet --trials 2 --out results/demo && node bin/firstshot.js report results --out site"
+    "verify-tasks": "node bin/oneshot.js verify-tasks",
+    "demo": "node bin/oneshot.js run tasks --agent claude --model sonnet --trials 2 --out results/demo && node bin/oneshot.js report results --out site"
   },
   "engines": {
     "node": ">=20"
   },
   "keywords": [
+    "agent-experience",
     "ai-agents",
+    "benchmark",
+    "claude",
     "claude-code",
     "codex",
+    "cursor",
+    "dependencies",
     "developer-experience",
-    "agent-experience",
-    "benchmark",
+    "docker",
+    "github-actions",
+    "mcp",
     "sdk"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borossdaniel/FirstShot.git"
+  },
+  "homepage": "https://oneshotagent.dev"
 }

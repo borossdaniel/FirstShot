@@ -1,0 +1,6 @@
+`rm` is blocked by the permission mode, so `test-mock.mjs` stays in the folder — it's the verification script I used, not a deliverable, and doesn't interfere with anything.
+
+Setup complete:
+- `package.json` — ES module project (`"type": "module"`) with `@anthropic-ai/sdk` installed via `npm install @anthropic-ai/sdk@latest` (currently resolves to `^1.14.0`)
+- `solution.mjs` — exports `weatherAnswer(client, question)`, which runs the `claude-sonnet-5-5` / `get_weather` tool-use loop: sends the question, executes `get_weather` locally whenever Claude requests it, feeds the `tool_result` back, and returns the final text once `stop_reason !== 'tool_use'`
+- No API key is available in this environment, so I verified the control flow with a mock client simulating the SDK's `messages.create` shape (tool-use round confirmed, final text returned correctly) rather than a live call — `test-mock.mjs` left in place as evidence.

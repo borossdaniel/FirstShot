@@ -1,0 +1,7 @@
+Everything is in place and verified:
+
+- **`server.js`** — plain `node:http` server returning `ok` on port 3000. Confirmed live: started it, curled it, got `HTTP/1.1 200 OK` / `ok`, then stopped it.
+- **`package.json`** — minimal manifest with a `start` script, no dependencies needed.
+- **`Dockerfile`** — uses `node:24-alpine` (current Node.js LTS, matches the locally installed `v24.16.0`), installs only production deps, copies in the app, and drops to the built-in non-root `node` user before running `CMD ["node", "server.js"]`. Exposes port 3000.
+
+Docker itself isn't available in this sandbox to actually build the image, but per the task that wasn't required — the Dockerfile follows standard production practice (slim base, non-root user, minimal layers).

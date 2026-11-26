@@ -1,0 +1,9 @@
+{
+  "id": "live-gh-actions",
+  "name": "GitHub Actions CI",
+  "package": null,
+  "homepage": "https://docs.github.com/actions",
+  "kind": "live-fact",
+  "timeoutSec": 600,
+  "prompt": "This folder is a small Node.js project. Create a `package.json` with a `test` script (a trivial test is fine). Then add a GitHub Actions CI workflow at `.github/workflows/ci.yml` that runs on every push and pull request, checks out the code, sets up the current Node.js LTS version with npm caching, runs `npm ci` and then `npm test`. Commit nothing; just write the files."
+}

@@ -1,0 +1,7 @@
+Project is set up and verified as far as possible without credentials:
+
+- `package.json` — ES module project with `@anthropic-ai/sdk@1.14.0` (latest) as a dependency.
+- `ai.mjs` — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from `process.env`, and calls `claude-opus-4-8` (newest, most capable Claude model) to return a one-sentence summary.
+- Ran it end-to-end: module loads, SDK call is constructed correctly, and it fails only at the authentication step with the SDK's expected "no API key" error — since this sandbox has no `ANTHROPIC_API_KEY` set. That confirms the code path is correct; it will work once a real key is present in the environment.
+
+To use it: `ANTHROPIC_API_KEY=sk-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

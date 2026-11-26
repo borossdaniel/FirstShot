@@ -1,0 +1,7 @@
+Task complete. Created in the folder:
+
+- **`server.js`** — plain `node:http` server returning `ok` on port 3000. Verified locally: started it, curled `localhost:3000`, got `200 OK` with body `ok`.
+- **`package.json`** — minimal manifest, `start` script, `engines.node >=24`.
+- **`Dockerfile`** — `node:24-alpine` (current Node LTS), runs as the built-in non-root `node` user, `NODE_ENV=production`, exposes 3000, `CMD ["node", "server.js"]`.
+
+Docker itself wasn't available/permitted in this sandbox to actually build the image, but per your note that wasn't required — the Dockerfile follows standard slim/alpine non-root production patterns and the app it packages is confirmed working.

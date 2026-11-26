@@ -1,0 +1,7 @@
+Everything is set up and verified: ES-module Node project with `commander@15.1.0` (latest) installed, `solution.mjs` exporting `buildProgram()` (no `process.argv` parsing inside), and `cli.mjs` calling `buildProgram().parse()`.
+
+Verified behavior:
+- `node cli.mjs --version` → `1.2.3`
+- `node cli.mjs greet World` → `Hello, World!`
+- `--shout` uppercases, `--times <n>` repeats the greeting (default 1)
+- `--times abc` and `--times 0` are rejected by Commander's own argument parser (`InvalidArgumentError`), exiting with code 1 and a proper `error: option '--times <n>' argument '...' is invalid` message

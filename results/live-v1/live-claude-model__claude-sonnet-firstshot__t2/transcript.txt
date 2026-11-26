@@ -1,0 +1,9 @@
+The project is set up and verified as far as possible without live credentials:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@^1.14.0` (current major, confirmed via firstshot) installed via npm.
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from `process.env`, and calls `claude-opus-5-5` (the current most-capable model, confirmed via firstshot facts) to return a one-sentence summary.
+
+Verification done:
+1. Module imports cleanly, `summarize` resolves as a function.
+2. Ran `summarize()` against the real SDK — it correctly reached the API call stage and failed only on missing `ANTHROPIC_API_KEY` ("Could not resolve authentication method"), confirming the client/request wiring is correct. This environment has no API key set, so I couldn't exercise a live response — set `ANTHROPIC_API_KEY` and rerun to get an actual summary.
+3. `firstshot check_project` confirms no outdated dependencies.

@@ -1,0 +1,7 @@
+Setup complete. In this folder:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk@1.14.0` (verified current via firstshot, not from memory)
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates the `Anthropic` client inside the function call (reading `ANTHROPIC_API_KEY` from env) and sends the text to `claude-opus-5-5` (confirmed as the newest/most capable model via firstshot's `current_facts`), returning the one-sentence summary text.
+- Dependencies installed with `npm install`; firstshot's `check_project` confirms everything is on its current major version.
+
+Verified: the module imports cleanly and `summarize` is a correctly-typed async function. I could not perform a live end-to-end API call because `ANTHROPIC_API_KEY` isn't set in this environment — once you export that variable, `summarize("some text")` will work as-is.

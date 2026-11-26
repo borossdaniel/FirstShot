@@ -1,0 +1,7 @@
+This confirms the full request pipeline works correctly — it reached Anthropic's API and got a proper `401 invalid x-api-key` response, meaning the request was well-formed (correct model name, correct message structure, correct auth header placement). With a real `ANTHROPIC_API_KEY` set, it will return a summary string.
+
+Setup is complete:
+- `package.json` — ES module project with `@anthropic-ai/sdk` (v1.14.0) installed
+- `ai.mjs` — exports `async function summarize(text)`, creates the client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-4-8` (Anthropic's current flagship model), returns the one-sentence summary as a trimmed string
+
+To use it, run with the real key set: `ANTHROPIC_API_KEY=sk-ant-... node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

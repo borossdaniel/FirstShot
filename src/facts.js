@@ -3,7 +3,7 @@
 // From those we estimate how likely an AI agent is to install an outdated version:
 // models learn from data that is months to years old, so a young major is a trap.
 
-const DEPS_DEV = () => (process.env.FIRSTSHOT_DEPSDEV || 'https://api.deps.dev').replace(/\/$/, '');
+const DEPS_DEV = () => (process.env.ONESHOT_DEPSDEV || 'https://api.deps.dev').replace(/\/$/, '');
 const cache = new Map();
 
 const isPre = (v) => /-/.test(v);

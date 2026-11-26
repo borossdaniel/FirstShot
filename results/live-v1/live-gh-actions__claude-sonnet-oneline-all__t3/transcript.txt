@@ -1,0 +1,9 @@
+`npm ci && npm test` passes cleanly, matching exactly what the CI workflow runs.
+
+Created and verified:
+- `package.json` — test script runs `node --test`
+- `test/basic.test.js` — trivial sanity test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on push/PR, uses `actions/checkout@v7` and `actions/setup-node@v7` (confirmed latest via GitHub), Node set to `lts/*` (currently resolves to Node 26) with npm caching, then `npm ci` + `npm test`
+
+Nothing was committed, per the instructions.

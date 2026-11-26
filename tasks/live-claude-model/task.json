@@ -1,0 +1,9 @@
+{
+  "id": "live-claude-model",
+  "name": "Newest Claude model",
+  "package": "@anthropic-ai/sdk",
+  "homepage": "https://docs.claude.com",
+  "kind": "live-fact",
+  "timeoutSec": 900,
+  "prompt": "In this folder, set up a small Node.js project (ES modules) that uses the official Anthropic JavaScript SDK. Create `ai.mjs` that exports an async function `summarize(text)`: it sends the text to Anthropic's newest and most capable Claude model and returns a one-sentence summary as a string. Create the client inside the function and read the API key from the ANTHROPIC_API_KEY environment variable. Install the dependencies with npm."
+}

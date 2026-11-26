@@ -11,7 +11,7 @@ runCheck(async (ws) => {
   const ok = await sh(ws, 'npm run lint', 120_000);
   if (ok.code !== 0) fail('wrong_behavior', `npm run lint fails on the agent's own code: ${ok.out.trim().split('\n').slice(-4).join(' | ').slice(0, 300)}`);
 
-  writeFileSync(join(ws, 'src', 'firstshot-probe.js'), [
+  writeFileSync(join(ws, 'src', 'oneshot-probe.js'), [
     'export function check(a, b) {',
     '  const unused = 1;',
     '  console.log(process.env.HOME);',
@@ -19,7 +19,7 @@ runCheck(async (ws) => {
     '}',
     '',
   ].join('\n'));
-  const r = await sh(ws, 'node node_modules/eslint/bin/eslint.js src/firstshot-probe.js --format json', 120_000);
+  const r = await sh(ws, 'node node_modules/eslint/bin/eslint.js src/oneshot-probe.js --format json', 120_000);
   let report;
   try {
     report = JSON.parse(r.out.slice(r.out.indexOf('[')));

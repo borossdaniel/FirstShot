@@ -1,0 +1,21 @@
+{
+  "firstshot": "0.1.0",
+  "task": "commander",
+  "taskName": "Commander.js",
+  "package": "commander",
+  "agent": "claude",
+  "model": "sonnet+oneline",
+  "variant": "oneline",
+  "trial": 2,
+  "ok": true,
+  "category": "pass",
+  "detail": "commander@15.1.0: subcommand, options, validation and version correct",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 48.7,
+  "costUsd": 0.3389687999999999,
+  "turns": 20,
+  "installedVersion": "15.1.0",
+  "finishedAt": "2026-11-26T17:46:54.888Z"
+}

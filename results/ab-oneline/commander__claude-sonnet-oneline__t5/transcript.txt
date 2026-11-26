@@ -1,0 +1,6 @@
+All verifications pass: `--version` prints `1.2.3`, `greet <name>` works with and without `--shout`, `--times` repeats correctly, and Commander itself rejects invalid `--times` values (`abc`, `0`) with a proper error and exit code 1.
+
+Setup is complete in `/private<workspace>`:
+- `package.json` — ES module project, `commander@^15.1.0` (latest) installed via npm
+- `solution.mjs` — exports `buildProgram()`, builds the `hello` program with the `greet` subcommand and `--version`
+- `cli.mjs` — thin entrypoint calling `buildProgram().parse()`

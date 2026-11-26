@@ -1,0 +1,5 @@
+Everything checks out. Summary:
+
+- `server.js` — plain `node:http` server returning "ok" on port 3000 (verified live: `curl` returned `200 ok`).
+- `package.json` — minimal, no dependencies.
+- `Dockerfile` — `node:26-alpine` (current Node LTS per firstshot facts), runs as the built-in non-root `node` user, exposes port 3000.

@@ -1,0 +1,24 @@
+Done. Set up the project with `npm install stripe@latest` and created `solution.mjs`:
+
+```js
+export async function createSubscriptionCheckout(stripe, { priceId, email, baseUrl }) {
+  const session = await stripe.checkout.sessions.create({
+    mode: 'subscription',
+    line_items: [{ price: priceId, quantity: 1 }],
+    customer_email: email,
+    success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}/pricing`,
+  });
+  return session.url;
+}
+```
+
+Key points:
+- Takes the caller's already-configured `stripe` client — no key handling.
+- `mode: 'subscription'`, one line item at `quantity: 1` for the given price.
+- `customer_email` pre-fills the checkout form.
+- `success_url` includes Stripe's `{CHECKOUT_SESSION_ID}` template placeholder, so the success page can read `session_id` from its query string and call `stripe.checkout.sessions.retrieve(...)` to look up the completed session.
+- `cancel_url` goes to `/pricing`.
+- Returns `session.url` for the redirect.
+
+I verified it by calling the function with a fake `stripe` client (mocking `checkout.sessions.create`) and asserting all the fields and the returned URL — it passed. One leftover: `verify.mjs`, the test script I used, is still in the folder because `rm` is blocked under this session's "don't ask" permission mode — you may want to delete it manually if you don't want it kept around.

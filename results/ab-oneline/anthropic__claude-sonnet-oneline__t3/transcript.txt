@@ -1,0 +1,6 @@
+The mock test confirms the tool-use loop, message formatting, and multi-turn handling all work correctly. The project is set up and verified:
+
+- `package.json` — ES modules (`"type": "module"`), with `@anthropic-ai/sdk@1.14.0` (latest) installed via npm.
+- `solution.mjs` — exports `weatherAnswer(client, question)`, which calls `claude-sonnet-5-5` with `max_tokens: 1024` and a `get_weather` tool, loops on `tool_use` responses by running the local stub (`{ city, temp_c: 21 }`) and feeding `tool_result` blocks back, and returns the concatenated text of Claude's final `end_turn` response.
+
+No real API key is present in this environment, so I couldn't hit the live API end-to-end, but the mock-driven test exercised the full request/response cycle (model/params validation, tool_use → tool_result round trip, final text extraction) and passed.

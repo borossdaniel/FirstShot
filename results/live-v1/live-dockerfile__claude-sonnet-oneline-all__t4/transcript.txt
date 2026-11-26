@@ -1,0 +1,7 @@
+All files created. Summary:
+
+- **`server.js`** — plain `node:http` server returning "ok" on port 3000. Verified it actually runs: started it in the background, `curl`'d it (got `HTTP/1.1 200 OK` / body `ok`), then stopped it.
+- **`package.json`** + **`package-lock.json`** — minimal manifest with `engines.node >= 26` and a generated lockfile (needed for `npm ci` in the Dockerfile).
+- **`Dockerfile`** — `node:26-alpine` (confirmed via nodejs.org as the current Active LTS, codename "Lithium," as of today), installs with `npm ci --omit=dev`, runs as the built-in non-root `node` user, exposes 3000, runs `node server.js`.
+
+Image build was intentionally skipped per your instructions, but everything else — server behavior and file correctness — was verified.

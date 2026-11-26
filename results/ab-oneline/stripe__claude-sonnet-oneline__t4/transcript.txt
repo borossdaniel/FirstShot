@@ -1,0 +1,5 @@
+Done. The project is set up at the target folder with:
+
+- `package.json` — ES module project, `stripe@^23.2.0` installed via npm (latest).
+- `solution.mjs` — exports `createSubscriptionCheckout(stripe, { priceId, email, baseUrl })`, which creates a `mode: 'subscription'` Checkout Session (quantity 1 for the given price), pre-fills `customer_email`, sets `success_url` to `<baseUrl>/success?session_id={CHECKOUT_SESSION_ID}` (so the success page can look up the completed session via the query param), sets `cancel_url` to `<baseUrl>/pricing`, and returns `session.url`.
+- `verify.mjs` — exercises the function with a mock Stripe client (no real API key needed, since the client is injected) and confirms the request shape and returned URL; ran successfully (`All checks passed.`).

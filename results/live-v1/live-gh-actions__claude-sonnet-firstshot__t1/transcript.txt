@@ -1,0 +1,8 @@
+`npm ci` and `npm test` both pass locally (local Node is v24, but CI targets Node 26 LTS per current facts). Files created:
+
+- `package.json` — `npm test` runs `node --test`
+- `package-lock.json` — generated so `npm ci` works in CI
+- `test/basic.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7` + `actions/setup-node@v7` (node-version 26, npm cache), then `npm ci` && `npm test`
+
+Nothing committed, as requested.

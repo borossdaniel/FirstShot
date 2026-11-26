@@ -1,0 +1,6 @@
+Project is set up and verified:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` (`^0.68.0`) as a dependency, installed via npm (`node_modules` + `package-lock.json` present).
+- **`ai.mjs`** — exports `async function summarize(text)`. It creates the Anthropic client inside the function, reads `ANTHROPIC_API_KEY` from the environment, calls `claude-opus-4-8` (Anthropic's newest, most capable model), and returns the one-sentence summary as a trimmed string.
+
+Verification done: syntax check passed, and a live smoke test imported the module and called `summarize()` — it correctly progressed through client creation and the API call, failing only with an authentication error because no `ANTHROPIC_API_KEY` is set in this sandbox. That confirms the code path is wired correctly end-to-end; it will work as soon as a real key is present in the environment.

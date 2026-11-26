@@ -1,0 +1,9 @@
+{
+  "name": "claude-summarizer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0"
+  }
+}

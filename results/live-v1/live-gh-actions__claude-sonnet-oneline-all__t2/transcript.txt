@@ -1,0 +1,9 @@
+Everything verified end-to-end: `npm install` generated `package-lock.json`, `npm ci` succeeds, and `npm test` passes (using Node's built-in test runner, so no dependencies are needed).
+
+Files created (nothing committed, per instructions):
+- `package.json` — `test` script runs `node --test`
+- `test/basic.test.js` — trivial sanity test
+- `package-lock.json` — required for `npm ci`
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code (`actions/checkout@v7`), sets up Node LTS with npm caching (`actions/setup-node@v7`, `node-version: lts/*`), then `npm ci` and `npm test`
+
+I checked live sources rather than relying on memory: Node.js 26 is the current Active LTS (confirmed via nodejs.org), and `actions/checkout@v7` / `actions/setup-node@v7` are the latest major versions (confirmed via their GitHub releases pages). The workflow uses `lts/*` so it always tracks whichever LTS is current rather than hardcoding a number that will go stale.

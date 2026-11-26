@@ -1,0 +1,8 @@
+All 11 tests pass. Done:
+
+- `math.mjs` — exports `sum(a, b)` and `clamp(n, min, max)`
+- `test/math.test.mjs` — 11 tests covering both functions, including clamp edge cases (below/above range, boundary equal to min/max, min===max, negative ranges)
+- `package.json` — ES modules (`"type": "module"`), `npm test` runs `vitest run` (single run, exits non-zero on failure — no watch mode)
+- Installed `vitest@^5.1.2` (latest) as a dev dependency
+
+`npm test` output confirms: 1 test file, 11 tests, all passed.

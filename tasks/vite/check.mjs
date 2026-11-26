@@ -2,7 +2,7 @@ import { runCheck, expectInstalled, expect, fail, sh } from '../../src/check-hel
 import { existsSync, readFileSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 
-const PROBE = 'FirstShotProbe7q3x';
+const PROBE = 'OneShotProbe7q3x';
 
 // Script and stylesheet URLs in a built HTML file (not <a href> links).
 function assetRefs(html) {

@@ -47,10 +47,13 @@ export async function runCheck(task, ws) {
 export async function runTrial({ task, agent, model, trial, outDir, fixture, maxBudgetUsd, keep = false, log = () => {}, variant = null }) {
   const adapter = agents[agent];
   if (!adapter) throw new Error(`unknown agent "${agent}" (known: ${Object.keys(agents).join(', ')})`);
-  const ws = mkdtempSync(join(tmpdir(), `firstshot-${task.id}-`));
+  const ws = mkdtempSync(join(tmpdir(), `oneshot-${task.id}-`));
   const label = `${task.id} · ${agent}${model ? `/${model}` : ''}${variant ? ` +${variant}` : ''} · trial ${trial}`;
   log(`▶ ${label}`);
-  if (variant === 'firstshot') init(ws, { local: true }); // the add-on, installed the way a developer would
+  if (variant === 'oneshot') init(ws, { local: true }); // the add-on, installed the way a developer would
+  // Control: just the one-line instruction a developer might put in CLAUDE.md, no tools, no hook.
+  if (variant === 'oneline') writeFileSync(join(ws, 'CLAUDE.md'), ONE_LINE + '\n');
+  if (variant === 'oneline-all') writeFileSync(join(ws, 'CLAUDE.md'), ONE_LINE_ALL + '\n');
 
   let a;
   try {
@@ -79,7 +82,7 @@ export async function runTrial({ task, agent, model, trial, outDir, fixture, max
   }
 
   const result = {
-    firstshot: VERSION,
+    oneshot: VERSION,
     task: task.id,
     taskName: task.name,
     package: task.package ?? null,
@@ -113,6 +116,12 @@ export async function runTrial({ task, agent, model, trial, outDir, fixture, max
   log(`  ${result.ok ? '✅ pass' : `❌ ${result.category}`} — ${result.detail} (${result.durationSec}s${result.costUsd != null ? `, $${result.costUsd.toFixed(3)}` : ''})`);
   return result;
 }
+
+export const ONE_LINE =
+  'Always install the latest version of every dependency (for example `npm install <package>@latest`). Never write dependency versions from memory.';
+
+export const ONE_LINE_ALL =
+  'Always use the newest versions of everything: packages, AI model names, GitHub Actions, Docker base images and runtimes. Never write versions or model names from memory; check what is current.';
 
 export const UNAVAILABLE = /usage limit|rate.?limit|limit reached|resets? at|overloaded|\b429\b|failed to authenticate|not logged in|credit balance/i;
 
@@ -176,8 +185,8 @@ function saveAgentFiles(ws, dest) {
   mkdirSync(dest, { recursive: true });
   cpSync(ws, dest, {
     recursive: true,
-    // Skip installs, and the files FirstShot itself put there (they contain local paths).
-    filter: (src) => !/node_modules|\.git(\/|$)|package-lock\.json$|\/(\.next|dist|build|\.vite|\.turbo|coverage|\.cache)(\/|$)|\.(db|sqlite|sqlite3)(-journal|-wal|-shm)?$|\/\.mcp\.json$|\/\.claude(\/|$)|\/CLAUDE\.md$|\/\.firstshot-import-/.test(src.slice(ws.length)),
+    // Skip installs, and the files OneShot itself put there (they contain local paths).
+    filter: (src) => !/node_modules|\.git(\/|$)|package-lock\.json$|\/(\.next|dist|build|\.vite|\.turbo|coverage|\.cache)(\/|$)|\.(db|sqlite|sqlite3)(-journal|-wal|-shm)?$|\/\.mcp\.json$|\/\.claude(\/|$)|\/CLAUDE\.md$|\/\.oneshot-import-/.test(src.slice(ws.length)),
   });
 }
 

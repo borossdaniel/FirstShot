@@ -1,0 +1,8 @@
+Setup is complete and verified.
+
+- `package.json` — ES module project (`"type": "module"`) with `@anthropic-ai/sdk` (installed, v0.68.0) as dependency.
+- `ai.mjs` — exports `async function summarize(text)`, which creates an `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from env) and calls `claude-opus-4-8` (Anthropic's newest, most capable model) to return a one-sentence summary.
+- Ran a smoke test: the module imports cleanly, builds the request correctly, and fails only at the network/auth step with `Could not resolve authentication method` — because no `ANTHROPIC_API_KEY` is set in this environment. That confirms the code path is correct; it will work as soon as a real key is present in `ANTHROPIC_API_KEY`.
+- Left a `test.mjs` smoke-test script in the folder (not required, but handy — delete it if you don't want it).
+
+To actually get a summary, just run with the key set: `ANTHROPIC_API_KEY=sk-... node -e "import('./ai.mjs').then(m=>m.summarize('...').then(console.log))"`.

@@ -1,0 +1,9 @@
+This confirms the code correctly reaches the SDK and attempts authentication — it fails only because no `ANTHROPIC_API_KEY` is set in this environment, which is expected since none was provided. The implementation itself (module loading, SDK call construction, client instantiation inside the function) is verified working.
+
+Setup is complete:
+
+- **`package.json`** — ES module project (`"type": "module"`) with `@anthropic-ai/sdk@^1.14.0` (current major, verified via firstshot).
+- **`ai.mjs`** — exports `async function summarize(text)`. Creates the `Anthropic` client inside the function, reads `ANTHROPIC_API_KEY` from env, calls `claude-opus-5-5` (per firstshot's current facts, the newest/most capable model) with a one-sentence-summary prompt, and returns the trimmed text response.
+- Verified the module imports cleanly and the call reaches Anthropic's API (failing only on missing API key, as expected in this unattended environment).
+
+To use it, set `ANTHROPIC_API_KEY` in the environment and call `summarize(text)`.

@@ -1,13 +1,14 @@
-// The part of FirstShot that agents use: current versions from the npm registry, the
+// The part of OneShot that agents use: current versions from the npm registry, the
 // mistakes agents made with each library on our board, and an outdated-dependency check.
 
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describeFacts, packageFacts } from './facts.js';
+import { scanProjectFacts } from './livefacts.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const REGISTRY = () => (process.env.FIRSTSHOT_REGISTRY || 'https://registry.npmjs.org').replace(/\/$/, '');
+const REGISTRY = () => (process.env.ONESHOT_REGISTRY || 'https://registry.npmjs.org').replace(/\/$/, '');
 
 function readJson(p, fallback) {
   try {
@@ -66,7 +67,7 @@ export function declaredMajor(range) {
 export async function latestPyPI(name) {
   const key = `pypi:${name}`;
   if (cache.has(key)) return cache.get(key);
-  const base = (process.env.FIRSTSHOT_PYPI || 'https://pypi.org').replace(/\/$/, '');
+  const base = (process.env.ONESHOT_PYPI || 'https://pypi.org').replace(/\/$/, '');
   const p = (async () => {
     const res = await fetch(`${base}/pypi/${encodeURIComponent(name)}/json`, { signal: AbortSignal.timeout(10_000) });
     if (res.status === 404) return null;
@@ -97,7 +98,7 @@ async function safeFacts(name, system) {
   }
 }
 
-/** What FirstShot knows about one package: latest version, install command, agent notes, board stats. */
+/** What OneShot knows about one package: latest version, install command, agent notes, board stats. */
 export async function adviseOne(name, system = 'npm') {
   if (system === 'pypi') {
     const latest = await latestPyPI(name);
@@ -116,7 +117,7 @@ export async function adviseOne(name, system = 'npm') {
   const lines = [`Current version: ${name}@${latest} (major ${majorOf(latest)}). Install with: npm install ${name}@latest`];
   lines.push(...(describeFacts(facts) || []));
   if (board?.old) {
-    lines.push(`On the FirstShot board, ${board.old} of ${board.runs} agent runs installed an outdated major (${board.oldVersions.join(', ')}). Do not write a version from memory.`);
+    lines.push(`On the OneShot board, ${board.old} of ${board.runs} agent runs installed an outdated major (${board.oldVersions.join(', ')}). Do not write a version from memory.`);
   }
   lines.push(...notes);
   return { package: name, system: 'npm', exists: true, latest, latestMajor: majorOf(latest), install: `npm install ${name}@latest`, facts, notes, board, advice: lines.join('\n') };
@@ -168,8 +169,9 @@ export async function checkProject(dir = process.cwd()) {
   const pj = join(dir, 'package.json');
   const npmDeps = existsSync(pj) ? (({ dependencies, devDependencies }) => ({ ...(dependencies || {}), ...(devDependencies || {}) }))(readJson(pj, {})) : {};
   const pyDeps = readPythonDeps(dir);
-  const found = existsSync(pj) || Object.keys(pyDeps).length > 0;
-  if (!found) return { dir, found: false, outdated: [], checked: [], skipped: [] };
+  const facts = await scanProjectFacts(dir).catch(() => []);
+  const found = existsSync(pj) || Object.keys(pyDeps).length > 0 || facts.length > 0;
+  if (!found) return { dir, found: false, outdated: [], checked: [], skipped: [], facts };
   const checked = [];
   const skipped = [];
   const outdated = [];
@@ -194,13 +196,20 @@ export async function checkProject(dir = process.cwd()) {
     if (behind) outdated.push({ ...entry, behind: latestMajor - declared, notes: system === 'npm' ? NOTES[name] || [] : [] });
   }));
   outdated.sort((a, b) => b.behind - a.behind || a.name.localeCompare(b.name));
-  return { dir, found, outdated, checked, skipped };
+  return { dir, found, outdated, checked, skipped, facts };
 }
 
 export function formatProjectReport(rep) {
   if (!rep.found) return 'No package.json, requirements.txt or pyproject.toml here, nothing to check.';
-  if (!rep.outdated.length) return `All ${rep.checked.length} dependencies are on their current major version.`;
-  const lines = [`${rep.outdated.length} dependenc${rep.outdated.length === 1 ? 'y is' : 'ies are'} on an outdated major version:`];
+  const facts = rep.facts || [];
+  if (!rep.outdated.length && !facts.length) return `All ${rep.checked.length} dependencies are on their current major version.`;
+  const lines = [];
+  if (facts.length) {
+    lines.push(`${facts.length} outdated value${facts.length === 1 ? '' : 's'} written from memory:`);
+    for (const f of facts) lines.push(`  - ${f.file}: ${f.found} → ${f.fix}`);
+  }
+  if (!rep.outdated.length) return lines.join('\n');
+  lines.push(`${rep.outdated.length} dependenc${rep.outdated.length === 1 ? 'y is' : 'ies are'} on an outdated major version:`);
   for (const o of rep.outdated) {
     lines.push(`  - ${o.name} "${o.range}" → current is ${o.latest} (${o.behind} major${o.behind > 1 ? 's' : ''} behind)`);
     for (const n of o.notes.slice(0, 2)) lines.push(`      ${n}`);

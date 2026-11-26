@@ -13,7 +13,7 @@ runCheck(async (ws) => {
 
   const [clientT, serverT] = InMemoryTransport.createLinkedPair();
   await server.connect(serverT);
-  const client = new Client({ name: 'firstshot-check', version: '1.0.0' });
+  const client = new Client({ name: 'oneshot-check', version: '1.0.0' });
   await client.connect(clientT);
   try {
     const info = client.getServerVersion();

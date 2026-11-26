@@ -10,6 +10,7 @@ export const CATEGORY_TEXT = {
   no_solution: 'Gave up / file missing',
   not_installed: 'Library not installed (often a made-up package name)',
   outdated_major: 'Installed an old major version',
+  outdated_fact: 'Wrote an outdated value from memory (model, action, runtime)',
   crash: 'Code crashed',
   wrong_behavior: 'Ran, but did the wrong thing',
   agent_timeout: 'Agent ran out of time',
@@ -121,7 +122,7 @@ function html(rows, title, generatedAt) {
 
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FirstShot leaderboard</title>
+<title>OneShot leaderboard</title>
 <style>
 :root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a65;--line:#e4e1d9;--card:#fff}
 @media (prefers-color-scheme:dark){:root{--bg:#141413;--fg:#eceae4;--muted:#9b998f;--line:#2c2b28;--card:#1c1c1a}}
@@ -157,13 +158,13 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 <div class="wrap"><table>
 <thead><tr><th>Library</th><th>Agent</th><th>First try</th><th>What went wrong</th><th>Median time</th><th>Avg cost</th><th>Runs</th></tr></thead>
 <tbody>
-${tr || '<tr><td colspan="7">No results yet. Run <code>firstshot run tasks --agent claude</code>.</td></tr>'}
+${tr || '<tr><td colspan="7">No results yet. Run <code>oneshot run tasks --agent claude</code>.</td></tr>'}
 </tbody></table></div>
 <h2>Most common failures</h2>
 <ul>${failList.map(([k, v]) => `<li>${esc(CATEGORY_TEXT[k] || k)}: ${v}</li>`).join('') || '<li>None yet.</li>'}</ul>
 <h2>Add your library</h2>
-<p>A task is one folder with a <code>task.json</code> (the prompt a developer would type) and a <code>check.mjs</code> (a real test). Run <code>npx firstshot run ./my-task --agent claude --trials 5</code> and add the badge to your README.</p>
-<footer>Generated ${esc(generatedAt)} by FirstShot. Small samples. Read the transcripts before drawing conclusions.</footer>
+<p>A task is one folder with a <code>task.json</code> (the prompt a developer would type) and a <code>check.mjs</code> (a real test). Run <code>npx oneshot-agent run ./my-task --agent claude --trials 5</code> and add the badge to your README.</p>
+<footer>Generated ${esc(generatedAt)} by OneShot. Small samples. Read the transcripts before drawing conclusions.</footer>
 </main></body></html>
 `;
 }

@@ -1,0 +1,7 @@
+Everything works as expected: `ask` returns a plain string via the Responses API, and `classify` builds a strict JSON Schema (`additionalProperties: false`, enum `["spam","ham"]`) from the Zod schema via `zodTextFormat` and returns the parsed object through `responses.parse()`.
+
+Summary:
+- `package.json` set to `"type": "module"`, with `openai@7.65.0` and `zod@4.6.7` installed as the latest versions via npm.
+- `solution.mjs` exports `ask(client, question)` using `client.responses.create` with model `gpt-5.2`, returning `response.output_text`.
+- `classify(client, text)` uses `client.responses.parse` with a Zod schema (`{ label: "spam" | "ham" }`) converted via `zodTextFormat`, returning `response.output_parsed`.
+- Verified with a mocked client (no real API key used/created) — both functions behave correctly end-to-end.

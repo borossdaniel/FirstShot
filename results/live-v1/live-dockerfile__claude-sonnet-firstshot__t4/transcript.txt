@@ -1,0 +1,9 @@
+All set and verified.
+
+- `server.js` — plain `node:http` server, responds "ok" on port 3000.
+- `package.json` — no dependencies, `node >=26` engine requirement.
+- `Dockerfile` — `node:26-alpine` (current Node LTS per firstshot), runs as the built-in non-root `node` user.
+
+Verified by actually running `server.js` and curling it: got `HTTP/1.1 200 OK` with body `ok`. `firstshot check_project` confirms no outdated dependencies (there are none).
+
+One note: an earlier test run left a stray `node server.js` process (PID 1592) listening on port 3000 on your machine — the permission mode here blocks `kill`/`pkill`/`lsof`, so I couldn't clean it up myself. You may want to kill it manually (`kill 1592`) if you plan to run the server locally again.

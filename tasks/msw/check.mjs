@@ -70,7 +70,7 @@ runCheck(async (ws) => {
       const health = await rejects(API + '/health');
       expect(health.rejected, `GET /health should fail with a network error, but it answered status ${health.status}`);
 
-      const leak = await rejects(`${network.url}/unhandled?from=firstshot`);
+      const leak = await rejects(`${network.url}/unhandled?from=oneshot`);
       expect(network.requests.length === 0, `a request with no matching handler went through to the real network (got status ${leak.status} "${leak.text}"); unhandled requests must fail instead`);
       expect(leak.rejected, `a request with no matching handler should fail, but it answered status ${leak.status}`);
       const unknown = await rejects(API + '/unknown');
