@@ -130,7 +130,8 @@ try {
   if (re.test(html)) {
     const safe = JSON.stringify(data).replace(/</g, '\\u003c');
     let next = html.replace(re, (_, a, b) => a + safe + b);
-    const cov = readFileSync(join(here, '..', 'data', 'coverage.json'), 'utf8').trim().replace(/</g, '\\u003c');
+    // Only the count is inlined; the full table (~170 KB) loads from /coverage.json when its tab opens.
+    const cov = JSON.stringify({ count: JSON.parse(readFileSync(join(here, '..', 'data', 'coverage.json'), 'utf8')).count });
     next = next.replace(/(<script type="application\/json" id="coverage">)[\s\S]*?(<\/script>)/, (_, a, b) => a + cov + b);
     writeFileSync(page, next);
     console.log('landing.html seed updated');

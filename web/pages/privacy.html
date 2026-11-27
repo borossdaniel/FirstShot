@@ -1,0 +1,39 @@
+<!-- {"title": "Privacy", "desc": "OneShot sets no cookies and has no tracking and no accounts. What the website, the repo check and the tools do with data."} -->
+<h1>Privacy</h1>
+<p class="lead">Last updated 28 November 2026.</p>
+
+<div class="short">
+  <strong>Short version</strong>
+  <ul>
+    <li>No cookies, no analytics, no tracking, no accounts, no ads.</li>
+    <li>The tools (CLI, MCP server, plugin, GitHub Action) send no telemetry and never send your code.</li>
+    <li>The repo check downloads a <em>public</em> repo, checks it and deletes it straight away.</li>
+    <li>Our host keeps short-lived server logs, like every website.</li>
+  </ul>
+</div>
+
+<h2>Who is responsible</h2>
+<p>OneShot is a product of <strong>Findwell</strong> (trading as Artixles), Van Vollenhovenstraat 3-213, 3016 BE Rotterdam, the Netherlands, KvK 92838812. Findwell is the controller for the personal data described here. For any privacy question or request, email <a href="mailto:hello@artixles.com">hello@artixles.com</a>. Full company details are on the <a href="/imprint">imprint</a>.</p>
+
+<h2>This website</h2>
+<p>The site runs on <a href="https://vercel.com/legal/privacy-policy">Vercel</a> (Vercel Inc., USA), which processes data for us as our hosting provider. For each request, Vercel records technical data: your IP address, the address requested, the time and your browser's user agent. We use this only to deliver the site and keep it secure (legal basis: legitimate interest, GDPR Art. 6(1)(f)). The request logs we can see are kept for <strong>1 hour</strong>. Vercel may keep limited security and infrastructure logs longer, under its own privacy notice. Vercel is certified under the EU-US Data Privacy Framework, which covers the transfer to the US. We don't combine logs with other data, and we don't use them to identify visitors.</p>
+<p>Fonts and everything else on the page are served from this site. Your browser doesn't contact Google or any other third party when you visit.</p>
+
+<h2>The repo check</h2>
+<p>When you paste a repo, our server fetches that <strong>public</strong> GitHub repository from GitHub. It keeps only the files the check reads (code, package files, workflows, Dockerfiles), checks them and deletes them in the same request. To compare versions, it looks up the package names it found on the npm registry, PyPI and <a href="https://deps.dev">deps.dev</a> (run by Google). Only package names are sent, never code. Nothing from the repo is stored.</p>
+<p>The result is about the public repo, not about you. It is cached for up to 1 hour. After that, an older result may be shown for up to 24 more hours while a fresh one is made. The repo name also appears in the server logs above.</p>
+
+<h2>README badges</h2>
+<p>A badge is an image of a public repo's check result. Browsers cache it for up to 1 hour and our host for up to 6 hours, with an older copy possibly shown for up to 24 more hours while it refreshes. On GitHub, README images load through GitHub's own image proxy, so we don't see who views a README.</p>
+
+<h2>The tools</h2>
+<p>The npm package <code>oneshot-agent</code>, the MCP server, the Claude Code plugin and the GitHub Action run on your machine or in your CI. They send no telemetry and no code. To get today's facts, they read public sources:</p>
+<ul>
+  <li><code>oneshotagent.dev/facts.json</code>, or its fallback address <code>oneshot-tawny.vercel.app</code> (the same Vercel project). These requests are logged like any request to this site.</li>
+  <li>The npm registry, PyPI, <a href="https://endoflife.date">endoflife.date</a> and GitHub's public API.</li>
+  <li><a href="https://deps.dev">deps.dev</a> (run by Google), when you ask about a package. Only the package name is sent.</li>
+</ul>
+<p>You can turn off the request to our site with <code>ONESHOT_FACTS_URL=off</code>.</p>
+
+<h2>Your rights</h2>
+<p>Under the GDPR you can ask for access to, correction of or deletion of personal data about you, and you can object to its use. Apart from the host's short-lived logs, we hold no personal data. Write to <a href="mailto:hello@artixles.com">hello@artixles.com</a>. You can also complain to the Dutch data protection authority (<a href="https://autoriteitpersoonsgegevens.nl">Autoriteit Persoonsgegevens</a>) or the one in your own country.</p>
