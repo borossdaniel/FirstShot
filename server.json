@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.borossdaniel/oneshot",
+  "title": "OneShot",
+  "description": "Live facts for coding agents: current AI model names, Actions and runtimes. Flags retired models.",
+  "websiteUrl": "https://www.oneshotagent.dev",
+  "repository": {
+    "url": "https://github.com/borossdaniel/OneShot",
+    "source": "github"
+  },
+  "version": "0.4.3",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "oneshot-agent",
+      "version": "0.4.3",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ]
+    }
+  ]
+}
