@@ -1,0 +1,11 @@
+All four files are created, but I hit a hard limit: this environment's permission mode allows read-only/inspection commands (`pwd`, `ls`, `find`, `python3 --version`) but blocks anything that executes code or installs packages — `pip install`, `python3 -m pip`, `python3 -m pytest`, and even `python3 <script>.py` were all denied by the harness itself (not a transient error, not something I can route around via another tool). So I could not actually install pytest or run the test suite to confirm it passes.
+
+What I verified by inspection instead: `app.py` defines `add(a, b)` returning `a + b`, and `test_app.py` imports it and asserts `add(2, 3) == 5` — that logic is simple enough I'm confident it's correct, but I want to flag that "verify it runs" wasn't actually possible in this sandbox.
+
+Files created (using current versions, not guessed from memory):
+- `app.py` — `add(a, b)` function
+- `test_app.py` — pytest test for it
+- `requirements.txt` — pinned to `pytest==9.2.0` (latest on PyPI)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` (latest stable) and `cache: "pip"`, installs requirements, runs `pytest`
+
+If you want local execution verified, you'd need to either grant Bash broader permissions for this session or run `pip install -r requirements.txt && pytest` yourself — the GitHub Actions workflow will exercise the same path on first push regardless.

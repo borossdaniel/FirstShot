@@ -1,0 +1,11 @@
+I've created all four files, but I need to flag a blocker before finishing.
+
+**What I did:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — pytest test asserting `add(2, 3) == 5`
+- `requirements.txt` — pinned to `pytest==9.2.0` (verified as the current PyPI release, not from memory)
+- `.github/workflows/ci.yml` — triggers on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` (current stable Python) and `cache: "pip"`, then installs requirements and runs pytest
+
+**What I couldn't do:** verify it runs. The Bash tool in this environment is locked to a narrow read-only allowlist (`ls`, `pwd`, `which`, `python3 --version` succeed) and denies everything else — `pip install`, `python3 -m pytest`, `python3 -c ...`, even running `test_app.py` directly — with "Claude Code is running in don't ask mode." There's no approval path available since no one is present to grant it, and I don't have a legitimate way around that sandboxing, so I stopped rather than keep burning attempts on it.
+
+I manually reviewed all four files for correctness (the code and YAML are straightforward and I'm confident they're correct), but I cannot claim to have actually executed `pytest` or confirmed the CI workflow runs end-to-end — that step is blocked by the sandbox, not something I verified and am just not telling you about.

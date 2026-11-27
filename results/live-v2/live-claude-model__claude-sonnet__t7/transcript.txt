@@ -1,0 +1,7 @@
+This confirms the request reaches Anthropic's API correctly (server-side `401 invalid x-api-key`, not a client-side validation error) — the model id and request shape are valid.
+
+Setup complete in this folder:
+- **package.json** — ES module project (`"type": "module"`) with `@anthropic-ai/sdk` installed via npm.
+- **ai.mjs** — exports `async function summarize(text)`, which creates the Anthropic client inside the function (reading `ANTHROPIC_API_KEY` from the environment) and calls the newest, most capable Claude model (`claude-opus-4-8`) to return a one-sentence summary.
+
+Verified: with no key set, it fails at the expected auth step; with a dummy key, the live API round-trips and correctly rejects it with `401 invalid x-api-key` — confirming the request/model/plumbing is correct. Set a real `ANTHROPIC_API_KEY` to get actual summaries.

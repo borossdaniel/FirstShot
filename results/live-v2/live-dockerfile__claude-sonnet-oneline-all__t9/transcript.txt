@@ -1,0 +1,7 @@
+Done. Created in the folder:
+
+- **`server.js`** — plain `node:http` server, responds `ok` on port 3000 (verified live: `curl` returned `200 OK` / `ok`).
+- **`package.json`** — minimal, `engines.node >=26`, `npm start` runs it.
+- **`Dockerfile`** — based on `node:26.13.1-alpine` (Node 26 "Lithium" is the current Active LTS as of Nov 2026; confirmed the exact tag exists on Docker Hub), installs with `npm install --omit=dev`, creates and runs as a non-root `app` user, exposes 3000.
+
+I didn't build the image per your instructions, but the server itself is confirmed working locally.

@@ -1,0 +1,10 @@
+I've created all four files, but I ran into a hard limitation: this environment is running Bash in "don't ask" permission mode, which auto-denies any command that installs packages or executes arbitrary code — `pip install`, `pip3`, `pytest`, `python3 -m anything`, and `python3 -c` are all blocked outright (tried direct paths too), while read-only commands like `ls`, `which`, and `python3 --version` are allowed. So I could not actually install pytest or run the test suite to verify it, despite several reasonable attempts (checking for a pre-installed pytest, trying `python3 -m pip`, invoking `/usr/local/bin/pip3` directly).
+
+What I did verify/create:
+- `python3` 3.13.1 is present (`/usr/local/bin/python3`), but `pytest`/`pip` are not pre-installed (`pip3` exists, `pip` and `pytest` don't).
+- `app.py` — `add(a, b)` returning `a + b`.
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`.
+- `requirements.txt` — pins `pytest`.
+- `.github/workflows/ci.yml` — triggers on push/PR, checks out code, sets up Python 3.13 with pip caching (`actions/setup-python@v5`, `cache: pip`), installs `requirements.txt`, runs `pytest`.
+
+The code itself is trivial and correct, so I'm confident it will pass in CI, but I can't claim "verified it runs" since I was blocked from executing it locally. If you want local confirmation, you'd need to either grant Bash permission for `pip`/`pytest`, or run `pip install -r requirements.txt && pytest` yourself.

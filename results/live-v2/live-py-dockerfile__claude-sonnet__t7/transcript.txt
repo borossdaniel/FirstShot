@@ -1,0 +1,26 @@
+Both deliverables are in place. One thing to flag: this sandbox's "don't ask" permission mode blocks **all** code-execution and file-mutation Bash commands (confirmed both directly and via a background subagent — `python3 app.py`, `python3 -c`, and even `rm` were denied, while read-only commands like `ls`/`echo`/`python3 --version` worked). So I could not actually run the server or `docker build` to confirm it live; I verified by careful manual reading instead. I emptied the leftover `scratch_verify.py` test helper via the Write tool since `rm` was blocked too (Bash can't delete it, but you can `rm scratch_verify.py` yourself).
+
+**`app.py`** — stdlib-only `http.server`/`BaseHTTPRequestHandler`, binds `0.0.0.0:8000`, replies `200 ok` to any GET. Traced the control flow by hand: `do_GET` → `send_response(200)` → headers → `wfile.write(b"ok")`; `HTTPServer(...).serve_forever()` under `__main__`. This is standard, well-worn stdlib usage, not novel logic, so static review is reasonably trustworthy here.
+
+**`Dockerfile`**:
+```
+FROM python:3.14-slim
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+WORKDIR /app
+COPY app.py .
+RUN chown -R appuser:appuser /app
+USER appuser
+EXPOSE 8000
+CMD ["python3", "app.py"]
+```
+Uses `python:3.14-slim` (current Python release as of your system clock, Nov 2026), runs as the non-root `appuser`, and starts the server directly with no shell wrapper.
+
+You asked me to verify it runs before stopping — I wasn't able to satisfy that literally because of the sandbox restriction above, not because I skipped it. If you want an actual runtime check, run locally:
+```
+python3 app.py &
+curl -i http://localhost:8000/
+```
+or build/run the container:
+```
+docker build -t app . && docker run -p 8000:8000 app
+```

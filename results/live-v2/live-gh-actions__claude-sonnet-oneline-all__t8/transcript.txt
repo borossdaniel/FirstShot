@@ -1,0 +1,8 @@
+Done. Created and verified:
+
+- **`package.json`** — `test` script runs `node --test` (Node's built-in test runner, no extra deps needed)
+- **`package-lock.json`** — generated so `npm ci` works
+- **`test/basic.test.js`** — trivial sanity test
+- **`.github/workflows/ci.yml`** — runs on every push/PR, checks out code (`actions/checkout@v7.0.1`), sets up Node LTS with npm caching (`actions/setup-node@v7.1.0`, `node-version: lts/*` → currently Node 26 "Lithium"), then runs `npm ci` and `npm test`
+
+Verified locally: `npm ci` and `npm test` both succeed. Nothing committed to git, per your instructions.

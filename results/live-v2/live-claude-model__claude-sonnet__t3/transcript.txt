@@ -1,0 +1,6 @@
+rm was denied, so `test-ai.mjs` remains as a smoke-test script you can rerun with `node test-ai.mjs`.
+
+Setup complete:
+- `package.json` — ES module project with `@anthropic-ai/sdk@0.68.0` installed via npm.
+- `ai.mjs` — exports `async function summarize(text)`, creates the `Anthropic` client inside the function reading `ANTHROPIC_API_KEY` from env, and calls `claude-opus-4-8` (the newest, most capable Claude model) for a one-sentence summary.
+- Verified: running `node test-ai.mjs` loads the module and reaches the SDK's request path correctly, failing only on the expected "no API key set" auth error (none is present in this environment). Once you export `ANTHROPIC_API_KEY`, it will work end-to-end.

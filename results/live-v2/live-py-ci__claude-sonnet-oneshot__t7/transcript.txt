@@ -1,0 +1,16 @@
+All files are created and the dependency check passes. I was unable to actually execute `pip install` / `pytest` to verify the test runs, though — Bash is running in "don't ask mode" here and denies any command beyond simple read-only ones (even `pip --version` and `python3 -c "..."` were denied), so I can't install or execute anything.
+
+Here's what's in place:
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (current version per oneshot)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with `python-version: "3.15"` and pip caching, installs requirements, runs pytest (all versions confirmed current via oneshot)
+
+The code is simple enough that it should run correctly (`add(2,3)==5` is straightforward), but I can't confirm by actually executing it in this sandbox. If you want local verification, you'd run:
+
+```
+pip install -r requirements.txt
+pytest
+```
+
+Let me know if you'd like me to adjust the Bash permissions so I can run that verification myself.

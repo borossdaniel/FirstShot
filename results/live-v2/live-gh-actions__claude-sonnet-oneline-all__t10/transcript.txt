@@ -1,0 +1,6 @@
+Done. Created `package.json` (with `test` script), `test.js`, `package-lock.json`, and `.github/workflows/ci.yml`.
+
+- `npm install`, `npm ci`, and `npm test` all verified working locally.
+- CI workflow triggers on every push/PR, checks out with `actions/checkout@v7`, sets up Node via `actions/setup-node@v7` using `lts/*` (dynamically resolves to the current LTS, so it stays correct without hardcoding a version number) with npm caching enabled, then runs `npm ci` and `npm test`.
+
+Nothing was committed, per your instructions.

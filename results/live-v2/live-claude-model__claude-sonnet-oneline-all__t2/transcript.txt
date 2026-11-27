@@ -1,0 +1,7 @@
+Setup is complete:
+
+- **`package.json`** — ES module project (`"type": "module"`), depends on `@anthropic-ai/sdk` (installed, v1.14.0).
+- **`ai.mjs`** — exports `async function summarize(text)`. Creates the `Anthropic` client inside the function, reading `ANTHROPIC_API_KEY` from the environment, and calls `claude-opus-4-8` (the newest/most capable Claude model per current model listing) to produce a one-sentence summary.
+- **`test.mjs`** — a small smoke-test script I left in place; run `node test.mjs` after exporting `ANTHROPIC_API_KEY` to verify end-to-end.
+
+Verification: I ran `node test.mjs` in this environment. It correctly loaded the module, constructed the client, and attempted the API call — failing only with the SDK's expected auth error since `ANTHROPIC_API_KEY` isn't set here (`Could not resolve authentication method...`). That confirms the code path is wired correctly; I can't do a full live-response check without a real key in this environment. Set `ANTHROPIC_API_KEY` and rerun `node test.mjs` to see an actual summary.

@@ -1,0 +1,8 @@
+This confirms the full path works end-to-end: the request reaches Anthropic's API with the `ANTHROPIC_API_KEY` env var correctly wired into the client, and the model name `claude-opus-5-5` is accepted (it got to auth checking, not a model-not-found error). It will work as soon as a real key is set.
+
+Setup is complete in this folder:
+
+- **`package.json`** — ES module project with `@anthropic-ai/sdk` as a dependency
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates the Anthropic client inside the function (reading `ANTHROPIC_API_KEY` from env) and calls `claude-opus-5-5` — verified via the live docs as Anthropic's current newest and most capable model, per CLAUDE.md's instruction to never guess model names.
+
+To use it for real: `export ANTHROPIC_API_KEY=sk-ant-...` then `node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

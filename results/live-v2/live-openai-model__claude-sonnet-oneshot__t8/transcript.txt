@@ -1,0 +1,5 @@
+Setup complete:
+
+- `package.json` — ES module project with `openai@7.65.0` (current major, verified via oneshot).
+- `ai.mjs` — exports `async function summarize(text)`, creates the `OpenAI` client inside the function using `process.env.OPENAI_API_KEY`, and calls `client.responses.create()` with model `gpt-6.2-astra` (OpenAI's newest/most-capable model per oneshot's current facts), returning the one-sentence summary text.
+- Dependencies installed via `npm install`; verified the module imports, `summarize` is a proper async function, and the call path reaches OpenAI's SDK correctly (it fails only on the missing `OPENAI_API_KEY`, which is expected since no real key is available in this environment — set that env var to make live calls).

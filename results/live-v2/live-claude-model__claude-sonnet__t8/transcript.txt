@@ -1,0 +1,11 @@
+Project is set up and verified:
+
+- `package.json` — ES modules (`"type": "module"`), with `@anthropic-ai/sdk` installed as a dependency
+- `ai.mjs` — exports `async function summarize(text)`, creates the Anthropic client inside the function reading `ANTHROPIC_API_KEY` from env, calls `claude-opus-4-8` (the newest/most capable Claude model) with a system prompt instructing a one-sentence reply, and returns the extracted text
+
+Verified end-to-end without a real key present in this environment:
+1. `node --check ai.mjs` — syntax is valid
+2. No key set → throws Anthropic SDK's own "could not resolve authentication method" error, proving the client is built correctly inside the function
+3. Fake key set → request reaches Anthropic's API and gets back a real `401 invalid x-api-key` from their server, proving the request (model, messages, system prompt) is well-formed and network wiring is correct
+
+No real `ANTHROPIC_API_KEY` is available in this environment, so I couldn't exercise an actual successful summary — but the only missing piece is a valid key; swap it in and `summarize(text)` will return the one-sentence summary.

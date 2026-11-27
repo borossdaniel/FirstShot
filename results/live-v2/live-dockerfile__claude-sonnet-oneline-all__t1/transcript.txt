@@ -1,0 +1,7 @@
+All set. In this folder:
+
+- **`server.js`** — plain `node:http` server, responds "ok" on port 3000 (verified live: `curl` returned `ok` / HTTP 200).
+- **`package.json`** + **`package-lock.json`** — no runtime dependencies; `engines.node >= 26`.
+- **`Dockerfile`** — based on `node:26-alpine` (Node.js 26 is the current LTS as of Nov 2026, confirmed via nodejs.org), runs `npm ci --omit=dev`, and drops to the image's built-in non-root `node` user before `CMD`.
+
+Didn't build the image per your instructions, but the server itself is confirmed working under local Node v24, and the Dockerfile uses a verified-current base tag (`node:26-alpine`) with a non-root `USER node`.

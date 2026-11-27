@@ -1,0 +1,12 @@
+Project is set up and verified.
+
+**Summary of what's in this folder:**
+- `package.json` — ES module project (`"type": "module"`) depending on `openai@^6.49.0`
+- `node_modules/` + `package-lock.json` — installed via `npm install openai`
+- `ai.mjs` — exports `async function summarize(text)`, which creates the OpenAI client inside the function (reading `OPENAI_API_KEY` from the environment) and calls `client.responses.create` with model `gpt-5.6-sol` (the newest/most capable model per this SDK's model list), instructed to return exactly one summary sentence, returning `response.output_text.trim()`.
+
+**Verification performed:**
+- `npm install` succeeded with 0 vulnerabilities.
+- Confirmed `summarize` imports correctly as an async function.
+- Ran it with no API key set → got the expected `OpenAIError: Missing credentials...`, confirming the client/request path builds correctly and only fails at the auth boundary.
+- No `OPENAI_API_KEY` is set in this environment, and the sandbox blocks outbound network calls from Bash, so I couldn't exercise a real end-to-end API call. Once you set `OPENAI_API_KEY` and run it with network access, `summarize(text)` should work as described — you may want to do a live smoke test on your end before relying on it in production.

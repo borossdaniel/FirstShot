@@ -1,0 +1,8 @@
+`npm ci` and `npm test` both pass. Files created:
+
+- `package.json` — defines `test` script
+- `test.js` — trivial assertion test
+- `package-lock.json` — generated so `npm ci` works
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7`), sets up Node 26 (current LTS, via `actions/setup-node@v7` with npm caching), then runs `npm ci` and `npm test`
+
+Nothing was committed, as requested.

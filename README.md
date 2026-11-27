@@ -2,15 +2,17 @@
 
 **Your AI coding agent writes last year's versions from memory. OneShot gives it today's, so it gets it right in one shot.**
 
-Agents write model names, GitHub Actions versions, Docker images and runtime versions from memory, and those go stale fast. We measured it with Claude Code (Sonnet), 15 runs per setup, each run checked by a real test:
+Agents write model names, GitHub Actions versions, Docker images and runtime versions from memory, and those go stale fast. We measured it with Claude Code (Sonnet) on 6 everyday tasks (newest Claude and OpenAI model, Node and Python CI, Node and Python Dockerfiles), 10 runs per task per setup, each run checked by a real test:
 
 | Setup | Wrote current values | Median time per run | Median cost per run |
 |---|---|---|---|
-| Nothing | 2 of 15 | 42 s | $0.25 |
-| "Always use the newest versions" in CLAUDE.md | 13 of 15 | 68 s | $0.43 |
-| **OneShot** | **15 of 15** | **41 s** | **$0.27** |
+| Nothing | 17 of 60 | 61 s | $0.33 |
+| "Always use the newest versions" in CLAUDE.md | 54 of 60 | 68 s | $0.44 |
+| **OneShot** | **60 of 60** | **47 s** | **$0.29** |
 
-Without help, agents wrote `claude-opus-4-8`, `actions/checkout@v4` and `node:24`. Told to "use the newest", they searched the web: right most of the time, but 64% slower and 72% more expensive. With OneShot they asked once and were right every time. All runs and transcripts are in `results/live-v1/`.
+Without help, agents wrote `claude-opus-4-8` (10 of 10 runs), `actions/checkout@v4` (20 of 20), `node:24-alpine` and `python:3.13-slim`. Told to "use the newest", they searched the web: right 54 of 60 times, but the Claude model was still wrong 4 of 10 times. With OneShot they asked once and were right every time, **31% faster and 33% cheaper than telling the agent to look things up**, and no slower or more expensive than giving it no help at all. All 180 runs and transcripts are in `results/live-v2/`.
+
+**Try it without installing anything:** paste a public GitHub repo at [oneshotagent.dev](https://oneshotagent.dev/#check), or see the Action on a [demo repo](https://github.com/borossdaniel/oneshot-demo).
 
 ## Catch retired models before they break your app
 
@@ -20,10 +22,10 @@ AI providers retire models on a schedule. After the date, every request to that 
 $ npx oneshot-agent check
 3 problems to fix (these break your app or your team's rules):
   ✗ src/chat.ts:2: claude-sonnet-4-5 retires on 2026-11-30 (in 4 days). After that, requests fail. Use claude-sonnet-5-5.
-  ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol.
-  ✗ Dockerfile: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
+  ✗ .env.example:1: gpt-5 retires on 2026-12-11 (in 15 days). After that, requests fail. Use gpt-6.1-sol (newest: gpt-6.2-sol).
+  ✗ Dockerfile:1: node:20-alpine is end-of-life: no more security fixes. Use node:26-alpine.
 1 outdated value:
-  ! .github/workflows/ci.yml: actions/checkout@v4 is outdated; current is v7.
+  ! .github/workflows/ci.yml:6: actions/checkout@v4 is outdated; current is v7.
 ```
 
 ### On every pull request (GitHub Action)
@@ -154,7 +156,9 @@ It needs Node 20 or newer and a logged-in agent CLI (`claude`, `codex` or `gemin
 | `no_solution` | The file we asked for was never written |
 | `agent_timeout` / `agent_error` | The agent run itself died. It counts against the run, not the library |
 
-## Tasks (13)
+## Tasks (37)
+
+31 library tasks and 6 live-fact tasks (newest Claude and OpenAI model, GitHub Actions for Node and Python, Node and Python Dockerfiles). Some of them:
 
 | Task | What it tests | Typical trap |
 |---|---|---|
@@ -211,12 +215,28 @@ Then run `npx oneshot-agent run ./my-lib --agent claude --trials 5` and add the 
 
 ## Status
 
-- **Version:** 0.1, an MVP.
-- **Agents:** the Claude Code adapter has been tested. The Codex and Gemini adapters are written but not yet run.
-- **Tasks:** 13 (5 starter, 8 harder).
-- **Next:** more tasks, Python support, a GitHub Action that re-runs on every docs change, and a hosted leaderboard.
+- **Version:** 0.4. Live facts, retirement guard, GitHub Action, Claude Code plugin, MCP server, team rules.
+- **Agents:** the benchmark runs Claude Code (Sonnet). The MCP tools work in any MCP app; Codex and Gemini benchmark runs are next.
+- **Tasks:** 37 (31 libraries, 6 live facts).
 
 MIT licensed.
+
+## FAQ
+
+**Does it track me or send my code anywhere?**
+No. OneShot only downloads public facts: package versions (npm, PyPI, deps.dev), runtime dates (endoflife.date), Action versions (GitHub) and model lists (Anthropic and OpenAI SDKs), plus our hosted copy of those at `oneshotagent.dev/facts.json`. Your code never leaves your machine. No account, no telemetry. Set `ONESHOT_FACTS_URL=off` to skip the hosted copy. The repo check on the website downloads a public repo to a temporary folder, checks it and deletes it.
+
+**Does it only work with Claude?**
+No. The MCP tools work in Cursor, Windsurf, Codex, Claude Desktop and any other MCP app. The check before "done" (Stop hook) is Claude Code only. The CLI and the GitHub Action work with any agent, or none. The benchmark numbers are from Claude Code with Sonnet.
+
+**Why not just tell my agent to use the newest versions?**
+It helps, but the agent then has to look everything up itself: in our runs it was right 54 of 60 times. OneShot answers in one call: 60 of 60 right, 31% faster and 33% cheaper per run.
+
+**Will it change my code?**
+No. It tells your agent what is current; the agent writes the code. The Action only annotates pull requests. It fails when something will break (a retired model, an end-of-life runtime); `strict: true` also fails on older versions.
+
+**How fresh are the facts?**
+Refreshed every 6 hours from the official sources. Retirement dates come from the providers' deprecation pages. Wrong or missing? Open an issue.
 
 ## Limits
 
@@ -225,4 +245,4 @@ MIT licensed.
 - Hand-written notes exist for the libraries on the board. Other packages get the current version plus release-date and deprecation warnings.
 - 0.x packages and calendar-versioned packages (certifi 2026.x) are not flagged as outdated.
 - If you pin an old major on purpose, the check only warns.
-- The board uses one agent (Claude Code with Sonnet), 5 runs per library. Small samples, published in full.
+- The package board uses one agent (Claude Code with Sonnet), 5 runs per library; the live-facts test 10 runs per task. Small samples, published in full.

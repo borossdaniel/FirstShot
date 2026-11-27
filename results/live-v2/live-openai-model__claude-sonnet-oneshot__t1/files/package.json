@@ -1,0 +1,10 @@
+{
+  "name": "openai-summarizer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Summarizes text using the OpenAI API",
+  "main": "ai.mjs",
+  "dependencies": {
+    "openai": "^7.65.0"
+  }
+}

@@ -1,0 +1,10 @@
+Deletion is blocked by this sandbox's safety settings, so I'll leave `test-run.mjs` in place rather than attempt a workaround — it's harmless (not imported by anything) and I'll flag it below.
+
+Setup is complete and verified:
+
+- **`package.json`** — ES module project (`"type": "module"`), depends on `openai@^7.65.0` (current major per oneshot's `check_package`, confirmed installed as exactly `7.65.0`).
+- **`ai.mjs`** — exports `async function summarize(text)`. Creates the `OpenAI` client inside the function, reading `OPENAI_API_KEY` from the environment; calls `client.responses.create()` (the current Responses API) with model `gpt-6.2-astra` — the newest/most capable OpenAI model per oneshot's `current_facts` (current generation is gpt-6.2; avoided the outdated gpt-4o/gpt-5/gpt-6.1 lines flagged there) — and returns `response.output_text.trim()` as the one-sentence summary.
+- Verified: `node --check` passes, the module imports cleanly, and calling `summarize()` without `OPENAI_API_KEY` set throws the expected client-side "Missing credentials" error — confirming the env-var wiring is correct. A live network call couldn't be tested here since outbound network access is blocked in this sandbox.
+- `check_project` confirms the one dependency is on its current major version.
+
+One leftover: `test-run.mjs` (the verification script) is still in the folder since `rm` is blocked under this session's safety settings — delete it manually if you don't want it kept around.

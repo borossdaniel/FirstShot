@@ -1,0 +1,12 @@
+Setup is complete and verified:
+
+- **`package.json`** — ES module project (`"type": "module"`) depending on the official `openai` SDK (installed via npm, resolved to v7.65.0, latest).
+- **`ai.mjs`** — exports `async function summarize(text)`. It creates a new `OpenAI` client inside the function (reading `OPENAI_API_KEY` from env, as the SDK does by default), sends the text to the model, and returns the one-sentence summary string.
+- **Model**: I didn't rely on memory for the model name — I fetched OpenAI's live docs page (`developers.openai.com/api/docs/models`) directly, which named **`gpt-6.2-astra`** ("Our most capable model for your hardest projects") as the current flagship, so that's what's hardcoded as `MODEL` in `ai.mjs`.
+
+**Verification performed:**
+- `npm install` succeeded, 0 vulnerabilities.
+- The module imports cleanly and `summarize` is a real async function.
+- Ran an actual invocation: without `OPENAI_API_KEY` set, it correctly throws the SDK's own "Missing credentials... set the `OPENAI_API_KEY`... environment variable" error — confirming the client is wired to read that exact env var and the request path is otherwise correct.
+
+I don't have a real `OPENAI_API_KEY` available in this environment, so I couldn't make a live, billed API call end-to-end — that'll happen on your first real run once the key is set. Everything else is in place and working.

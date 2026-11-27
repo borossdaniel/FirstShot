@@ -1,0 +1,9 @@
+I've created all four files, but I hit a hard wall trying to verify them: this environment's Bash permissions are locked to a narrow allowlist (`ls`, `echo`, `which`, `python3 --version` work) and explicitly deny anything involving `pip`, `pip3`, `python3 -m pip`, `python3 -m pytest`, or even plain `python3 -c "..."`. I tried multiple reasonable variants and all were denied by the harness itself (not something I can route around without attempting to bypass an explicit permission denial, which I won't do).
+
+**Files created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — triggers on push/PR, checks out code, sets up Python 3.13 with pip caching, installs `requirements.txt`, runs `pytest`
+
+I'm confident these are correct (simple, standard patterns), but I could not actually execute `pip install -r requirements.txt` or `pytest` to verify locally since the sandbox denies those commands outright. If you want me to verify, you'd need to either grant Bash permission for `pip`/`pytest`/`python3 -c`, or run `pip install -r requirements.txt && pytest` yourself locally.

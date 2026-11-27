@@ -1,0 +1,6 @@
+Both files check out on manual review:
+
+- **`app.py`** — standard-library `http.server`, binds `0.0.0.0:8000`, responds `200 ok` (text/plain) to any GET. Syntactically correct, no dependencies.
+- **`Dockerfile`** — `python:3.15-slim` (current version per `oneshot current_facts`), creates and switches to non-root `appuser`, copies `app.py`, exposes 8000, runs via `CMD ["python", "app.py"]`.
+
+One caveat: this sandbox denies all Python code execution (even `python3 -c`, `py_compile`, and background runs), so I verified correctness by manual code review rather than actually running the server or building the image — I could not execute the "verify it runs" step you asked for. If you want an actual runtime check, you'll need to run `python3 app.py` (or build/run the Docker image) yourself; both are standard, well-tested patterns and should work as-is.

@@ -1,0 +1,13 @@
+Both files are in place. I wasn't able to runtime-verify this the way I intended — the sandbox's permission policy denies all Bash invocations that execute code (`python3 app.py`, `python3 -c`, even `python3 -m py_compile`), allowing only inert commands like `ls`/`wc -l`/`python3 --version`. I tried several approaches (foreground, in-process self-test, syntax-only compile) and all were denied identically, so this is a deliberate restriction, not a fluke — I stopped rather than hunt for a workaround. I also couldn't `rm` the `verify.py` scratch file I created for testing; it's harmless but still sitting in the folder since no delete tool is available to me here. Feel free to remove it.
+
+What I did verify by careful code review instead:
+
+**`app.py`** — `ThreadingHTTPServer` + `BaseHTTPRequestHandler`, binds `0.0.0.0:8000`, `do_GET` returns `200` with body `ok` and correct `Content-Length`. This is standard-library-only, syntactically valid, idiomatic usage.
+
+**`Dockerfile`**:
+- `FROM python:3.15-slim` — 3.15.2 is the current stable Python release (shipped Oct 26, 2026).
+- Creates a dedicated non-root system user/group (`app`) via `groupadd`/`useradd`, `chown`s the app directory, then `USER app` before `CMD`.
+- `PYTHONUNBUFFERED=1` / `PYTHONDONTWRITEBYTECODE=1` for sane container logging/behavior.
+- `EXPOSE 8000`, exec-form `CMD ["python", "app.py"]`.
+
+I'm confident in this logic from inspection (it's a well-worn pattern), but I want to be upfront that "runs in container" wasn't machine-verified this time — if you can run it in an environment where `python3 app.py` and/or `docker build` are permitted, a quick `curl localhost:8000` is the sanity check worth doing.

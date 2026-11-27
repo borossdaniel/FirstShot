@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.4.1",
+  "task": "live-openai-model",
+  "taskName": "Newest OpenAI model",
+  "package": "openai",
+  "agent": "claude",
+  "model": "sonnet+oneshot",
+  "variant": "oneshot",
+  "trial": 7,
+  "ok": true,
+  "category": "pass",
+  "detail": "uses gpt-6.2-astra",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 43.5,
+  "costUsd": 0.29077289999999995,
+  "turns": 13,
+  "installedVersion": "7.65.0",
+  "finishedAt": "2026-11-26T19:50:16.608Z"
+}

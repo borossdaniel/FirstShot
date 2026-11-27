@@ -1,0 +1,8 @@
+Verified: `npm ci` and `npm test` both succeed. Final file layout:
+
+- `package.json` — test script runs `node --test`
+- `package-lock.json` — generated so `npm ci` works
+- `test/basic.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node LTS with npm caching, runs `npm ci` then `npm test`
+
+No commits were made, per your instruction.

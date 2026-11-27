@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.4.1",
+  "task": "live-py-dockerfile",
+  "taskName": "Python Dockerfile",
+  "package": null,
+  "agent": "claude",
+  "model": "sonnet+oneshot",
+  "variant": "oneshot",
+  "trial": 8,
+  "ok": true,
+  "category": "pass",
+  "detail": "base image python:3.15-slim is current",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 87,
+  "costUsd": 0.43734629999999997,
+  "turns": 18,
+  "installedVersion": null,
+  "finishedAt": "2026-11-26T19:57:58.944Z"
+}

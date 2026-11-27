@@ -1,0 +1,11 @@
+Files are created, but I hit a permission wall trying to verify them.
+
+**What I created:**
+- `app.py` — `add(a, b)` returning `a + b`
+- `test_app.py` — `test_add()` asserting `add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — triggers on push/PR, checks out code, sets up Python 3.13 with pip caching via `actions/setup-python@v5`, installs requirements, runs `pytest`
+
+**What I couldn't do:** this session is running in a locked-down "don't ask" mode that blocks Bash commands which install packages or execute code (`pip3 install -r requirements.txt` and `python3 -m pytest` were both denied), even though read-only commands like `pwd` and `python3 --version` go through. So I wasn't able to actually install pytest and run the test locally to verify it passes.
+
+The code is simple enough that it should work (`add(2,3)==5` is straightforward), but since you asked me to verify before stopping, you'll want to either grant Bash permission for this session or run `pip3 install -r requirements.txt && pytest -q` yourself to confirm.

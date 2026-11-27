@@ -1,0 +1,7 @@
+Everything is set up and verified:
+
+- **`server.js`** — plain `node:http` server returning `"ok"` on port 3000 (tested live: `200 OK`, body `ok`).
+- **`package.json`** — minimal manifest with a `start` script.
+- **`Dockerfile`** — uses `node:26-alpine` (verified current Active LTS via nodejs.org, and confirmed the tag exists on Docker Hub), copies the two files, drops to the built-in non-root `node` user, exposes 3000, and runs `node server.js`.
+
+No build/dependency install was needed since the app has zero npm dependencies.

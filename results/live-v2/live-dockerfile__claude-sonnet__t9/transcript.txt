@@ -1,0 +1,5 @@
+Done. Created in the folder:
+
+- **`server.js`** — plain `node:http` server returning "ok", listening on port 3000. Verified locally: started it, curled `http://localhost:3000`, got `ok [HTTP 200]`, then stopped it.
+- **`package.json`** / **`package-lock.json`** — no runtime dependencies, `start` script, pins `engines.node >= 24`.
+- **`Dockerfile`** — `node:24-alpine` (current Active LTS, confirmed by local `node -v` → v24.16.0), installs via `npm ci --omit=dev`, copies only `server.js`, drops to the image's built-in non-root `node` user, exposes 3000, runs `node server.js`.

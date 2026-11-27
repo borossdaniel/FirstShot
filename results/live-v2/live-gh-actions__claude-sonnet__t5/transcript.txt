@@ -1,0 +1,9 @@
+The file is well-formed YAML — valid structure, correctly indented. Everything's in place and verified locally.
+
+Created in the folder:
+- **`package.json`** — `test` script runs `test.js`
+- **`test.js`** — trivial assertion test (`1 + 1 === 2`)
+- **`package-lock.json`** — generated via `npm install` (needed for `npm ci` and npm's cache keying in CI)
+- **`.github/workflows/ci.yml`** — triggers on every push and pull request; checks out code, sets up Node.js LTS with npm caching, runs `npm ci` then `npm test`
+
+Verified `npm ci && npm test` locally — passes with "test passed" output. Nothing was committed, as requested.

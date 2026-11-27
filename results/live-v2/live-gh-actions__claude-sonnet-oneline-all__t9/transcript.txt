@@ -1,0 +1,5 @@
+`npm ci` and `npm test` both run cleanly (1 passing test). Files created, nothing committed:
+
+- `package.json` + `package-lock.json` — test script runs Node's built-in test runner
+- `test/index.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7.0.1`), sets up current Node LTS (`actions/setup-node@v7.1.0`, `node-version: lts/*`, npm cache), then `npm ci` and `npm test`

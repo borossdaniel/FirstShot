@@ -1,0 +1,7 @@
+No dependencies, so nothing outdated. All three files are in place and verified.
+
+- `server.js` — plain `node:http` server returning "ok" on port 3000.
+- `package.json` — minimal, no dependencies.
+- `Dockerfile` — `node:26-alpine` (current LTS per oneshot facts), runs as non-root `node` user, exposes 3000.
+
+Verified by actually running `server.js` and curling it — got `200 ok`.

@@ -1,0 +1,8 @@
+Done. Created in the project folder:
+
+- `package.json` — `test` script runs `node test.js`
+- `test.js` — trivial assertion test
+- `package-lock.json` — generated via `npm install` so `npm ci` works in CI
+- `.github/workflows/ci.yml` — runs on every push/PR: checks out code (`actions/checkout@v7`), sets up Node.js LTS 26 with npm caching (`actions/setup-node@v7`), then `npm ci` and `npm test`
+
+Verified locally: `npm ci` and `npm test` both pass. No files were committed, per the instructions.

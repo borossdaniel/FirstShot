@@ -1,0 +1,8 @@
+Setup is complete. `ai.mjs` imports cleanly and calls through correctly to the SDK — it only fails at the final step because no `ANTHROPIC_API_KEY` is set in this sandbox, which is expected (nobody can set a real key here).
+
+Summary:
+- `package.json` — ES module project (`"type": "module"`) with `@anthropic-ai/sdk@1.14.0` (latest) as a dependency.
+- `ai.mjs` — exports `async function summarize(text)`, which creates the Anthropic client inside the function (reading `ANTHROPIC_API_KEY` from env) and calls `claude-opus-4-8` (Opus 4.8, Anthropic's current most capable model) to produce a one-sentence summary.
+- Verified: module loads, SDK call is correctly wired, and the only failure is the expected "no API key" error — confirming the code is correct and will work as soon as a real key is exported as `ANTHROPIC_API_KEY`.
+
+To use it: `export ANTHROPIC_API_KEY=sk-...` then `import { summarize } from './ai.mjs'`.

@@ -1,0 +1,7 @@
+All three files are in place and verified:
+
+- **`server.js`** — plain `node:http` server returning `ok` on port 3000 (confirmed with a live `curl`: `200 OK`, body `ok`).
+- **`package.json`** — minimal, no dependencies.
+- **`Dockerfile`** — `node:26-alpine` (current Node LTS per oneshot facts), copies app files, runs as the built-in non-root `node` user, exposes 3000.
+
+`check_project` reported no outdated dependencies (there are none). Image build wasn't required per your instructions, so I didn't build it, but the server itself is verified working.

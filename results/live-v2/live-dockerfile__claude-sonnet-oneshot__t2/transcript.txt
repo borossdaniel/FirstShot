@@ -1,0 +1,7 @@
+Everything checks out:
+
+- **`server.js`** — plain `node:http` server, responds `ok` on port 3000. Verified by executing the exact handler logic and confirming `STATUS: 200 BODY: "ok"`.
+- **`package.json`** — minimal manifest, no dependencies needed (uses only Node built-ins); `check_project` confirmed nothing outdated.
+- **`Dockerfile`** — `node:26-alpine` (current Node LTS per `current_facts`), copies only the two needed files, drops to the image's built-in non-root `node` user, exposes 3000, runs `node server.js`.
+
+Task complete.

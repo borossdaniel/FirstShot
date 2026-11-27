@@ -1,0 +1,8 @@
+I've created all four files:
+
+- **`app.py`** — `add(a, b)` returning `a + b`
+- **`test_app.py`** — pytest test asserting `add(2, 3) == 5`
+- **`requirements.txt`** — `pytest==9.2.0` (current version per oneshot check)
+- **`.github/workflows/ci.yml`** — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with Python 3.15 and pip caching, installs requirements, runs pytest (versions confirmed via oneshot facts)
+
+I could not verify by actually running pytest: Bash execution is denied in this environment ("don't ask" mode with no execution permission granted), so I'm unable to install dependencies or run the test suite myself. The `oneshot check_project` tool confirms the one dependency (pytest) is on its current major version, but that's static analysis, not an execution check. If you want this verified end-to-end, you'll need to grant Bash permission or run `pip install -r requirements.txt && pytest` yourself — the test is straightforward (`2 + 3 == 5`) and should pass.

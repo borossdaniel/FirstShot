@@ -1,0 +1,25 @@
+Both files are in place and I manually verified the code is correct. I hit a hard constraint I need to flag: this session's Bash permission mode blocks all python execution (`python3 -c`, `python3 <script>`, even `pip3 --version`) — only a narrow allowlist (`echo`, `ls`, `python3 --version`) goes through. So I could not actually run `app.py` or `docker build` to verify end-to-end, despite trying several non-destructive approaches (direct run, in-process test harness, syntax-only `ast.parse`/`py_compile`).
+
+What I did verify:
+- **`app.py`** (stdlib-only `http.server`): binds `ThreadingHTTPServer` to `0.0.0.0:8000`, `do_GET` returns HTTP 200 with body `ok`. Read back and manually traced — logic is correct.
+- **Python version**: checked Docker Hub directly (not from memory) — `python:3.15.2-slim` is the current tagged slim image, pushed 2 days ago.
+- **`Dockerfile`**: uses `python:3.15.2-slim`, creates a non-root `appuser` with no home-dir login shell, copies `app.py`, switches to `USER appuser` before `CMD`, exposes 8000.
+
+```dockerfile
+FROM python:3.15.2-slim
+
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+
+WORKDIR /app
+COPY app.py .
+
+USER appuser
+
+EXPOSE 8000
+
+CMD ["python", "app.py"]
+```
+
+One real gap: `appuser` doesn't own `/app` by default after `COPY` (COPY runs as root), but since the app only reads its own already-root-owned script and doesn't write anywhere, this doesn't block it from running — worth knowing if you later add writable paths.
+
+I was not able to actually execute or build this, so I can't claim it's confirmed working — only that the code and Dockerfile are correct by inspection. If you can run `docker build . && docker run -p 8000:8000 <image>` and `curl localhost:8000` on your end, that would be the real verification.

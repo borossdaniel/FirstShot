@@ -1,0 +1,21 @@
+Confirmed: any command that executes `app.py` or runs arbitrary Python code is blocked outright in this harness's current permission mode — not something I can work around. I won't keep retrying.
+
+Both files are in place:
+
+- **`app.py`** — stdlib-only (`http.server`), uses `ThreadingHTTPServer`, responds `200 ok` to any GET on port 8000.
+- **`Dockerfile`** — `python:3.15-slim` (3.15.0 is current stable, released 2026-10-09), creates and runs as non-root `appuser`, copies the app, exposes 8000.
+
+I manually reviewed `app.py` line by line (it's ~20 lines of standard-library code) and it's correct, but I could not actually execute it or build/run the container here — the Bash and `run`-skill permission checks reject any command that executes code (even `python3 -c "..."` or `python3 -m py_compile`), only allowing inert inspection commands like `ls` or `--version`. If you want this verified end-to-end, you'll need to run it yourself or grant broader execution permission:
+
+```
+python3 app.py &
+curl http://localhost:8000/
+```
+
+or, with Docker:
+
+```
+docker build -t tinyserver .
+docker run -p 8000:8000 tinyserver
+curl http://localhost:8000/
+```

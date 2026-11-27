@@ -1,0 +1,7 @@
+All three files are created and verified working — the server returns `ok` on port 3000.
+
+- **server.js** — plain `node:http` server, listens on port 3000, responds "ok"
+- **package.json** — minimal manifest with `start` script, `engines.node >=26`
+- **Dockerfile** — `node:26-alpine` (current Node.js LTS "Lithium", confirmed via nodejs.org and Docker Hub), installs prod deps, runs as the built-in non-root `node` user
+
+Verified by starting `node server.js` in the background and curling `localhost:3000`, which returned `200 ok`; the test server has been stopped.

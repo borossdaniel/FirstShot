@@ -39,7 +39,7 @@ async function runtimes() {
   const lts = node.find((x) => x.lts && ok(x));
   const pyl = py.find(ok);
   return {
-    node: { ltsMajor: Number(lts.cycle), ltsVersion: lts.latest, currentMajor: Number(node.find(ok).cycle), supportedMajors: node.filter(ok).map((x) => Number(x.cycle)), docker: `node:${lts.cycle}-alpine (or node:${lts.cycle}-slim)`, githubActions: `node-version: ${lts.cycle}` },
+    node: { ltsMajor: Number(lts.cycle), ltsVersion: lts.latest, currentMajor: Number(node.find(ok).cycle), supportedMajors: node.filter(ok).map((x) => Number(x.cycle)).filter((n) => n >= 4), docker: `node:${lts.cycle}-alpine (or node:${lts.cycle}-slim)`, githubActions: `node-version: ${lts.cycle}` },
     python: { latest: pyl.cycle, latestVersion: pyl.latest, supported: py.filter(ok).map((x) => x.cycle), docker: `python:${pyl.cycle}-slim` },
   };
 }

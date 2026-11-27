@@ -1,0 +1,13 @@
+{
+  "name": "oneshot-live-dockerfile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tiny Node.js web server using node:http",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=26"
+  }
+}

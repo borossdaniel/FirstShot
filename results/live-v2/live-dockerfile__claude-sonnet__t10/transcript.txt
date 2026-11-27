@@ -1,0 +1,7 @@
+All set. Created in this folder:
+
+- **`server.js`** — plain `node:http` server, responds `ok` on port 3000
+- **`package.json`** — minimal, `start` script, `engines.node >=24`
+- **`Dockerfile`** — `node:24-alpine` (current LTS, matches your local `v24.16.0`), installs prod deps only, copies app, drops to the built-in non-root `node` user, exposes 3000
+
+Verified by running `node server.js` locally and curling it — got `HTTP/1.1 200 OK` with body `ok`. Didn't build the Docker image per your instructions, but the Dockerfile uses only the built-in `node` user/group that ships in the official alpine image, so no extra setup is needed for the non-root step.

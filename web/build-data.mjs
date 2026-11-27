@@ -82,11 +82,12 @@ const data = {
   rows,
   // Live facts: model names, GitHub Actions, Docker/runtime versions. Three setups, same tasks.
   live: (() => {
-    const lr = allRuns.filter((r) => /[\\/]live-v1[\\/]/.test(r._dir));
+    // live-v2: 6 tasks × 10 runs × 3 setups (Nov 2026). live-v1 (3 tasks × 5) stays in results/ for reference.
+    const lr = allRuns.filter((r) => /[\\/]live-v2[\\/]/.test(r._dir));
     if (!lr.length) return null;
     const pick = (v) => lr.filter((r) => (v === 'oneshot' ? r.variant === 'oneshot' || r.variant === 'firstshot' : (r.variant || null) === v));
-    const side = (rs) => ({ runs: rs.length, correct: rs.filter((r) => r.ok).length, medianSec: round(median(rs.map((r) => r.durationSec)), 1), medianCost: round(median(rs.map((r) => r.costUsd))) });
-    const names = { 'live-claude-model': 'Newest Claude model', 'live-gh-actions': 'GitHub Actions CI', 'live-dockerfile': 'Node.js Dockerfile' };
+    const side = (rs) => ({ runs: rs.length, correct: rs.filter((r) => r.ok).length, medianSec: round(median(rs.map((r) => r.durationSec)), 1), medianCost: round(median(rs.map((r) => r.costUsd)), 3) });
+    const names = { 'live-claude-model': 'Newest Claude model', 'live-openai-model': 'Newest OpenAI model', 'live-gh-actions': 'GitHub Actions CI', 'live-py-ci': 'Python CI', 'live-dockerfile': 'Node.js Dockerfile', 'live-py-dockerfile': 'Python Dockerfile' };
     const arms = { none: pick(null), line: pick('oneline-all'), oneshot: pick('oneshot') };
     const examples = [];
     for (const r of arms.none) {

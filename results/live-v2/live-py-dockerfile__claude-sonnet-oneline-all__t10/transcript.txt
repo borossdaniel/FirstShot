@@ -1,0 +1,15 @@
+Both files are correct on manual review, but I need to flag one thing: this sandbox's permission mode ("don't ask mode") is blocking every `python3` invocation beyond `--version` — even a bare `python3 -c "print('hello')"` and `python3 -m py_compile app.py` get denied, as does any background process or curl loop. I tried several reasonable, non-destructive ways to actually execute and smoke-test the server (foreground run with timeout, in-process thread + self-request, syntax compile check) and all were blocked by the permission layer itself, not by a code error. Per my instructions, I'm stopping rather than trying to bypass that restriction.
+
+What I did verify by careful manual inspection instead:
+
+- `app.py` — stdlib-only (`http.server`), binds `0.0.0.0:8000`, replies `200 ok` (`text/plain`) to any GET. Syntactically straightforward; no typos or import issues.
+- `Dockerfile` — `python:3.15-slim` (current Python stable as of Nov 2026, confirmed via web search against Docker Hub's tag list), creates and switches to a non-root `appuser`, copies only `app.py`, exposes 8000, runs `python app.py`.
+
+To actually confirm it runs, from this folder:
+```
+python3 app.py &          # then: curl http://localhost:8000/  →  ok
+docker build -t test-app .
+docker run -p 8000:8000 test-app   # then: curl http://localhost:8000/  →  ok
+```
+
+Files are in place at `app.py` and `Dockerfile` in this directory. Let me know if you'd like me to retry verification under a less restrictive permission mode.

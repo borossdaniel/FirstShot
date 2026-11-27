@@ -1,0 +1,9 @@
+All verified and working. Summary of what's in the folder:
+
+- **`server.js`** — plain `node:http` server, responds `ok` on port 3000.
+- **`package.json`** + **`package-lock.json`** — minimal, no dependencies, `engines.node >= 24`.
+- **`Dockerfile`** — `node:24-alpine` (current Node.js LTS), copies `package.json`/lockfile, `npm ci --omit=dev`, copies `server.js`, drops to the image's built-in unprivileged `node` user, exposes 3000, runs `node server.js`.
+
+I started the server locally and confirmed with `curl`: `HTTP/1.1 200 OK` with body `ok`.
+
+One note: a background test run left a stray `node server.js` process bound to port 3000 in this sandbox, and the shell denied my `pkill` attempt (process-kill commands are blocked under this session's permission mode). It's confined to this ephemeral session folder and harmless, but I wasn't able to tear it down myself — let me know if you'd like me to try again or if you can stop it on your end.

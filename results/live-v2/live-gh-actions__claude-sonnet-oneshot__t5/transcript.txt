@@ -1,0 +1,7 @@
+Everything's in place and verified locally:
+
+- `package.json` + `package-lock.json` — `test` script runs `node --test`
+- `test/index.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code (`actions/checkout@v7`), sets up Node 26 (current LTS) with npm caching (`actions/setup-node@v7`), then `npm ci` and `npm test`
+
+Ran `npm ci && npm test` locally — both succeed. No files were committed, as requested.

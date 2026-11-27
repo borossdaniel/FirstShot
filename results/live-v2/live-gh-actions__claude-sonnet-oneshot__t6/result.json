@@ -1,0 +1,21 @@
+{
+  "oneshot": "0.4.1",
+  "task": "live-gh-actions",
+  "taskName": "GitHub Actions CI",
+  "package": null,
+  "agent": "claude",
+  "model": "sonnet+oneshot",
+  "variant": "oneshot",
+  "trial": 6,
+  "ok": true,
+  "category": "pass",
+  "detail": "actions and Node.js 26 are current",
+  "agentExitCode": 0,
+  "agentTimedOut": false,
+  "agentError": null,
+  "durationSec": 35.2,
+  "costUsd": 0.2652621,
+  "turns": 11,
+  "installedVersion": null,
+  "finishedAt": "2026-11-26T19:47:03.747Z"
+}

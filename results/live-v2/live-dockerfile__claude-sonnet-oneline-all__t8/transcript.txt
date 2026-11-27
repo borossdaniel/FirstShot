@@ -1,0 +1,5 @@
+All set. Created in the working directory:
+
+- **`server.js`** — plain `node:http` server returning `"ok"` on port 3000. Verified live: started it, curled `localhost:3000`, got `HTTP 200` / `ok`, then stopped the process.
+- **`package.json`** — minimal manifest, `"start": "node server.js"`, `engines.node >= 26`.
+- **`Dockerfile`** — `node:26.13.1-alpine3.24` (Node 26 is the current Active LTS as of Nov 2026, Alpine 3.24 is its current paired base), installs prod deps, creates and switches to a non-root `app` user, exposes 3000, runs `node server.js`. Not built, per your note that it wasn't required.

@@ -1,0 +1,9 @@
+Both files are created at the project root:
+
+**`app.py`** — stdlib `http.server` with `ThreadingHTTPServer`, responds `200 ok` on port 8000 to any GET request.
+
+**`Dockerfile`** — uses `python:3.15.2-slim-trixie` (verified current: Python 3.15.2 is the latest stable release as of Nov 2026, and that exact tag exists on Docker Hub, pushed 2 days ago), creates a non-root `appuser` via `useradd`, copies the app, switches to that user, exposes 8000, and runs `python app.py`.
+
+One limitation: I could not execute anything in this environment to live-verify the server — Bash is locked down to a narrow allowlist here (even `python3 app.py`, `python3 -c "..."`, and `python3 -m py_compile app.py` were denied; only trivial checks like `python3 --version` passed), and a subagent hit the identical denial. Per the tool's explicit instruction to stop rather than work around a permission denial, I didn't push further. I did trace the code by hand instead: `do_GET` sends a 200 status, sets `Content-Length`/`Content-Type`, writes `b"ok"` — this is the standard, well-known `http.server` idiom and has no logic that could fail at runtime.
+
+If you want actual execution confirmation, running `python3 app.py` and `curl localhost:8000` (or `docker build` + `docker run -p 8000:8000`) in an environment with normal shell permissions will confirm it immediately.

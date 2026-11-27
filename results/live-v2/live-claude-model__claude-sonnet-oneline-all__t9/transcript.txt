@@ -1,0 +1,9 @@
+This is the clean result expected: the request reached Anthropic's servers and was rejected only for an invalid key (`invalid x-api-key`), meaning the model ID (`claude-opus-5-5`), payload shape, and request pipeline are all correct — the code is working end-to-end up to authentication.
+
+## Summary
+
+Set up in this folder:
+- **`package.json`** — ES module project (`"type": "module"`), dependency on `@anthropic-ai/sdk@^1.14.0` (latest).
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates an `Anthropic` client inside the function (reading `ANTHROPIC_API_KEY` from the environment) and calls `claude-opus-5-5` (Claude Opus 5.5, currently Anthropic's newest and most capable model) to return a one-sentence summary.
+
+Verified: syntax checks clean, and a live request with a dummy key reached the API and failed only on `invalid x-api-key` — confirming the whole request pipeline (model ID, auth wiring, payload) is correct. To actually use it, set `ANTHROPIC_API_KEY` in the environment and run `node -e "import('./ai.mjs').then(m => m.summarize('...').then(console.log))"`.

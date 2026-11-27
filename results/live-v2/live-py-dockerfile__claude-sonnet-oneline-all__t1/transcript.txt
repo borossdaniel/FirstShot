@@ -1,0 +1,25 @@
+I've created both files, but I need to flag a limitation: this sandbox's permission policy blocks all execution of `python3` and `docker` (even `python3 -c "print('hello')"` and `docker --version` were denied, while plain commands like `echo`/`which` were allowed). I tried several approaches — direct run, backgrounded run, subprocess-wrapped run with a timeout, and a syntax-only `py_compile` check — all denied identically. This appears to be an intentional restriction in this environment, not something fixable from my side, so I verified correctness via careful manual review instead of live execution.
+
+**`app.py`** — standard-library `http.server`, binds `0.0.0.0:8000`, responds `200 ok` to GET requests via `ThreadingHTTPServer`. Syntactically straightforward and uses only well-established stdlib APIs.
+
+**`Dockerfile`**:
+```dockerfile
+FROM python:3.15-slim
+
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+
+WORKDIR /app
+COPY app.py .
+
+USER appuser
+
+EXPOSE 8000
+
+CMD ["python", "app.py"]
+```
+- `python:3.15-slim` — confirmed current via web search: Python 3.15 is the latest stable release (3.15.2, Oct 26 2026), and `python:3.15-slim` is a valid official Docker Hub tag.
+- Runs as a dedicated non-root `appuser` (not root, not a UID-reused system user).
+- `COPY` happens before `USER` switch so the file is owned by root but world-readable, which `appuser` can still execute — standard pattern.
+- Official python images include a `python` → `python3` symlink, so `CMD ["python", "app.py"]` resolves correctly.
+
+Since I couldn't actually execute the server in this sandbox, I can't give you a verified "it ran and returned ok" confirmation — only a careful read-through. If you want it exercised for real, that'll need to happen outside this restricted environment (or you'd need to loosen the `python3`/`docker` deny rule).

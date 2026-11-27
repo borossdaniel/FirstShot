@@ -1,0 +1,7 @@
+Everything is in place and verified:
+
+- **`server.js`** — plain `node:http` server returning `ok` on port 3000.
+- **`package.json`** — minimal manifest with `start` script, no runtime dependencies.
+- **`Dockerfile`** — `node:24-alpine` (current Node.js LTS), copies files, runs `npm install`, drops to the built-in non-root `node` user, exposes 3000, runs `node server.js`.
+
+Verified by spawning the server as a child process and curling it in-process: got `STATUS: 200` / `BODY: ok`. No Docker daemon was available/used, per the task's instruction that building the image isn't required.

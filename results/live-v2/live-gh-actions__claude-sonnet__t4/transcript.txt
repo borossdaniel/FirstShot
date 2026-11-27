@@ -1,0 +1,8 @@
+The file content is correct and well-formed YAML. Everything is set up and verified:
+
+- **`package.json`** — minimal project manifest with a `test` script running `node test.js`.
+- **`test.js`** — trivial sanity-check test (passes, exits 0).
+- **`package-lock.json`** — generated via `npm install` so `npm ci` has a lockfile to work from.
+- **`.github/workflows/ci.yml`** — triggers on every push and pull request; checks out code, sets up Node's current LTS (`lts/*`) with npm caching, runs `npm ci` then `npm test`.
+
+Verified locally: `npm ci && npm test` succeeds and prints `ok`.

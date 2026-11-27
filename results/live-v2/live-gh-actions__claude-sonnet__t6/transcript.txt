@@ -1,0 +1,8 @@
+Everything's in place and verified locally: `npm ci` and `npm test` both succeed.
+
+- `package.json` — `test` script runs Node's built-in test runner (`node --test`)
+- `package-lock.json` — generated so `npm ci` works and npm caching in CI has something to key off
+- `test/basic.test.js` — trivial sanity test
+- `.github/workflows/ci.yml` — runs on every push/PR, checks out code, sets up Node LTS (`lts/*`) with npm caching, then `npm ci && npm test`
+
+No commit was made, per your instructions.

@@ -1,0 +1,7 @@
+Done. The project is set up in this folder:
+
+- **`package.json`** — ES modules (`"type": "module"`), with `openai@^7.65.0` (verified via `npm view openai version` as the current release) as a dependency.
+- **`ai.mjs`** — exports `async function summarize(text)`, which creates an `OpenAI` client inside the function (reading `OPENAI_API_KEY` from the environment) and calls the `gpt-6.2-astra` model (confirmed as OpenAI's current newest/most capable flagship via their live docs, rather than from memory, per CLAUDE.md), returning the one-sentence summary text.
+- Dependencies installed via `npm install`; `node_modules` and `package-lock.json` present.
+
+Verified by importing the module and calling `summarize()`: it loads cleanly, exports the function correctly, and the client correctly reaches for `OPENAI_API_KEY` — failing only with "Missing credentials" since no key is set in this sandbox, which is expected. A follow-up live-network check with a dummy key was blocked by your permission settings, so I stopped there rather than working around it — let me know if you'd like me to attempt that once a real `OPENAI_API_KEY` is available.

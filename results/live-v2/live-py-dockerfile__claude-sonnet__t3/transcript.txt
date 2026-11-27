@@ -1,0 +1,19 @@
+I've created both files but hit a hard constraint I should flag rather than work around: in this environment, Bash permission denies any command that isn't on a narrow pre-approved allowlist (plain `ls`, `pwd`, `echo`, `python3 --version`, `curl` are allowed; but `python3 app.py`, `python3 -c`, `python3 -m py_compile`, `timeout ...`, and the `run` skill are all denied — including when run in background). This isn't a code problem, it's the permission policy itself blocking any process execution, so I stopped retrying rather than trying to force it.
+
+What I did instead, to still give you confidence before stopping:
+
+**`app.py`** — stdlib-only `http.server`, binds `0.0.0.0:8000`, responds `200 ok` (text/plain) to any GET. Manually traced: imports are correct, `Handler.do_GET` writes `b"ok"` after proper response/headers, `HTTPServer(...).serve_forever()` runs under the `__main__` guard. No syntax or logic issues on inspection.
+
+**`Dockerfile`**:
+```
+FROM python:3.15-slim
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+WORKDIR /app
+COPY app.py .
+USER appuser
+EXPOSE 8000
+CMD ["python", "app.py"]
+```
+I confirmed via web lookup that **Python 3.15.2** (Oct 2026) is the current stable release, so `python:3.15-slim` is up to date. It creates a dedicated non-login user, copies the app, drops to that user before running, and exposes 8000.
+
+I could not actually execute the server or build the image to confirm runtime behavior — that capability was denied at the permission layer, not something I could script around safely. If you want it actually run/built, that'll need either a permission-mode change on your end or you running `docker build . && docker run -p 8000:8000 <image>` / `python3 app.py` yourself locally.

@@ -1,0 +1,6 @@
+Project structure confirms correctly (node_modules, package.json, package-lock.json, ai.mjs all present). Setup is complete.
+
+**Summary:**
+- `package.json` — ES module project (`"type": "module"`) with `openai@^6.49.0` as a dependency (installed via `npm install`, `node_modules`/`package-lock.json` generated).
+- `ai.mjs` — exports `async function summarize(text)`. It constructs the `OpenAI` client inside the function (reading `OPENAI_API_KEY` from env, as required), calls `client.responses.create` with model `gpt-6.2-astra` — OpenAI's current flagship/most capable model per their live docs (`developers.openai.com/api/docs/models`) — and returns `response.output_text.trim()`.
+- Verified: the module imports cleanly, `summarize` runs through client construction and the API call path correctly, failing only at the expected point — "Missing credentials... set the `OPENAI_API_KEY`... environment variable" — since no key is set in this environment. I couldn't do a live end-to-end call for that reason; once you export `OPENAI_API_KEY`, it should work as-is.

@@ -1,6 +1,6 @@
 {
   "name": "oneshot",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Live facts for Claude Code: newest AI model names, GitHub Actions versions, Node/Python LTS and Docker images, plus a check for retired models before Claude says done.",
   "author": { "name": "OneShot" },
   "homepage": "https://oneshotagent.dev",

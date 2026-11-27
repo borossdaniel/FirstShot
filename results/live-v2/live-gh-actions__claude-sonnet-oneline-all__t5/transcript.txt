@@ -1,0 +1,10 @@
+Good, the workflow file is there too (the earlier `-not -path './.git*'` glob happened to also swallow `.github` due to shell globbing quirks, but a plain `find` confirms everything is in place).
+
+All files are created and verified:
+
+- **`package.json`** — `test` script runs `node --test` (Node's built-in test runner, no extra deps)
+- **`test/sanity.test.js`** — trivial passing test
+- **`package-lock.json`** — generated so `npm ci` works
+- **`.github/workflows/ci.yml`** — runs on every push/PR, uses `actions/checkout@v7` and `actions/setup-node@v7` (current major versions as of Nov 2026) with `node-version: lts/*` (resolves to Node 26, current LTS) and `cache: npm`, then runs `npm ci` and `npm test`
+
+Locally ran `npm install` → `npm ci` → `npm test`, all succeeded. Nothing committed, as requested.

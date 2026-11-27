@@ -1,0 +1,7 @@
+Done. Created and verified:
+
+- **`server.js`** — plain `node:http` server returning `ok` with status 200 on port 3000. Confirmed working: ran it locally (local Node is v24.16.0) and `curl localhost:3000` returned `HTTP/1.1 200 OK` / `ok`.
+- **`package.json`** — minimal manifest with a `start` script and `engines.node >=24`.
+- **`Dockerfile`** — `node:24-alpine` (current Node.js LTS), installs only production deps, copies in the app, and runs as the built-in non-root `node` user, exposing port 3000.
+
+Docker itself wasn't accessible in this sandbox (permission denied), but per the task that wasn't required — I verified correctness by running the server directly with Node instead.

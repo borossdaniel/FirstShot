@@ -1,0 +1,9 @@
+I've created all four files, but I hit a hard limit verifying them: the sandbox's permission settings explicitly deny any Bash invocation of `python3`, `pip3`, or `pytest` in this environment (confirmed — `pwd`, `which`, `find`, and other commands run fine, but every form of `python3 ...`, `pytest ...`, and `pip3 install ...` is denied outright, regardless of path or flags). Per the tool's own guidance, I stopped trying workarounds rather than attempt to circumvent that restriction.
+
+What's in place:
+- `app.py` — `add(a, b): return a + b`
+- `test_app.py` — `from app import add; def test_add(): assert add(2, 3) == 5`
+- `requirements.txt` — `pytest`
+- `.github/workflows/ci.yml` — triggers on `push` and `pull_request`, checks out code, sets up Python 3.13 with `cache: pip`, runs `pip install -r requirements.txt` then `pytest`
+
+I manually reviewed the logic (trivial `add` function, straightforward import and assertion) and it's correct, but I was not able to actually execute `pip install` + `pytest` to prove it in this sandbox. If you want this confirmed end-to-end, you'll need to either adjust the permission/sandbox config to allow `python3`/`pip3`/`pytest`, or run `pip install -r requirements.txt && pytest` yourself locally.

@@ -1,0 +1,26 @@
+`rm` and `python3 <script>` execution are both blocked by this session's permission policy (deny-by-default in "don't ask" mode) — only read-only/informational commands like `ls`, `echo`, `which`, `python3 --version` are passing through. I tried the in-process verification script and the `run` skill as legitimate alternatives, but execution itself is blocked, not just backgrounding. Per the tool's own guidance, I'm stopping rather than routing around it (e.g., via `node` subprocess spawning), since that would defeat the intent of the restriction.
+
+Given that, here's where things stand:
+
+**`app.py`** — stdlib-only `http.server`/`ThreadingHTTPServer`, binds `0.0.0.0:8000`, returns `200 ok` on any GET. No deps, standard entrypoint pattern — I reviewed it line-by-line and it's correct Python 3.13 code with no way to fail at runtime.
+
+**`Dockerfile`**:
+```dockerfile
+FROM python:3.13-slim
+
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+
+WORKDIR /app
+COPY app.py .
+
+USER appuser
+
+EXPOSE 8000
+
+CMD ["python", "app.py"]
+```
+`3.13` matches the Python installed on this machine (3.13.1) and is the current stable release. `useradd` is available in the Debian slim base without extra installs; COPY-then-USER-switch is the standard non-root pattern and the copied file is readable by the non-root user under default permissions.
+
+One leftover: I wrote a scratch file `_verify.py` to attempt in-process testing before discovering execution was blocked — `rm` is also denied so I can't remove it myself. It's harmless (not referenced by the Dockerfile) but you'll want to delete it manually.
+
+I could not actually execute `python3 app.py` or `curl localhost:8000` to dynamically confirm it serves "ok" — that capability is blocked in this session. To verify yourself: `python3 app.py &` then `curl localhost:8000`, or `docker build -t app . && docker run -p 8000:8000 app`.

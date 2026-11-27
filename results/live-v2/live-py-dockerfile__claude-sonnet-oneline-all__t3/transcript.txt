@@ -1,0 +1,36 @@
+Both direct execution and the subagent's attempts are blocked by this sandbox's permission mode — it denies any Python execution beyond trivial commands like `--version`, not just network-binding. I've exhausted reasonable verification paths; reporting that limitation transparently now.
+
+**Created files:**
+
+`app.py` — stdlib-only `http.server`, binds `0.0.0.0:8000`, responds `200 ok` to any GET:
+```python
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"ok")
+
+if __name__ == "__main__":
+    server = ThreadingHTTPServer(("0.0.0.0", 8000), Handler)
+    server.serve_forever()
+```
+
+`Dockerfile` — uses `python:3.15.2-slim`, the current Python release and current Docker Hub slim tag (verified today via web search and Docker Hub, not from memory), runs as a non-root user:
+```dockerfile
+FROM python:3.15.2-slim
+
+RUN useradd --create-home --shell /usr/sbin/nologin appuser
+WORKDIR /app
+COPY app.py .
+USER appuser
+
+EXPOSE 8000
+CMD ["python", "app.py"]
+```
+
+**Verification status — being upfront:** I could not actually execute the server in this sandbox to confirm it runs and returns "ok". I tried running it directly (foreground, backgrounded, with `run_in_background`, with `timeout`) and also delegated to a subagent, which additionally tried `python3 -m http.server` as a generic sanity check and `python3 -c "..."`. All execution attempts were denied by the harness's permission mode except truly trivial commands (`echo`, `python3 --version`). So this is a hard sandbox restriction, not a bug in the code. I did not build/run the Docker image either, per your instructions not to.
+
+What I did verify: the code is correct stdlib usage (no third-party deps, no syntax issues on inspection), `python:3.15.2-slim` currently exists on Docker Hub (confirmed via Docker Hub tags page, pushed 2 days ago), and the Dockerfile correctly creates/switches to a non-root user before `CMD`.

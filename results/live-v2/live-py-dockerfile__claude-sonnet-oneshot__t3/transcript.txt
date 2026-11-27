@@ -1,0 +1,14 @@
+Both files are in place:
+
+- **`app.py`** — stdlib `http.server`, binds `0.0.0.0:8000`, responds `200 ok` to any GET.
+- **`Dockerfile`** — `python:3.15-slim` (current per oneshot facts), creates a non-root `appuser` (uid 1000), copies `app.py`, exposes 8000, runs as that user.
+
+No dependencies were needed, so `check_project` found nothing to flag.
+
+One thing to flag: I could not actually execute `app.py` or even run a plain `python3 -m py_compile app.py` — every attempt (directly and via a subagent) was denied by the harness's "don't ask mode" policy, specifically for commands touching this file/port, even though unrelated commands like `python3 --version` worked fine. So I verified correctness by careful inspection rather than by running it, which falls short of the "verify it runs" instruction. If you want an actual runtime check, you'd need to grant Bash permission for this session, or run it yourself:
+
+```
+python3 app.py &
+curl http://localhost:8000/
+kill %1
+```

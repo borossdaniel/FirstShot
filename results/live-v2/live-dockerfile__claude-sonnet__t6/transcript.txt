@@ -1,0 +1,7 @@
+Done. Created in this folder:
+
+- **`server.js`** — plain `node:http` server returning `ok` on port 3000
+- **`package.json`** — minimal, `engines.node >=26`, `npm start` runs it
+- **`Dockerfile`** — `node:26-alpine` (current Node.js LTS, "Lithium"), installs deps, copies source, runs as the built-in non-root `node` user, exposes port 3000
+
+Verified by running `node server.js` directly and curling `localhost:3000` — got `200 ok`. Didn't build the Docker image per your instructions, but the Dockerfile follows standard practice (alpine base, non-root user, no dev deps).

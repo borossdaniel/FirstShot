@@ -1,0 +1,9 @@
+I've created all four files, but I'm unable to verify by actually running pytest — the Bash tool is denied in this environment (running in "don't ask" mode with Bash disabled). I don't have another tool that can execute Python/pip/pytest commands.
+
+Files created:
+- `app.py` — `add(a, b)` returns `a + b`
+- `test_app.py` — tests `add(2, 3) == 5`
+- `requirements.txt` — `pytest==9.2.0` (current version per oneshot check)
+- `.github/workflows/ci.yml` — runs on push/PR, `actions/checkout@v7`, `actions/setup-python@v7` with Python `3.15` and pip caching, installs requirements, runs pytest (versions confirmed current via oneshot facts tool)
+
+Since I can't execute shell commands here, I can't actually install dependencies or run the test suite to confirm it passes — the code is straightforward and should work, but I haven't verified it. If you want this verified, you'd need to either grant Bash access or run `pip install -r requirements.txt && pytest` yourself.

@@ -1,0 +1,7 @@
+Project is set up and verified:
+
+- **`package.json`** — ES modules (`"type": "module"`), with `openai` installed as a dependency.
+- **`ai.mjs`** — exports `async function summarize(text)`. It constructs the `OpenAI` client inside the function (reading `OPENAI_API_KEY` from the environment implicitly), calls `client.responses.create` with model `gpt-6.2-astra` (OpenAI's current flagship, confirmed directly against their docs), and returns the one-sentence summary as a trimmed string.
+- Ran a smoke test importing `summarize` and calling it: it loaded correctly, exported a function, and the SDK's error message confirmed it's correctly wired to read `OPENAI_API_KEY` from the environment (it failed only due to no key being set in this sandbox — expected, since no real key exists here).
+
+To actually use it, set `OPENAI_API_KEY` in the environment and call `summarize("your text")`.

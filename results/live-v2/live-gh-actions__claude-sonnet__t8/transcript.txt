@@ -1,0 +1,9 @@
+`npm ci` and `npm test` both succeed, confirming the CI workflow's exact steps work locally.
+
+Done:
+- `package.json` — test script runs `node --test` (Node's built-in test runner, no extra deps).
+- `index.test.js` — trivial sanity test.
+- `package-lock.json` — generated so `npm ci` works in CI.
+- `.github/workflows/ci.yml` — runs on push/PR, checks out code, sets up Node LTS (`lts/*`) with npm caching, then `npm ci` and `npm test`.
+
+Nothing was committed, as requested.

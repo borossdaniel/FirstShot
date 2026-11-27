@@ -1,0 +1,8 @@
+Done. Created in the project folder:
+
+- **`package.json`** — minimal config with `test` script running Node's built-in test runner (`node --test`), no external dependencies.
+- **`index.test.js`** — trivial sanity test.
+- **`package-lock.json`** — generated via `npm install` so `npm ci` works.
+- **`.github/workflows/ci.yml`** — runs on every push/PR, checks out code (`actions/checkout@v7`), sets up Node.js 26 LTS with npm caching (`actions/setup-node@v7`), then runs `npm ci` and `npm test`.
+
+Verified locally: `npm ci` and `npm test` both succeed. Versions (Node 26, action majors) came from the oneshot `current_facts` tool per CLAUDE.md, not memory.

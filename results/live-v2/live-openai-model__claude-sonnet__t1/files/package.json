@@ -1,0 +1,16 @@
+{
+  "name": "oneshot-live-openai-model-sjgx39",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ai.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^7.65.0"
+  }
+}

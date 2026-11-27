@@ -1,0 +1,5 @@
+Setup is complete and verified:
+
+- **`package.json`** — ES module project with `openai@7.65.0` (current major, confirmed via dependency check).
+- **`ai.mjs`** — exports `async function summarize(text)`, creates the `OpenAI` client inside the function reading `OPENAI_API_KEY` from env, and calls `client.responses.create()` with model `gpt-6.2-sol` (OpenAI's current flagship model per live facts lookup), returning `response.output_text.trim()`.
+- Verified by importing and invoking `summarize()`: it correctly builds the request and fails with OpenAI's own "missing API key" error since no key is present in this sandbox — confirming the code path is wired correctly end-to-end. To get a live summary, set `OPENAI_API_KEY` and rerun.
