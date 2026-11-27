@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy · OneShot</title>
+<meta name="description" content="OneShot sets no cookies, has no tracking and no accounts. What the website, the repo check and the tools do with data.">
+<meta name="theme-color" content="#060606">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2026%2026%22%3E%3Crect%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22%23060606%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23ff4f1f%22%20stroke-width%3D%223%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%223.5%22%20fill%3D%22%23ff4f1f%22%2F%3E%3C%2Fsvg%3E">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root { color-scheme: dark; --bg: #060606; --fg: #f5f3ef; --muted: #8f8b85; --line: #262626; --signal: #ff4f1f; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.65 "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; padding: max(28px, env(safe-area-inset-top)) 20px max(48px, env(safe-area-inset-bottom)); }
+main { max-width: 680px; margin: 0 auto; }
+a { color: var(--signal); text-underline-offset: 3px; }
+.home { font: 600 14px "IBM Plex Mono", ui-monospace, Menlo, monospace; color: var(--fg); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+h1 { font: 800 clamp(34px, 7vw, 52px)/1.05 "Archivo", "Arial Black", system-ui, sans-serif; letter-spacing: -0.02em; margin: 36px 0 10px; }
+h2 { font: 700 20px/1.3 "Archivo", system-ui, sans-serif; margin: 36px 0 8px; }
+.lead { color: var(--muted); margin: 0 0 8px; }
+.short { border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin: 24px 0; background: #111; }
+.short ul { margin: 0; padding-left: 20px; }
+code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, monospace; background: #1a1a1a; padding: 2px 6px; border-radius: 5px; }
+footer { color: var(--muted); font-size: 14px; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="home" href="/"><svg width="18" height="18" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="9" fill="none" stroke="#ff4f1f" stroke-width="3"/><circle cx="13" cy="13" r="3.5" fill="#ff4f1f"/></svg>OneShot</a>
+
+  <h1>Privacy</h1>
+  <p class="lead">Last updated 27 November 2026.</p>
+
+  <div class="short">
+    <strong>Short version</strong>
+    <ul>
+      <li>No cookies, no analytics, no tracking, no accounts, no ads.</li>
+      <li>The tools (CLI, MCP server, plugin, GitHub Action) send no telemetry.</li>
+      <li>The repo check downloads a <em>public</em> repo, checks it and deletes it straight away.</li>
+      <li>Our host keeps normal server logs, like every website.</li>
+    </ul>
+  </div>
+
+  <h2>Who runs OneShot</h2>
+  <p>OneShot is an open-source project maintained at <a href="https://github.com/borossdaniel/OneShot">github.com/borossdaniel/OneShot</a>. For any privacy question or request, <a href="https://github.com/borossdaniel/OneShot/issues/new">open an issue</a>. If you'd rather not ask in public, open an issue asking for a private contact and we'll reply there.</p>
+
+  <h2>This website</h2>
+  <p>The site is hosted by <a href="https://vercel.com/legal/privacy-policy">Vercel</a>. Like any web server, Vercel records technical data for each request: your IP address, the page or address requested, the time, and your browser's user agent. These logs are kept for a limited time, to deliver the site and keep it secure. That is the legal basis (legitimate interest, GDPR Art. 6(1)(f)). We don't combine the logs with anything, and we don't use them to identify visitors.</p>
+  <p>Fonts and everything else on the page are served from this site. Your browser doesn't contact Google or any other third party when you visit.</p>
+
+  <h2>The repo check</h2>
+  <p>When you paste a repo, we fetch that <strong>public</strong> GitHub repository from GitHub, keep only the files the check reads (code, package files, workflows, Dockerfiles), check them and delete them in the same request. Nothing from the repo is stored. The result is about the public repo, not about you. It is cached for up to an hour, so the next person checking the same repo gets it faster. The repo name also shows up in the server logs above.</p>
+
+  <h2>README badges</h2>
+  <p>A badge is an image of a public repo's check result, cached for up to 6 hours. On GitHub, README images are loaded through GitHub's own image proxy, so we don't see who views a README.</p>
+
+  <h2>The tools</h2>
+  <p>The npm package <code>oneshot-agent</code>, the MCP server, the Claude Code plugin and the GitHub Action run on your machine or in your CI. They send no telemetry and no code. To get today's facts, they read public sources: the npm registry, PyPI, endoflife.date, GitHub's public API and <code>oneshotagent.dev/facts.json</code>. That last request is logged by our host like any other request to this site. You can turn it off with <code>ONESHOT_FACTS_URL=off</code>.</p>
+
+  <h2>Your rights</h2>
+  <p>Under the GDPR you can ask for access to, correction of or deletion of personal data about you, and you can object to its use. Apart from the host's short-lived server logs, we hold no personal data. You can also complain to your national data protection authority.</p>
+
+  <footer>OneShot · open source, MIT · <a href="/">Home</a></footer>
+</main>
+</body>
+</html>
