@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-26T20:00:17.429Z",
+ "updatedAt": "2026-11-27T02:40:14.507Z",
  "agent": "Claude Code · Sonnet",
  "totals": {
   "libraries": 31,
@@ -1063,19 +1063,19 @@
      "runs": 10,
      "correct": 0,
      "medianSec": 46.3,
-     "medianCost": 0.26
+     "medianCost": 0.263
     },
     "line": {
      "runs": 10,
      "correct": 6,
      "medianSec": 59.6,
-     "medianCost": 0.39
+     "medianCost": 0.391
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 46.7,
-     "medianCost": 0.28
+     "medianCost": 0.282
     }
    },
    {
@@ -1085,19 +1085,19 @@
      "runs": 10,
      "correct": 8,
      "medianSec": 90.4,
-     "medianCost": 0.53
+     "medianCost": 0.526
     },
     "line": {
      "runs": 10,
      "correct": 9,
      "medianSec": 69.6,
-     "medianCost": 0.42
+     "medianCost": 0.416
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 53.9,
-     "medianCost": 0.31
+     "medianCost": 0.308
     }
    },
    {
@@ -1107,19 +1107,19 @@
      "runs": 10,
      "correct": 0,
      "medianSec": 34.3,
-     "medianCost": 0.24
+     "medianCost": 0.242
     },
     "line": {
      "runs": 10,
      "correct": 10,
      "medianSec": 55.4,
-     "medianCost": 0.39
+     "medianCost": 0.389
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 33.8,
-     "medianCost": 0.25
+     "medianCost": 0.247
     }
    },
    {
@@ -1129,19 +1129,19 @@
      "runs": 10,
      "correct": 0,
      "medianSec": 73.7,
-     "medianCost": 0.35
+     "medianCost": 0.349
     },
     "line": {
      "runs": 10,
      "correct": 10,
      "medianSec": 106.3,
-     "medianCost": 0.61
+     "medianCost": 0.606
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 65.8,
-     "medianCost": 0.36
+     "medianCost": 0.364
     }
    },
    {
@@ -1157,13 +1157,13 @@
      "runs": 10,
      "correct": 10,
      "medianSec": 57.6,
-     "medianCost": 0.4
+     "medianCost": 0.396
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 45.7,
-     "medianCost": 0.32
+     "medianCost": 0.324
     }
    },
    {
@@ -1173,19 +1173,19 @@
      "runs": 10,
      "correct": 5,
      "medianSec": 115.3,
-     "medianCost": 0.48
+     "medianCost": 0.478
     },
     "line": {
      "runs": 10,
      "correct": 9,
      "medianSec": 104,
-     "medianCost": 0.51
+     "medianCost": 0.508
     },
     "oneshot": {
      "runs": 10,
      "correct": 10,
      "medianSec": 59.6,
-     "medianCost": 0.33
+     "medianCost": 0.332
     }
    }
   ],
@@ -1193,19 +1193,19 @@
    "runs": 60,
    "correct": 17,
    "medianSec": 60.7,
-   "medianCost": 0.33
+   "medianCost": 0.326
   },
   "line": {
    "runs": 60,
    "correct": 54,
    "medianSec": 67.5,
-   "medianCost": 0.44
+   "medianCost": 0.436
   },
   "oneshot": {
    "runs": 60,
    "correct": 60,
    "medianSec": 46.8,
-   "medianCost": 0.29
+   "medianCost": 0.292
   },
   "examples": [
    {

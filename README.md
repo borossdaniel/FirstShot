@@ -10,7 +10,7 @@ Agents write model names, GitHub Actions versions, Docker images and runtime ver
 | "Always use the newest versions" in CLAUDE.md | 54 of 60 | 68 s | $0.44 |
 | **OneShot** | **60 of 60** | **47 s** | **$0.29** |
 
-Without help, agents wrote `claude-opus-4-8` (10 of 10 runs), `actions/checkout@v4` (20 of 20), `node:24-alpine` and `python:3.13-slim`. Told to "use the newest", they searched the web: right most of the time, but 44% slower and 52% more expensive per run than OneShot, and the Claude model was still wrong 4 of 10 times. With OneShot they asked once and were right every time, faster and cheaper than with no help at all. All 180 runs and transcripts are in `results/live-v2/`.
+Without help, agents wrote `claude-opus-4-8` (10 of 10 runs), `actions/checkout@v4` (20 of 20), `node:24-alpine` and `python:3.13-slim`. Told to "use the newest", they searched the web: right 54 of 60 times, but the Claude model was still wrong 4 of 10 times. With OneShot they asked once and were right every time, **31% faster and 33% cheaper than telling the agent to look things up**, and no slower or more expensive than giving it no help at all. All 180 runs and transcripts are in `results/live-v2/`.
 
 **Try it without installing anything:** paste a public GitHub repo at [oneshotagent.dev](https://oneshotagent.dev/#check), or see the Action on a [demo repo](https://github.com/borossdaniel/oneshot-demo).
 
@@ -230,7 +230,7 @@ No. OneShot only downloads public facts: package versions (npm, PyPI, deps.dev),
 No. The MCP tools work in Cursor, Windsurf, Codex, Claude Desktop and any other MCP app. The check before "done" (Stop hook) is Claude Code only. The CLI and the GitHub Action work with any agent, or none. The benchmark numbers are from Claude Code with Sonnet.
 
 **Why not just tell my agent to use the newest versions?**
-It helps, but the agent then has to look everything up itself: in our runs it was right 54 of 60 times, but 44% slower and 52% more expensive per run than OneShot (60 of 60). OneShot answers in one call.
+It helps, but the agent then has to look everything up itself: in our runs it was right 54 of 60 times. OneShot answers in one call: 60 of 60 right, 31% faster and 33% cheaper per run.
 
 **Will it change my code?**
 No. It tells your agent what is current; the agent writes the code. The Action only annotates pull requests. It fails when something will break (a retired model, an end-of-life runtime); `strict: true` also fails on older versions.

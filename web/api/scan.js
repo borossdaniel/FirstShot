@@ -119,14 +119,8 @@ async function fetchInto(repo, dir) {
   }
 }
 
-export default async function handler(req, res) {
-  res.setHeader('content-type', 'application/json; charset=utf-8');
-  const url = new URL(req.url, 'http://x');
-  const repo = parseRepo(url.searchParams.get('repo'));
-  if (!repo) {
-    res.status(400).send(JSON.stringify({ error: 'Paste a public GitHub repo, like vercel/next.js or https://github.com/owner/name.' }));
-    return;
-  }
+/** Check one public repo. Returns { repo, files, partial, checkedPackages, facts, outdated }. Throws { status } errors. */
+export async function scanRepo(repo) {
   process.env.ONESHOT_FACTS_URL ||= 'https://www.oneshotagent.dev/facts.json';
   process.env.ONESHOT_FACTS_CACHE ||= join(tmpdir(), 'oneshot-facts.json');
   const dir = mkdtempSync(join(tmpdir(), 'scan-'));
@@ -136,12 +130,26 @@ export default async function handler(req, res) {
     const rep = await checkProject(dir);
     const facts = (rep.facts || []).map(({ kind, level, file, line, found, fix, message, retires }) => ({ kind, level, file, line, found, fix, message, retires }));
     const outdated = (rep.outdated || []).map(({ name, range, latest, behind, system }) => ({ name, range, latest, behind, system }));
+    return { repo, files, partial, checkedPackages: (rep.checked || []).length, facts, outdated };
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+export default async function handler(req, res) {
+  res.setHeader('content-type', 'application/json; charset=utf-8');
+  const url = new URL(req.url, 'http://x');
+  const repo = parseRepo(url.searchParams.get('repo'));
+  if (!repo) {
+    res.status(400).send(JSON.stringify({ error: 'Paste a public GitHub repo, like vercel/next.js or https://github.com/owner/name.' }));
+    return;
+  }
+  try {
+    const result = await scanRepo(repo);
     res.setHeader('cache-control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-    res.status(200).send(JSON.stringify({ repo, files, partial, checkedPackages: (rep.checked || []).length, facts, outdated }));
+    res.status(200).send(JSON.stringify(result));
   } catch (err) {
     res.setHeader('cache-control', 'no-store');
     res.status(err.status || 500).send(JSON.stringify({ error: err.status ? err.message : 'Something went wrong checking this repo. Try again, or run npx oneshot-agent check locally.' }));
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
   }
 }
