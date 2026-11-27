@@ -5,7 +5,8 @@
 // {
 //   "models":   { "allowed": ["claude-sonnet-5-5", "gpt-6.2-*"], "blocked": ["gpt-4o*"] },
 //   "packages": { "blocked": { "moment": "use date-fns" }, "minMajor": { "react": 19 } },
-//   "notes":    ["Use @acme/ui for buttons and forms"]
+//   "notes":    ["Use @acme/ui for buttons and forms"],
+//   "ignore":   ["test/fixtures/", "docs/**/*.md"]   (paths the check skips)
 // }
 
 import { existsSync, readFileSync } from 'node:fs';

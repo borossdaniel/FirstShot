@@ -271,3 +271,16 @@ test('check --format=github: paths are from the repo root with the right line, f
   assert.match(sub.stdout, /::error file=app\/ai\.mjs,line=2,/);
   assert.match(sub.stdout, /::error file=app\/Dockerfile,line=2,/);
 });
+
+test('.oneshot.json ignore: listed folders and files are not reported', async () => {
+  const { mkdirSync } = await import('node:fs');
+  const dir = mkdtempSync(join(tmpdir(), 'oneshot-ignore-'));
+  mkdirSync(join(dir, 'fixtures'));
+  mkdirSync(join(dir, 'src'));
+  writeFileSync(join(dir, 'fixtures', 'old.mjs'), 'export const m = "claude-3-5-sonnet-20241022";\n');
+  writeFileSync(join(dir, 'src', 'ai.mjs'), 'export const m = "claude-3-5-sonnet-20241022";\n');
+  writeFileSync(join(dir, 'CHANGELOG.md'), 'Moved off claude-3-5-sonnet-20241022.\n');
+  writeFileSync(join(dir, '.oneshot.json'), JSON.stringify({ ignore: ['fixtures/', '*.md'] }));
+  const files = [...new Set((await checkProject(dir)).facts.map((f) => f.file))];
+  assert.deepEqual(files, ['src/ai.mjs']);
+});
