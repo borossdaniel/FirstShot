@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts-local.css">
+<style>
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#060606}
+body{font-family:"Instrument Sans",sans-serif;color:#f5f3ef;position:relative}
+.glow{position:absolute;right:-180px;top:-220px;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(255,79,31,.28),rgba(255,79,31,0) 65%)}
+.wrap{position:absolute;inset:56px 64px;display:flex;flex-direction:column;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:14px;font:600 30px "IBM Plex Mono",monospace;letter-spacing:-.01em}
+.row{display:flex;gap:44px;align-items:center}
+h1{margin:0;font:800 62px/1.04 "Archivo",sans-serif;font-stretch:100%;letter-spacing:-.025em;width:660px}
+h1 span{color:#ff4f1f}
+.card{width:400px;background:#ff4f1f;color:#0a0a0a;border-radius:26px;padding:26px 28px;font:500 21px/1.75 "IBM Plex Mono",monospace;box-shadow:0 30px 80px rgba(255,79,31,.25)}
+.card .k{font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between}
+.card s{opacity:.62}
+.card b{display:inline-block;background:#0a0a0a;color:#f5f3ef;font-weight:500;font-size:16px;border-radius:999px;padding:0 12px;margin-left:8px;line-height:28px;vertical-align:2px}
+.stats{display:flex;gap:16px;align-items:center}
+.stat{border:1px solid #2a2a2a;border-radius:999px;padding:12px 22px;font:500 22px "Instrument Sans",sans-serif;color:#c9c5bf;background:#0e0e0e}
+.stat strong{color:#f5f3ef;font-weight:600}
+.url{margin-left:auto;font:600 24px "IBM Plex Mono",monospace;color:#ff4f1f}
+</style></head><body>
+<div class="glow"></div>
+<div class="wrap">
+  <div class="logo"><svg width="40" height="40" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" fill="none" stroke="#ff4f1f" stroke-width="3"/><circle cx="13" cy="13" r="3.5" fill="#ff4f1f"/></svg>OneShot</div>
+  <div class="row">
+    <h1>Your AI agent writes last year's versions. <span>Get it right<br>in one shot.</span></h1>
+    <div class="card">
+      <div class="k"><span>What the agent wrote</span></div>
+      model: <s>claude-opus-4-8</s><b>5.5</b><br>
+      uses: <s>checkout@v4</s><b>v7</b><br>
+      FROM <s>node:24</s><b>26</b>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong>60/60</strong> right</div>
+    <div class="stat"><strong>31%</strong> faster, <strong>33%</strong> cheaper than looking it up</div>
+    <div class="url">oneshotagent.dev</div>
+  </div>
+</div>
+</body></html>
