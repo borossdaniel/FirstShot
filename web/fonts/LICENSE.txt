@@ -1,0 +1,6 @@
+The fonts in this folder are Archivo, Instrument Sans and IBM Plex Mono, served
+from this site instead of Google Fonts. All three are licensed under the SIL Open
+Font License 1.1: https://openfontlicense.org
+- Archivo: https://github.com/Omnibus-Type/Archivo
+- Instrument Sans: https://github.com/Instrument/instrument-sans
+- IBM Plex Mono: https://github.com/IBM/plex

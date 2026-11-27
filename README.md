@@ -1,5 +1,7 @@
 # OneShot
 
+[![OneShot](https://www.oneshotagent.dev/badge/borossdaniel/OneShot.svg)](https://oneshotagent.dev/#check=borossdaniel/OneShot) [![npm](https://img.shields.io/npm/v/oneshot-agent)](https://www.npmjs.com/package/oneshot-agent)
+
 **Your AI coding agent writes last year's versions from memory. OneShot gives it today's, so it gets it right in one shot.**
 
 Agents write model names, GitHub Actions versions, Docker images and runtime versions from memory, and those go stale fast. We measured it with Claude Code (Sonnet) on 6 everyday tasks (newest Claude and OpenAI model, Node and Python CI, Node and Python Dockerfiles), 10 runs per task per setup, each run checked by a real test:
@@ -70,11 +72,12 @@ Put a `.oneshot.json` in your repo (or point `ONESHOT_RULES_URL` at one shared f
 {
   "models":   { "allowed": ["claude-sonnet-5-5", "gpt-6.2-*"], "blocked": ["gpt-4o*"] },
   "packages": { "blocked": { "moment": "use date-fns" }, "minMajor": { "react": 19 } },
-  "notes":    ["Use @acme/ui for buttons and forms"]
+  "notes":    ["Use @acme/ui for buttons and forms"],
+  "ignore":   ["test/fixtures/", "docs/**/*.md"]
 }
 ```
 
-`npx oneshot-agent init --rules` creates an example.
+`ignore` skips folders or files that mention old versions on purpose (test fixtures, changelogs, docs). `npx oneshot-agent init --rules` creates an example.
 
 ## Use it in your project
 

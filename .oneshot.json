@@ -1,0 +1,4 @@
+{
+  "notes": ["This repo stores old model names and versions on purpose: the facts data, test fixtures and benchmark transcripts."],
+  "ignore": ["data/", "results/", "test/fixtures/", "bench/", "site/", "tasks/", "deploy/"]
+}

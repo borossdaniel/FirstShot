@@ -43,6 +43,8 @@ ${body}
 `;
 writeFileSync(join(out, 'index.html'), html);
 copyFileSync(join(here, 'data.json'), join(out, 'data.json'));
+cpSync(join(here, 'fonts'), join(out, 'fonts'), { recursive: true });
+copyFileSync(join(here, 'privacy.html'), join(out, 'privacy.html'));
 // Hosted facts: a serverless function at /facts.json (see web/api/facts.js).
 mkdirSync(join(out, 'api', '_data'), { recursive: true });
 copyFileSync(join(here, 'api', 'facts.js'), join(out, 'api', 'facts.js'));

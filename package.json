@@ -1,6 +1,7 @@
 {
   "name": "oneshot-agent",
-  "version": "0.4.2",
+  "version": "0.4.3",
+  "mcpName": "io.github.borossdaniel/oneshot",
   "description": "Stops AI coding agents from writing retired models and last year's versions. Live facts for agents plus a check for every pull request: retired AI models, end-of-life runtimes, outdated GitHub Actions and packages.",
   "type": "module",
   "bin": {

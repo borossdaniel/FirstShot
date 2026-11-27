@@ -165,13 +165,25 @@ export function readPythonDeps(dir) {
   return deps;
 }
 
+/** Paths from .oneshot.json "ignore" (like "data/" or "test/**\/*.json") that the check skips. */
+export function ignoreMatcher(list) {
+  const res = (Array.isArray(list) ? list : []).map((p) => {
+    const s = String(p).replace(/^\.?\//, '');
+    if (s.endsWith('/')) return (f) => f.startsWith(s);
+    const re = new RegExp('^' + s.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*\*\//g, '\u0001').replace(/\*\*/g, '\u0002').replace(/\*/g, '[^/]*').replace(/\u0001/g, '(.*/)?').replace(/\u0002/g, '.*') + '(/.*)?$');
+    return (f) => re.test(f);
+  });
+  return (file) => res.some((m) => m(file));
+}
+
 /** Compare every dependency (package.json, requirements.txt, pyproject.toml) with the latest major. */
 export async function checkProject(dir = process.cwd()) {
   const pj = join(dir, 'package.json');
   const npmDeps = existsSync(pj) ? (({ dependencies, devDependencies }) => ({ ...(dependencies || {}), ...(devDependencies || {}) }))(readJson(pj, {})) : {};
   const pyDeps = readPythonDeps(dir);
-  const facts = await scanProjectFacts(dir).catch(() => []);
   const rules = await loadRules(dir);
+  const skip = ignoreMatcher(rules?.ignore);
+  const facts = (await scanProjectFacts(dir).catch(() => [])).filter((f) => !f.file || !skip(f.file));
   facts.push(...packageProblems(rules, npmDeps, declaredMajor));
   const found = existsSync(pj) || Object.keys(pyDeps).length > 0 || facts.length > 0;
   if (!found) return { dir, found: false, outdated: [], checked: [], skipped: [], facts };
